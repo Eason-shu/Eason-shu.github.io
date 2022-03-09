@@ -615,7 +615,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4k
+                    3.9k
                 </div>
                 
 
@@ -1090,119 +1090,144 @@ public class JianYue_Stream {
 <span class="token punctuation">}</span>
 </code></pre>
 <ul>
-<li>多个字段分组合计<br>&#96;&#96;&#96;java<br>package Stream;</li>
+<li>多个字段分组合计</li>
 </ul>
-<p>import java.util.Arrays;<br>import java.util.List;<br>import java.util.Map;<br>import java.util.stream.Collectors;</p>
-<p>&#x2F;**</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> Stream<span class="token punctuation">;</span>
+
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Map<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span>Collectors<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Date: 2022/02/22/ 10:39
+ * @Description 分组合计
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Person s1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">"aa"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Person s4 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">"aa"</span><span class="token punctuation">,</span> <span class="token number">120</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Person s2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">"bb"</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Person s5 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">"bb"</span><span class="token punctuation">,</span> <span class="token number">210</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Person s3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">"cc"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span><span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Person s6 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token string">"cc"</span><span class="token punctuation">,</span> <span class="token number">120</span><span class="token punctuation">,</span><span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        List<span class="token operator">&lt;</span>Person<span class="token operator">></span> list <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>s1<span class="token punctuation">,</span> s2<span class="token punctuation">,</span> s3<span class="token punctuation">,</span>s4<span class="token punctuation">,</span>s5<span class="token punctuation">,</span>s6<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">></span> map <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">groupingBy</span><span class="token punctuation">(</span>Person<span class="token operator">:</span><span class="token operator">:</span>getName<span class="token punctuation">,</span> Collectors<span class="token punctuation">.</span><span class="token function">summingInt</span><span class="token punctuation">(</span>Person<span class="token operator">:</span><span class="token operator">:</span>getScore<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">></span> maps <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">groupingBy</span><span class="token punctuation">(</span>Person<span class="token operator">:</span><span class="token operator">:</span>getName<span class="token punctuation">,</span> Collectors<span class="token punctuation">.</span><span class="token function">summingInt</span><span class="token punctuation">(</span>Person<span class="token operator">:</span><span class="token operator">:</span>getAge<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"aa"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>maps<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"aa"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> <span class="token keyword">long</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> collect <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span>k <span class="token operator">-</span><span class="token operator">></span> k<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> v <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">long</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>v<span class="token punctuation">.</span><span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> v<span class="token punctuation">.</span><span class="token function">getScore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>v<span class="token punctuation">.</span><span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> y<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            x<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> x<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> y<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>collect<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"aa"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>collect<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"aa"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> score<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">Person</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> <span class="token keyword">int</span> age<span class="token punctuation">,</span> <span class="token keyword">int</span> score<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>score <span class="token operator">=</span> score<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> age<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAge</span><span class="token punctuation">(</span><span class="token keyword">int</span> age<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getScore</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> score<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setScore</span><span class="token punctuation">(</span><span class="token keyword">int</span> score<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>score <span class="token operator">=</span> score<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"Person{"</span> <span class="token operator">+</span>
+                <span class="token string">"name='"</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
+                <span class="token string">", age="</span> <span class="token operator">+</span> age <span class="token operator">+</span>
+                <span class="token string">", score="</span> <span class="token operator">+</span> score <span class="token operator">+</span>
+                <span class="token string">'}'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="二-日期和时间API"><a href="#二-日期和时间API" class="headerlink" title="二 日期和时间API"></a>二 日期和时间API</h2><h3 id="2-1-LocalDate"><a href="#2-1-LocalDate" class="headerlink" title="2.1 LocalDate"></a>2.1 LocalDate</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/jpeg/12426173/1644580336048-3a623ca0-093e-4f35-84cf-6425f2a621df.jpeg" alt="epub_34339937_1058.jpg"></p>
 <ul>
-<li>@Author shu</li>
-<li>@Date: 2022&#x2F;02&#x2F;22&#x2F; 10:39</li>
-<li>@Description 分组合计</li>
+<li>LocalDate是带有年、月、日的日期。为了构建LocalDate对象，可以使用now或of静态方法.</li>
+<li>与UNIX和java.util.Date中使用的月从0开始计算而年从1900开始计算的不规则的惯用法不同，你需要提供通常使用的月份的数字。或者，你可以使用Month枚举。</li>
+<li>除了LocalDate之外，还有MonthDay、YearMonth和Year类可以描述部分日期。例如，12月25日（没有指定年份）可以表示成一个MonthDay对象。</li>
+<li>TemporalAdjusters类提供了大量用于常见调整的静态方法。你可以将调整方法的结果传递给with方法。</li>
 </ul>
-<p> **&#x2F;<br>public class Test {<br>    public static void main(String[] args) {<br>        Person s1 &#x3D; new Person(“aa”, 10,20);<br>        Person s4 &#x3D; new Person(“aa”, 120,20);<br>        Person s2 &#x3D; new Person(“bb”, 20,30);<br>        Person s5 &#x3D; new Person(“bb”, 210,30);<br>        Person s3 &#x3D; new Person(“cc”, 10,40);<br>        Person s6 &#x3D; new Person(“cc”, 120,40);<br>        List<Person> list &#x3D; Arrays.asList(s1, s2, s3,s4,s5,s6);<br>        Map&lt;String, Integer&gt; map &#x3D; list.stream().collect(Collectors.groupingBy(Person::getName, Collectors.summingInt(Person::getScore)));<br>        Map&lt;String, Integer&gt; maps &#x3D; list.stream().collect(Collectors.groupingBy(Person::getName, Collectors.summingInt(Person::getAge)));<br>        System.out.println(map.get(“aa”));<br>        System.out.println(maps.get(“aa”));<br>        Map&lt;String, long[]&gt; collect &#x3D; list.stream().collect(Collectors.toMap(k -&gt; k.getName(), v -&gt; new long[]{v.getAge(), v.getScore(),v.getAge()}, (x, y) -&gt; {<br>            x[0] &#x3D; x[0] + y[0];<br>            x[1] &#x3D; x[1] + y[1];<br>            return x;<br>        }));<br>        System.out.println(collect.get(“aa”)[0]);<br>        System.out.println(collect.get(“aa”)[1]);</p>
-<pre><code>}
-</code></pre>
-<p>}</p>
-<p>class Person {<br>    private String name;<br>    private int age;<br>    private int score;</p>
-<pre><code>public Person(String name, int age, int score) {
-    this.name = name;
-    this.age = age;
-    this.score = score;
-}
+<p><img src="https://cdn.nlark.com/yuque/0/2022/jpeg/12426173/1644580344453-9da9da04-9e62-482f-b980-5d609145edb9.jpeg" alt="epub_34339937_1070.jpg"></p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> Date<span class="token punctuation">;</span>
 
-public Person() {
-}
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>time<span class="token punctuation">.</span>DayOfWeek<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>time<span class="token punctuation">.</span>Instant<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>time<span class="token punctuation">.</span>LocalDate<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>time<span class="token punctuation">.</span>Month<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>time<span class="token punctuation">.</span>temporal<span class="token punctuation">.</span>TemporalAdjuster<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>time<span class="token punctuation">.</span>temporal<span class="token punctuation">.</span>TemporalAdjusters<span class="token punctuation">;</span>
 
 
-public String getName() {
-    return name;
-}
-
-public void setName(String name) {
-    this.name = name;
-}
-
-public int getAge() {
-    return age;
-}
-
-public void setAge(int age) {
-    this.age = age;
-}
-
-public int getScore() {
-    return score;
-}
-
-public void setScore(int score) {
-    this.score = score;
-}
-
-
-
-
-@Override
-public String toString() {
-    return &quot;Person{&quot; +
-            &quot;name=&#39;&quot; + name + &#39;\&#39;&#39; +
-            &quot;, age=&quot; + age +
-            &quot;, score=&quot; + score +
-            &#39;}&#39;;
-}
-</code></pre>
-<p>}</p>
-<pre><code>
-## 二 日期和时间API
-
-### 2.1 LocalDate
-![epub_34339937_1058.jpg](https://cdn.nlark.com/yuque/0/2022/jpeg/12426173/1644580336048-3a623ca0-093e-4f35-84cf-6425f2a621df.jpeg)
-
-- LocalDate是带有年、月、日的日期。为了构建LocalDate对象，可以使用now或of静态方法.
-- 与UNIX和java.util.Date中使用的月从0开始计算而年从1900开始计算的不规则的惯用法不同，你需要提供通常使用的月份的数字。或者，你可以使用Month枚举。
-- 除了LocalDate之外，还有MonthDay、YearMonth和Year类可以描述部分日期。例如，12月25日（没有指定年份）可以表示成一个MonthDay对象。
-- TemporalAdjusters类提供了大量用于常见调整的静态方法。你可以将调整方法的结果传递给with方法。
-
-![epub_34339937_1070.jpg](https://cdn.nlark.com/yuque/0/2022/jpeg/12426173/1644580344453-9da9da04-9e62-482f-b980-5d609145edb9.jpeg)
-
-```java
-package Date;
-
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalAdjusters;
-
-
-/**
+<span class="token comment" spellcheck="true">/**
  * @Author shu
  * @Date: 2022/01/17/ 15:50
  * @Description
- **/
-public class LocalDateWays {
-    public static void main(String[] args) {
-        // 获取当前日期
-        LocalDate localDate = LocalDate.now();
-        System.out.println(&quot;当前日期&quot;+localDate);
-        // 指定日期
-        LocalDate date = LocalDate.of(2021, 12, 1);
-        System.out.println(&quot;当前日期&quot;+date);
-        // 前多少天
-        LocalDate days = localDate.plusDays(-5);
-        System.out.println(&quot;当前日期&quot;+days);
-        // 前多少月
-        LocalDate months = localDate.plusMonths(1);
-        System.out.println(&quot;当前日期&quot;+months);
-        // 前多少年
-        LocalDate years = localDate.plusYears(-1);
-        //LocalDate years = localDate.plusYears(1);
-        System.out.println(&quot;当前日期&quot;+years);
-        // 某月的第一个星期二
-        LocalDate day = LocalDate.of(years.getYear(), Month.from(months), 1).with(TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY));
-        System.out.println(day);
-    }
-}
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LocalDateWays</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 获取当前日期</span>
+        LocalDate localDate <span class="token operator">=</span> LocalDate<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前日期"</span><span class="token operator">+</span>localDate<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 指定日期</span>
+        LocalDate date <span class="token operator">=</span> LocalDate<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">2021</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前日期"</span><span class="token operator">+</span>date<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 前多少天</span>
+        LocalDate days <span class="token operator">=</span> localDate<span class="token punctuation">.</span><span class="token function">plusDays</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前日期"</span><span class="token operator">+</span>days<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 前多少月</span>
+        LocalDate months <span class="token operator">=</span> localDate<span class="token punctuation">.</span><span class="token function">plusMonths</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前日期"</span><span class="token operator">+</span>months<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 前多少年</span>
+        LocalDate years <span class="token operator">=</span> localDate<span class="token punctuation">.</span><span class="token function">plusYears</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//LocalDate years = localDate.plusYears(1);</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前日期"</span><span class="token operator">+</span>years<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 某月的第一个星期二</span>
+        LocalDate day <span class="token operator">=</span> LocalDate<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>years<span class="token punctuation">.</span><span class="token function">getYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> Month<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>months<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">with</span><span class="token punctuation">(</span>TemporalAdjusters<span class="token punctuation">.</span><span class="token function">nextOrSame</span><span class="token punctuation">(</span>DayOfWeek<span class="token punctuation">.</span>TUESDAY<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>day<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="2-2-LocalTime"><a href="#2-2-LocalTime" class="headerlink" title="2.2 LocalTime"></a>2.2 LocalTime</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/jpeg/12426173/1644580354557-b31ff0c0-8c59-48dc-9057-992f389e5aa2.jpeg" alt="epub_34339937_1076.jpg"></p>
 <ul>
@@ -1864,7 +1889,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">5.4k</span>
+                        class="white-color">5.3k</span>
             
             
             
