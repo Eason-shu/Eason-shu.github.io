@@ -968,61 +968,66 @@ stringStream<span class="token punctuation">.</span><span class="token function"
 </code></pre>
 <h4 id="1-4-4-消费"><a href="#1-4-4-消费" class="headerlink" title="1.4.4 消费"></a>1.4.4 消费</h4><p><code>Stream&lt;T&gt;peek（Consumer&lt;?super T&gt;action）</code></p>
 <ul>
-<li><code>peek</code>：如同于map，能得到流中的每一个元素。但map接收的是一个Function表达式，有返回值；而peek接收的是Consumer表达式，没有返回值。<br>&#96;&#96;&#96;java<br>package Stream;</li>
+<li><code>peek</code>：如同于map，能得到流中的每一个元素。但map接收的是一个Function表达式，有返回值；而peek接收的是Consumer表达式，没有返回值。</li>
 </ul>
-<p>import java.util.Arrays;<br>import java.util.List;</p>
-<p>&#x2F;**</p>
-<ul>
-<li>@Author shu</li>
-<li>@Date: 2022&#x2F;01&#x2F;12&#x2F; 9:52</li>
-<li>@Description</li>
-</ul>
-<p> **&#x2F;<br>public class Pink_Stream {<br>    public static void main(String[] args) {<br>        Student s1 &#x3D; new Student(“aa”, 10);<br>        Student s2 &#x3D; new Student(“bb”, 20);<br>        List<Student> studentList &#x3D; Arrays.asList(s1, s2);</p>
-<pre><code>    studentList.stream()
-            .peek(o -&gt; o.setAge(100))
-            .forEach(System.out::println);
-}
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> Stream<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Date: 2022/01/12/ 9:52
+ * @Description
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Pink_Stream</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Student s1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"aa"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Student s2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"bb"</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        List<span class="token operator">&lt;</span>Student<span class="token operator">></span> studentList <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>s1<span class="token punctuation">,</span> s2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        studentList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span>o <span class="token operator">-</span><span class="token operator">></span> o<span class="token punctuation">.</span><span class="token function">setAge</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
-<p>}</p>
-<pre><code>
-### 1.5 流的简约操作
+<h3 id="1-5-流的简约操作"><a href="#1-5-流的简约操作" class="headerlink" title="1.5 流的简约操作"></a>1.5 流的简约操作</h3><ul>
+<li><code>Optional&lt;T&gt;</code>对象是一种包装器对象，要么包装了类型T的对象，要么没有包装任何对象。对于第一种情况，我们称这种值为存在的。<code>Optional&lt;T&gt;</code>类型被当作一种更安全的方式，用来替代类型T的引用，这种引用要么引用某个对象，要么为null。但是，它只有在正确使用的情况下才会更安全， </li>
+<li><code>Optional&lt;T&gt;max（Comparator&lt;?super T&gt;comparator）</code>:分别产生这个流的最大元素 </li>
+<li><code>Optional&lt;T&gt;min（Comparator&lt;?super T&gt;comparator）</code>:分别产生这个流的最小元素 </li>
+<li><code>Optional&lt;T&gt;findFirst（）</code>:分别产生这个流的任意一个元素，如果这个流为空，会产生一个空的Optional对象。 </li>
+<li><code>Optional&lt;T&gt;findAny（）</code>:分别产生这个流的任意一个元素，如果这个流为空，会产生一个空的Optional对象。 </li>
+<li><code>boolean anyMatch（Predicate&lt;？super T&gt;predicate）</code>:这个流中任意元素匹配给定断言时返回true。 </li>
+<li><code>boolean allMatch（Predicate&lt;？super T&gt;predicate）</code>:这个流中所有元素给定断言时返回true。 </li>
+<li><code>boolean noneMatch（Predicate&lt;？super T&gt;predicate）</code>:这个流中没有任何元素匹配给定断言时返回true。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> Stream<span class="token punctuation">;</span>
 
--  `Optional&lt;T&gt;`对象是一种包装器对象，要么包装了类型T的对象，要么没有包装任何对象。对于第一种情况，我们称这种值为存在的。`Optional&lt;T&gt;`类型被当作一种更安全的方式，用来替代类型T的引用，这种引用要么引用某个对象，要么为null。但是，它只有在正确使用的情况下才会更安全， 
--  `Optional&lt;T&gt;max（Comparator&lt;?super T&gt;comparator）`:分别产生这个流的最大元素 
--  `Optional&lt;T&gt;min（Comparator&lt;?super T&gt;comparator）`:分别产生这个流的最小元素 
--  `Optional&lt;T&gt;findFirst（）`:分别产生这个流的任意一个元素，如果这个流为空，会产生一个空的Optional对象。 
--  `Optional&lt;T&gt;findAny（）`:分别产生这个流的任意一个元素，如果这个流为空，会产生一个空的Optional对象。 
--  `boolean anyMatch（Predicate&lt;？super T&gt;predicate）`:这个流中任意元素匹配给定断言时返回true。 
--  `boolean allMatch（Predicate&lt;？super T&gt;predicate）`:这个流中所有元素给定断言时返回true。 
--  `boolean noneMatch（Predicate&lt;？super T&gt;predicate）`:这个流中没有任何元素匹配给定断言时返回true。 
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
 
-```java
-package Stream;
-
-import java.util.Arrays;
-import java.util.List;
-
-/**
+<span class="token comment" spellcheck="true">/**
  * @Author shu
  * @Date: 2022/01/12/ 10:10
  * @Description
- **/
-public class JianYue_Stream {
-    public static void main(String[] args) {
-        List&lt;Integer&gt; list = Arrays.asList(1, 2, 3, 4, 5);
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JianYue_Stream</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> list <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        boolean allMatch = list.stream().allMatch(e -&gt; e &gt; 10); //false
-        boolean noneMatch = list.stream().noneMatch(e -&gt; e &gt; 10); //true
-        boolean anyMatch = list.stream().anyMatch(e -&gt; e &gt; 4);  //true
+        <span class="token keyword">boolean</span> allMatch <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">allMatch</span><span class="token punctuation">(</span>e <span class="token operator">-</span><span class="token operator">></span> e <span class="token operator">></span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//false</span>
+        <span class="token keyword">boolean</span> noneMatch <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">noneMatch</span><span class="token punctuation">(</span>e <span class="token operator">-</span><span class="token operator">></span> e <span class="token operator">></span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//true</span>
+        <span class="token keyword">boolean</span> anyMatch <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">anyMatch</span><span class="token punctuation">(</span>e <span class="token operator">-</span><span class="token operator">></span> e <span class="token operator">></span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//true</span>
 
-        Integer findFirst = list.stream().findFirst().get(); //1
-        Integer findAny = list.stream().findAny().get(); //1
+        Integer findFirst <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">findFirst</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//1</span>
+        Integer findAny <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">findAny</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//1</span>
 
-        long count = list.stream().count(); //5
-        Integer max = list.stream().max(Integer::compareTo).get(); //5
-        Integer min = list.stream().min(Integer::compareTo).get(); //1
-    }
-}
+        <span class="token keyword">long</span> count <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//5</span>
+        Integer max <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>Integer<span class="token operator">:</span><span class="token operator">:</span>compareTo<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//5</span>
+        Integer min <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>Integer<span class="token operator">:</span><span class="token operator">:</span>compareTo<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//1</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="1-6-流的收集操作"><a href="#1-6-流的收集操作" class="headerlink" title="1.6 流的收集操作"></a>1.6 流的收集操作</h3><ul>
 <li><code>collect</code>：接收一个Collector实例，将流中元素收集成另外一个数据结构。</li>
