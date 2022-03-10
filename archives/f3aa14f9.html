@@ -1,0 +1,2177 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="Apache Thrift 官网学习（四）, Eason_Shu">
+    <meta name="description" content="Thrift是一个轻量级、跨语言的远程服务调用框架，最初由Facebook开发，后面进入Apache开源项目。它通过自身的IDL中间语言, 并借助代码生成引擎生成各种主流语言的RPC服务端/客户端模板代码。 套接字服务器等网络编程。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Apache Thrift 官网学习（四） | Eason_Shu</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+ 
+    <style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },2500);
+        },1000);//强制显示loading page 1s
+    };
+    loaded();
+})()
+</script>
+
+ 
+<body>
+    
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading-container">
+             <p class="loading-text">嘘~  正在从服务器偷取页面 . . . </p>
+             <div class="loading-image">
+                 <div></div>
+                 <div></div>
+                 <div></div>
+                 <div></div>
+                 <div></div>
+             </div>
+        </div>
+    
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Eason_Shu</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fa fa-rocket" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Eason_Shu</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-rocket"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Eason-shu" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Eason-shu" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Apache Thrift 官网学习（四）</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Thrift/">
+                                <span class="chip bg-color">Thrift</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Thrift/" class="post-category">
+                                Thrift
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-03-10
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-03-10
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    13 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>学习视频：<a href="https://www.bilibili.com/video/BV1HP4y177St?p=13" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1HP4y177St</a><br>学习视频：<a href="https://www.bilibili.com/video/BV1j44y1q7fy?from=search&seid=9897528802909219793&spm_id_from=333.337.0.0" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1j44y1q7fy</a><br>参考博客：<a href="https://juejin.cn/post/6844903622384287751#heading-28" target="_blank" rel="noopener">https://juejin.cn/post/6844903622384287751#heading-28</a><br>参考博客：<a href="https://www.cnblogs.com/cyfonly/p/6059374.html" target="_blank" rel="noopener">https://www.cnblogs.com/cyfonly/p/6059374.html</a>    </p>
+<h2 id="四-序列化机制"><a href="#四-序列化机制" class="headerlink" title="四 序列化机制"></a>四 序列化机制</h2><h3 id="4-1-基本知识"><a href="#4-1-基本知识" class="headerlink" title="4.1 基本知识"></a>4.1 基本知识</h3><ul>
+<li>Thrift支持<strong>二进制</strong>，<strong>压缩格式</strong>，以及json格式数据的<strong>序列化</strong>和<strong>反序列化</strong>。开发人员可以更加灵活的选择协议的具体形式。协议是可<strong>自由扩展</strong>的，新版本的协议，完全<strong>兼容</strong>老的版本！</li>
+<li>前面介绍到了protocol的一些基本知识，下面我们来详细看下他的用法</li>
+</ul>
+<h3 id="4-2-TProtocol"><a href="#4-2-TProtocol" class="headerlink" title="4.2 TProtocol"></a>4.2 TProtocol</h3><ul>
+<li>这是一个协议接口，我们可以看出他有多少个实现类</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644470721026-7cc8efc5-fc44-4eb5-be5f-9852a3070b0d.png" alt="image.png"></p>
+<ul>
+<li><code>TBinaryProtocol</code>：是Thrift的默认协议，使用二进制编码格式进行数据传输，基本上直接发送原始数据</li>
+<li><code>TCompactProtocol</code>：压缩的、密集的数据传输协议，基于Variable-length quantity的zigzag 编码格式</li>
+<li><code>TJSONProtocol</code>：以JSON (JavaScript Object Notation)数据编码协议进行数据传输</li>
+<li><code>TDebugProtocol</code>：常常用以编码人员测试，以文本的形式展现方便阅读</li>
+</ul>
+<p>基本方法</p>
+<pre class=" language-java"><code class="language-java">  <span class="token comment" spellcheck="true">/**
+   * Writing methods. 写方法
+   */</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeMessageBegin</span><span class="token punctuation">(</span>TMessage message<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeMessageEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeStructBegin</span><span class="token punctuation">(</span>TStruct struct<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeStructEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeFieldBegin</span><span class="token punctuation">(</span>TField field<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeFieldEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeFieldStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeMapBegin</span><span class="token punctuation">(</span>TMap map<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeMapEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeListBegin</span><span class="token punctuation">(</span>TList list<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeListEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeSetBegin</span><span class="token punctuation">(</span>TSet set<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeSetEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeBool</span><span class="token punctuation">(</span><span class="token keyword">boolean</span> b<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeByte</span><span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeI16</span><span class="token punctuation">(</span><span class="token keyword">short</span> i16<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeI32</span><span class="token punctuation">(</span><span class="token keyword">int</span> i32<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeI64</span><span class="token punctuation">(</span><span class="token keyword">long</span> i64<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeDouble</span><span class="token punctuation">(</span><span class="token keyword">double</span> dub<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeString</span><span class="token punctuation">(</span>String str<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">writeBinary</span><span class="token punctuation">(</span>ByteBuffer buf<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/**
+   * Reading methods. 读方法
+   */</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> TMessage <span class="token function">readMessageBegin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">readMessageEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> TStruct <span class="token function">readStructBegin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">readStructEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> TField <span class="token function">readFieldBegin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">readFieldEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> TMap <span class="token function">readMapBegin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">readMapEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> TList <span class="token function">readListBegin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">readListEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> TSet <span class="token function">readSetBegin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">readSetEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">readBool</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">byte</span> <span class="token function">readByte</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">short</span> <span class="token function">readI16</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">readI32</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">long</span> <span class="token function">readI64</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">double</span> <span class="token function">readDouble</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> String <span class="token function">readString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> ByteBuffer <span class="token function">readBinary</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+</code></pre>
+<h3 id="4-3-TCompactProtocol"><a href="#4-3-TCompactProtocol" class="headerlink" title="4.3 TCompactProtocol"></a>4.3 TCompactProtocol</h3><ul>
+<li>TCompactProtocol2 是 THRIFT-110 中指定的紧凑协议的 Java 实现。减少结构开销的基本方法是 a) 在所有地方使用可变长度整数 b) 尽可能使用未使用的位。</li>
+<li>您的节省显然会根据结构的具体构成而有所不同，但总的来说，您拥有的字段、嵌套结构、短字符串和集合以及低值 i32 和 i64 字段越多，您将看到的好处就越多。</li>
+<li>所有类型：</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+   * All of the on-wire type codes.
+   */</span>
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Types</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> BOOLEAN_TRUE   <span class="token operator">=</span> <span class="token number">0x01</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> BOOLEAN_FALSE  <span class="token operator">=</span> <span class="token number">0x02</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> BYTE           <span class="token operator">=</span> <span class="token number">0x03</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> I16            <span class="token operator">=</span> <span class="token number">0x04</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> I32            <span class="token operator">=</span> <span class="token number">0x05</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> I64            <span class="token operator">=</span> <span class="token number">0x06</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> DOUBLE         <span class="token operator">=</span> <span class="token number">0x07</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> BINARY         <span class="token operator">=</span> <span class="token number">0x08</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> LIST           <span class="token operator">=</span> <span class="token number">0x09</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> SET            <span class="token operator">=</span> <span class="token number">0x0A</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> MAP            <span class="token operator">=</span> <span class="token number">0x0B</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">byte</span> STRUCT         <span class="token operator">=</span> <span class="token number">0x0C</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>源码分析</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>client<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>person<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>personservice<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TCompactProtocol<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TProtocol<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TSocket<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TTransport<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>layered<span class="token punctuation">.</span>TFramedTransport<span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Description 客服端
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThriftClient</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        TTransport transport <span class="token operator">=</span>null<span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 连接</span>
+            transport <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TFramedTransport</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TSocket</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span><span class="token number">8803</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">600</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 协议</span>
+            TProtocol protocol <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TCompactProtocol</span><span class="token punctuation">(</span>transport<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 调用方法</span>
+            personservice<span class="token punctuation">.</span>Client client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">personservice<span class="token punctuation">.</span>Client</span><span class="token punctuation">(</span>protocol<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 打开连接</span>
+            transport<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 调用方法</span>
+            person result <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">getPersonInfoByUserNmae</span><span class="token punctuation">(</span><span class="token string">"哈哈哈哈"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Result =: "</span> <span class="token operator">+</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">TException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">!=</span> transport<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                transport<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>点入我们自定的方法getPersonInfoByUserNmae，可以看到thrift生成的服务</li>
+</ul>
+<pre class=" language-java"><code class="language-java"> <span class="token keyword">public</span> person <span class="token function">getPersonInfoByUserNmae</span><span class="token punctuation">(</span>String username<span class="token punctuation">)</span> <span class="token keyword">throws</span> personexception<span class="token punctuation">,</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException
+    <span class="token punctuation">{</span>
+      <span class="token function">send_getPersonInfoByUserNmae</span><span class="token punctuation">(</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token function">recv_getPersonInfoByUserNmae</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">send_getPersonInfoByUserNmae</span><span class="token punctuation">(</span>String username<span class="token punctuation">)</span> <span class="token keyword">throws</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException
+    <span class="token punctuation">{</span>
+      getPersonInfoByUserNmae_args args <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">getPersonInfoByUserNmae_args</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      args<span class="token punctuation">.</span><span class="token function">setUsername</span><span class="token punctuation">(</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment" spellcheck="true">// 关键方法，发送数据</span>
+      <span class="token function">sendBase</span><span class="token punctuation">(</span><span class="token string">"getPersonInfoByUserNmae"</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>进入sendBase方法，可以看到他实际调用了TCompactProtocol的实现方法</li>
+</ul>
+<pre class=" language-java"><code class="language-java"> <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">sendBase</span><span class="token punctuation">(</span>String methodName<span class="token punctuation">,</span> TBase<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token punctuation">,</span><span class="token operator">?</span><span class="token operator">></span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException <span class="token punctuation">{</span>
+    <span class="token function">sendBase</span><span class="token punctuation">(</span>methodName<span class="token punctuation">,</span> args<span class="token punctuation">,</span> TMessageType<span class="token punctuation">.</span>CALL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 将数据写入具体的实现协议中</span>
+<span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">sendBase</span><span class="token punctuation">(</span>String methodName<span class="token punctuation">,</span> TBase<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token punctuation">,</span><span class="token operator">?</span><span class="token operator">></span> args<span class="token punctuation">,</span> <span class="token keyword">byte</span> type<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 写入开始，协议基本信息</span>
+    oprot_<span class="token punctuation">.</span><span class="token function">writeMessageBegin</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TMessage</span><span class="token punctuation">(</span>methodName<span class="token punctuation">,</span> type<span class="token punctuation">,</span> <span class="token operator">++</span>seqid_<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 写入</span>
+    args<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>oprot_<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 写入结束</span>
+    oprot_<span class="token punctuation">.</span><span class="token function">writeMessageEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 刷新数据</span>
+    oprot_<span class="token punctuation">.</span><span class="token function">getTransport</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644472172281-150e79e3-f1d7-4c05-8b15-3ac9a5a7ee82.png" alt="image.png"></p>
+<pre class=" language-java"><code class="language-java"> <span class="token comment" spellcheck="true">/**将消息头写入线路。紧凑协议消息包含协议版本
+   * Write a message header to the wire. Compact Protocol messages contain the
+   * protocol version so we can migrate forwards in the future if need be.
+   */</span>
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">writeMessageBegin</span><span class="token punctuation">(</span>TMessage message<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">// 协议编号</span>
+    <span class="token function">writeByteDirect</span><span class="token punctuation">(</span>PROTOCOL_ID<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment" spellcheck="true">// 版本</span>
+    <span class="token function">writeByteDirect</span><span class="token punctuation">(</span><span class="token punctuation">(</span>VERSION <span class="token operator">&amp;</span> VERSION_MASK<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>message<span class="token punctuation">.</span>type <span class="token operator">&lt;&lt;</span> TYPE_SHIFT_AMOUNT<span class="token punctuation">)</span> <span class="token operator">&amp;</span> TYPE_MASK<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment" spellcheck="true">// 序列号</span>
+    <span class="token function">writeVarint32</span><span class="token punctuation">(</span>message<span class="token punctuation">.</span>seqid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment" spellcheck="true">// 消息名</span>
+    <span class="token function">writeString</span><span class="token punctuation">(</span>message<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>生成的 Thrift 对象的通用基本接口：TSerializable</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TSerializable</span> <span class="token punctuation">{</span>
+
+  <span class="token comment" spellcheck="true">/**
+   * Reads the TObject from the given input protocol.
+   *从协议读取对象
+   * @param iprot Input protocol
+   */</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">read</span><span class="token punctuation">(</span>TProtocol iprot<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/**
+   * Writes the objects out to the protocol
+   *将对象写入协议
+   * @param oprot Output protocol
+   */</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span>TProtocol oprot<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644472745547-a02558c0-b80d-404d-bc94-773f147cab77.png" alt="image.png"></p>
+<ul>
+<li>显然这调用的是thrift生成的方法</li>
+</ul>
+<pre class=" language-java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TProtocol oprot<span class="token punctuation">)</span> <span class="token keyword">throws</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException <span class="token punctuation">{</span>
+      <span class="token function">scheme</span><span class="token punctuation">(</span>oprot<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>oprot<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644473148397-48ef6b76-c099-4678-98a0-f296a54a4531.png" alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644473171581-b58ec8a1-ad30-42c9-a1ed-e14bee456fef.png#clientId=u5aa604a5-0a00-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=257&id=ua3e66699&margin=%5Bobject%20Object%5D&name=image.png&originHeight=514&originWidth=1428&originalType=binary&ratio=1&rotation=0&showTitle=false&size=104486&status=done&style=none&taskId=ub0d0b20c-0945-4155-b9e3-027c55b52e4&title=&width=714" alt="image.png"></p>
+<ul>
+<li>调用TCompactProtocol方法开始写入</li>
+</ul>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TProtocol oprot<span class="token punctuation">,</span> getPersonInfoByUserNmae_args struct<span class="token punctuation">)</span> <span class="token keyword">throws</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException <span class="token punctuation">{</span>
+        struct<span class="token punctuation">.</span><span class="token function">validate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        oprot<span class="token punctuation">.</span><span class="token function">writeStructBegin</span><span class="token punctuation">(</span>STRUCT_DESC<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>struct<span class="token punctuation">.</span>username <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            
+          oprot<span class="token punctuation">.</span><span class="token function">writeFieldBegin</span><span class="token punctuation">(</span>USERNAME_FIELD_DESC<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            
+          oprot<span class="token punctuation">.</span><span class="token function">writeString</span><span class="token punctuation">(</span>struct<span class="token punctuation">.</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            
+          oprot<span class="token punctuation">.</span><span class="token function">writeFieldEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        oprot<span class="token punctuation">.</span><span class="token function">writeFieldStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        oprot<span class="token punctuation">.</span><span class="token function">writeStructEnd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>与写入方法不同的是，读方法调用的是TSerializabl接口的read实现类，其实也是调用了thrift生成的service中的方法。</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644474054797-73968a51-a5dd-431d-9b19-54645863c7b7.png" alt="image.png"></p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IScheme</span><span class="token operator">&lt;</span>T <span class="token keyword">extends</span> <span class="token class-name">TBase</span><span class="token operator">></span> <span class="token punctuation">{</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">read</span><span class="token punctuation">(</span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TProtocol iproto<span class="token punctuation">,</span> T struct<span class="token punctuation">)</span> <span class="token keyword">throws</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TProtocol oproto<span class="token punctuation">,</span> T struct<span class="token punctuation">)</span> <span class="token keyword">throws</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="五-SpringBoot整合Thrift"><a href="#五-SpringBoot整合Thrift" class="headerlink" title="五 SpringBoot整合Thrift"></a>五 SpringBoot整合Thrift</h2><h3 id="5-1-先建Maven项目"><a href="#5-1-先建Maven项目" class="headerlink" title="5.1 先建Maven项目"></a>5.1 先建Maven项目</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646051292122-4e328cf0-a9af-466e-9629-a59dab391d2f.png" alt="image.png"></p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
+    
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-web<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+        
+
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-devtools<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>runtime<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>optional</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>optional</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+
+
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.projectlombok<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>lombok<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>optional</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>optional</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+
+
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+
+
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.thrift<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>libthrift<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>0.15.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+
+    
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
+</code></pre>
+<h3 id="5-2-定义thrift文件"><a href="#5-2-定义thrift文件" class="headerlink" title="5.2 定义thrift文件"></a>5.2 定义thrift文件</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+    基本类型：
+  　　bool: 布尔值
+  　　byte: 8位有符号整数
+  　　i16: 16位有符号整数
+  　　i32: 32位有符号整数
+  　　i64: 64位有符号整数
+  　　double: 64位浮点数
+  　　string: UTF-8编码的字符串
+  　　binary: 二进制串
+    结构体类型：
+  　　struct: 定义的结构体对象
+    容器类型：
+  　　list: 有序元素列表
+  　　set: 无序无重复元素集合
+  　　map: 有序的key/value集合
+    异常类型：
+  　　exception: 异常类型
+    服务类型：
+  　　service: 具体对应服务的类
+**/</span>
+
+<span class="token comment" spellcheck="true">// 定义包名</span>
+namespace java com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift
+namespace py com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift
+
+
+<span class="token comment" spellcheck="true">// 定义别名:将thrift基本数据类型别名为Java数据类型，方便使用</span>
+typedef i16 <span class="token keyword">short</span>
+typedef i32 <span class="token keyword">int</span>
+typedef i64 <span class="token keyword">long</span>
+typedef string String
+typedef bool  Boolean
+typedef <span class="token keyword">double</span> Double
+
+
+<span class="token comment" spellcheck="true">// 定义实体类</span>
+struct Role<span class="token punctuation">{</span>
+<span class="token number">1</span><span class="token operator">:</span>required <span class="token keyword">int</span> RoleId<span class="token punctuation">;</span>
+<span class="token number">2</span><span class="token operator">:</span>required String RoleName<span class="token punctuation">;</span>
+<span class="token number">3</span><span class="token operator">:</span>required String Description<span class="token punctuation">;</span>
+<span class="token number">4</span><span class="token operator">:</span>required <span class="token keyword">int</span> OperationID<span class="token punctuation">;</span>
+<span class="token number">5</span><span class="token operator">:</span>required string UpdateTime<span class="token punctuation">;</span>
+<span class="token number">6</span><span class="token operator">:</span>required string CreatTime<span class="token punctuation">;</span>
+<span class="token number">7</span><span class="token operator">:</span>required <span class="token keyword">int</span> isDelete<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token comment" spellcheck="true">// 定义接口</span>
+service RoleServer<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">// 通过用户id获取角色</span>
+   Role <span class="token function">getRoleByUserId</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span>required String id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 通过菜单id获取角色</span>
+   Role <span class="token function">getRoleByMenuId</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span>required String id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 生成文件 thrift -gen java Role.thrift</span>
+</code></pre>
+<h3 id="5-3-Server代码"><a href="#5-3-Server代码" class="headerlink" title="5.3 Server代码"></a>5.3 Server代码</h3><ul>
+<li>配置类</li>
+</ul>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>config<span class="token punctuation">;</span>
+
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>service<span class="token punctuation">.</span>RoleServiceImpl<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>RoleServer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TCompactProtocol<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>server<span class="token punctuation">.</span>THsHaServer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>server<span class="token punctuation">.</span>TServer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span><span class="token operator">*</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>layered<span class="token punctuation">.</span>TFastFramedTransport<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>Logger<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>LoggerFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Autowired<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Value<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span>Component<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Description rpc服务初始化
+ **/</span>
+@Component
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RPCThriftServer</span> <span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> final Logger logger <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    @<span class="token function">Value</span><span class="token punctuation">(</span><span class="token string">"${thrift.port}"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> int port<span class="token punctuation">;</span>
+    @<span class="token function">Value</span><span class="token punctuation">(</span><span class="token string">"${thrift.minWorkerThreads}"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> int minThreads<span class="token punctuation">;</span>
+    @<span class="token function">Value</span><span class="token punctuation">(</span><span class="token string">"${thrift.maxWorkerThreads}"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> int maxThreads<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> TCompactProtocol<span class="token punctuation">.</span>Factory protocolFactory<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> TFastFramedTransport<span class="token punctuation">.</span>Factory transportFactory<span class="token punctuation">;</span>
+
+    @Autowired
+    <span class="token keyword">private</span> RoleServiceImpl roleService<span class="token punctuation">;</span>
+
+
+    <span class="token comment" spellcheck="true">/**
+     * 定义处理器工厂
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 压缩协议</span>
+        protocolFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TCompactProtocol<span class="token punctuation">.</span>Factory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 传输</span>
+        transportFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TFastFramedTransport<span class="token punctuation">.</span>Factory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token comment" spellcheck="true">/**
+     * 初始化方法
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        RoleServer<span class="token punctuation">.</span>Processor<span class="token operator">&lt;</span>RoleServer<span class="token punctuation">.</span>Iface<span class="token operator">></span> processor <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RoleServer<span class="token punctuation">.</span>Processor</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>roleService<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 非阻塞socket</span>
+            TNonblockingServerSocket transport <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TNonblockingServerSocket</span><span class="token punctuation">(</span>port<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 建立高可用server</span>
+            THsHaServer<span class="token punctuation">.</span>Args tArgs <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">THsHaServer<span class="token punctuation">.</span>Args</span><span class="token punctuation">(</span>transport<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">minWorkerThreads</span><span class="token punctuation">(</span>minThreads<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">maxWorkerThreads</span><span class="token punctuation">(</span>maxThreads<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 处理器</span>
+            tArgs<span class="token punctuation">.</span><span class="token function">processor</span><span class="token punctuation">(</span>processor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 协议</span>
+            tArgs<span class="token punctuation">.</span><span class="token function">protocolFactory</span><span class="token punctuation">(</span>protocolFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 传输层</span>
+            tArgs<span class="token punctuation">.</span><span class="token function">transportFactory</span><span class="token punctuation">(</span>transportFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// TNonblockingServer 对半同步/半异步服务器的扩展</span>
+            TServer server <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">THsHaServer</span><span class="token punctuation">(</span>tArgs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"thrift服务启动成功, 端口={}"</span><span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 启动</span>
+            server<span class="token punctuation">.</span><span class="token function">serve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            logger<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"thrift服务启动失败"</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<ul>
+<li>实现类</li>
+</ul>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>service<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>mapper<span class="token punctuation">.</span>RoleMapper<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>Role<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>RoleServer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Autowired<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span>Component<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Description 接口实现类
+ **/</span>
+@Component
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RoleServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">RoleServer<span class="token punctuation">.</span>Iface</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 模仿数据库数据</span>
+    @Autowired
+    RoleMapper mapper<span class="token punctuation">;</span>
+
+
+    @Override
+    <span class="token keyword">public</span> Role <span class="token function">getRoleByUserId</span><span class="token punctuation">(</span>String id<span class="token punctuation">)</span> throws TException <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> mapper<span class="token punctuation">.</span><span class="token function">findByUid</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+
+    @Override
+    <span class="token keyword">public</span> Role <span class="token function">getRoleByMenuId</span><span class="token punctuation">(</span>String id<span class="token punctuation">)</span> throws TException <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> mapper<span class="token punctuation">.</span><span class="token function">findByMenuId</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>application.properties</li>
+</ul>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">server.port</span><span class="token punctuation">=</span><span class="token attr-value">6010</span>
+<span class="token comment" spellcheck="true">#开启sql日志</span>
+<span class="token attr-name">logging.level.com.dubbo.mapper</span><span class="token punctuation">=</span><span class="token attr-value">debug</span>
+<span class="token comment" spellcheck="true"># thrift 通信端口</span>
+<span class="token attr-name">thrift.port</span><span class="token punctuation">=</span><span class="token attr-value">6666</span>
+<span class="token comment" spellcheck="true"># work 最小线程</span>
+<span class="token attr-name">thrift.minWorkerThreads</span><span class="token punctuation">=</span><span class="token attr-value">10</span>
+<span class="token comment" spellcheck="true"># work 最大线程</span>
+<span class="token attr-name">thrift.maxWorkerThreads</span><span class="token punctuation">=</span><span class="token attr-value">100</span>
+</code></pre>
+<ul>
+<li>启动类</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>config<span class="token punctuation">.</span>RPCThriftServer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>SpringApplication<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>autoconfigure<span class="token punctuation">.</span>SpringBootApplication<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>ApplicationContext<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Description
+ **/</span>
+<span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThriftServerApplication</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> RPCThriftServer rpcThriftServer<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ApplicationContext context <span class="token operator">=</span> SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>ThriftServerApplication<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 利用反射获取对象</span>
+            rpcThriftServer <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>RPCThriftServer<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 服务启动</span>
+            rpcThriftServer<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="5-4-Client代码"><a href="#5-4-Client代码" class="headerlink" title="5.4 Client代码"></a>5.4 Client代码</h3><ul>
+<li>配置类</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>config<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>RoleServer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TBinaryProtocol<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TCompactProtocol<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TSocket<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TTransport<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TTransportException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>layered<span class="token punctuation">.</span>TFramedTransport<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Description 客服端
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RPCThriftClient</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> RoleServer<span class="token punctuation">.</span>Client client<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> TCompactProtocol protocol<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//压缩协议</span>
+    <span class="token keyword">private</span> String host<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 主机ip</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> port<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 端口</span>
+    <span class="token keyword">private</span> TTransport transport<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 运输</span>
+
+    <span class="token keyword">public</span> String <span class="token function">getHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> host<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setHost</span><span class="token punctuation">(</span>String host<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>host <span class="token operator">=</span> host<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getPort</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> port<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setPort</span><span class="token punctuation">(</span><span class="token keyword">int</span> port<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>port <span class="token operator">=</span> port<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token comment" spellcheck="true">/**
+     * 初始化
+     * @throws TTransportException
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TTransportException <span class="token punctuation">{</span>
+        transport <span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">TFramedTransport</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TSocket</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span>port<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        protocol <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TCompactProtocol</span><span class="token punctuation">(</span>transport<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RoleServer<span class="token punctuation">.</span>Client</span><span class="token punctuation">(</span>protocol<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> RoleServer<span class="token punctuation">.</span>Client <span class="token function">getRPCThriftService</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> client<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token comment" spellcheck="true">/**
+     * 打开
+     * @throws TTransportException
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> TTransportException <span class="token punctuation">{</span>
+        transport<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token comment" spellcheck="true">/**
+     * 关闭
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        transport<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>config<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Value<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Bean<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Configuration<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Description 初始化
+ **/</span>
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RPCThriftClientConfig</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"${thrift.host}"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> String host<span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"${thrift.port}"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> port<span class="token punctuation">;</span>
+
+
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"init"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> RPCThriftClient <span class="token function">rpcThriftClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        RPCThriftClient rpcThriftClient <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RPCThriftClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rpcThriftClient<span class="token punctuation">.</span><span class="token function">setHost</span><span class="token punctuation">(</span>host<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rpcThriftClient<span class="token punctuation">.</span><span class="token function">setPort</span><span class="token punctuation">(</span>port<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> rpcThriftClient<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>controller</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>controller<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>config<span class="token punctuation">.</span>RPCThriftClient<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>Role<span class="token punctuation">;</span>
+<span class="token keyword">import</span> lombok<span class="token punctuation">.</span>extern<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>Slf4j<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Autowired<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>bind<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>RequestMapping<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>bind<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>RestController<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Description 测试
+ **/</span>
+<span class="token annotation punctuation">@RestController</span>
+<span class="token annotation punctuation">@Slf4j</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RoleController</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    RPCThriftClient thriftClient<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> Role <span class="token function">Test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            thriftClient<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> thriftClient<span class="token punctuation">.</span><span class="token function">getRPCThriftService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getRoleByUserId</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"RPC调用失败"</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            thriftClient<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>application.properties</li>
+</ul>
+<pre class=" language-properties"><code class="language-properties"><span class="token comment" spellcheck="true"># 服务ip</span>
+<span class="token attr-name">thrift.host</span><span class="token punctuation">=</span><span class="token attr-value">localhost</span>
+<span class="token comment" spellcheck="true"># 服务端口</span>
+<span class="token attr-name">thrift.port</span><span class="token punctuation">=</span><span class="token attr-value">6666</span>
+</code></pre>
+<ul>
+<li>启动类</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>thrift<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>SpringApplication<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>autoconfigure<span class="token punctuation">.</span>SpringBootApplication<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Description
+ **/</span>
+<span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThriftClientApplication</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>ThriftClientApplication<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="5-5-测试"><a href="#5-5-测试" class="headerlink" title="5.5 测试"></a>5.5 测试</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646052343944-3ec35e24-c3b4-424b-940d-ce9ab8367011.png" alt="image.png"></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Eason_Shu</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://www.xiaolin.store/archives/f3aa14f9.html">http://www.xiaolin.store/archives/f3aa14f9.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Eason_Shu</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Thrift/">
+                                    <span class="chip bg-color">Thrift</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/archives/f3aa14f9.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Apache Thrift 官网学习（四）">
+                        
+                        <span class="card-title">Apache Thrift 官网学习（四）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Thrift是一个轻量级、跨语言的远程服务调用框架，最初由Facebook开发，后面进入Apache开源项目。它通过自身的IDL中间语言, 并借助代码生成引擎生成各种主流语言的RPC服务端/客户端模板代码。 套接字服务器等网络编程。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Thrift/" class="post-category">
+                                    Thrift
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Thrift/">
+                        <span class="chip bg-color">Thrift</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/archives/44870d9c.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Apache Thrift 官网学习（三）">
+                        
+                        <span class="card-title">Apache Thrift 官网学习（三）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Thrift是一个轻量级、跨语言的远程服务调用框架，最初由Facebook开发，后面进入Apache开源项目。它通过自身的IDL中间语言, 并借助代码生成引擎生成各种主流语言的RPC服务端/客户端模板代码。 套接字服务器等网络编程。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Thrift/" class="post-category">
+                                    Thrift
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Thrift/">
+                        <span class="chip bg-color">Thrift</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Eason_Shu<br />'
+            + '文章作者: Eason_Shu<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <a href="/about" target="_blank">Eason_Shu</a>
+            |&nbsp;Powered by&nbsp;<a href="#" target="_blank">Eason_shu</a>
+            |&nbsp;<a href="https://github.com/Eason-shu" target="_blank">Github</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">42.3k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "10";
+                        var startDate = "28";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Eason-shu" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:3138066125@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=3138066125" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 3138066125" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>

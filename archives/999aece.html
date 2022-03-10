@@ -4,8 +4,8 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Netty基础入门（一）基本知识介绍, Eason_Shu">
-    <meta name="description" content="Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。">
+    <meta name="keywords" content="Apache Thrift 官网学习（二）, Eason_Shu">
+    <meta name="description" content="Thrift是一个轻量级、跨语言的远程服务调用框架，最初由Facebook开发，后面进入Apache开源项目。它通过自身的IDL中间语言, 并借助代码生成引擎生成各种主流语言的RPC服务端/客户端模板代码。 套接字服务器等网络编程。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Netty基础入门（一）基本知识介绍 | Eason_Shu</title>
+    <title>Apache Thrift 官网学习（二） | Eason_Shu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -438,7 +438,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Netty基础入门（一）基本知识介绍</h1>
+                    <h1 class="description center-align post-title">Apache Thrift 官网学习（二）</h1>
                 </div>
             </div>
         </div>
@@ -554,8 +554,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Netty/">
-                                <span class="chip bg-color">Netty</span>
+                            <a href="/tags/Thrift/">
+                                <span class="chip bg-color">Thrift</span>
                             </a>
                         
                     </div>
@@ -566,8 +566,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Netty/" class="post-category">
-                                Netty
+                            <a href="/categories/Thrift/" class="post-category">
+                                Thrift
                             </a>
                         
                     </div>
@@ -579,7 +579,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-09
+                    2022-03-10
                 </div>
                 
 
@@ -593,14 +593,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    3.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    14 分
                 </div>
                 
 
@@ -620,172 +620,182 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <meta name="referrer" content="no-referrer">
-
-
-<h2 id="一-基本介绍"><a href="#一-基本介绍" class="headerlink" title="一 基本介绍"></a>一 基本介绍</h2><h3 id="1-1-Netty知识了解"><a href="#1-1-Netty知识了解" class="headerlink" title="1.1 Netty知识了解"></a>1.1 Netty知识了解</h3><h4 id="1-1-1-概述"><a href="#1-1-1-概述" class="headerlink" title="1.1.1 概述"></a>1.1.1 概述</h4><p>官网：<a href="https://netty.io/" target="_blank" rel="noopener">https://netty.io/</a></p>
+                <p>学习视频：<a href="https://www.bilibili.com/video/BV1HP4y177St?p=13" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1HP4y177St</a><br>学习视频：<a href="https://www.bilibili.com/video/BV1j44y1q7fy?from=search&seid=9897528802909219793&spm_id_from=333.337.0.0" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1j44y1q7fy</a><br>参考博客：<a href="https://juejin.cn/post/6844903622384287751#heading-28" target="_blank" rel="noopener">https://juejin.cn/post/6844903622384287751#heading-28</a><br>参考博客：<a href="https://www.cnblogs.com/cyfonly/p/6059374.html" target="_blank" rel="noopener">https://www.cnblogs.com/cyfonly/p/6059374.html</a>    </p>
+<h2 id="二-基础知识掌握"><a href="#二-基础知识掌握" class="headerlink" title="二 基础知识掌握"></a>二 基础知识掌握</h2><h3 id="2-1-基本结构"><a href="#2-1-基本结构" class="headerlink" title="2.1 基本结构"></a>2.1 基本结构</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287380054-a099f493-fe0a-4150-b2b7-18096f9d487c.png" alt="897247-20161113221012717-424130274.png"></p>
 <ul>
-<li><p>Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。</p>
-</li>
-<li><p>Netty 是基于 Java NIO 的异步事件驱动的网络应用框架，使用 Netty 可以快速开发网络应用，Netty 提供了高层次的抽象来简化 TCP 和 UDP 服务器的编程，但是你仍然可以使用底层的 API。</p>
-</li>
-<li><p>Netty 的内部实现是很复杂的，但是 Netty 提供了简单易用的API从网络处理代码中解耦业务逻辑。Netty 是完全基于 NIO 实现的，所以整个 Netty 都是异步的。</p>
-</li>
-<li><p>Netty 是最流行的 NIO 框架，它已经得到成百上千的商业、商用项目验证，许多框架和开源组件的底层 rpc 都是使用的 Netty，如 Dubbo、Elasticsearch 等等。下面是官网给出的一些 Netty 的特性：</p>
-<h4 id="1-1-2-设计方面"><a href="#1-1-2-设计方面" class="headerlink" title="1.1.2 设计方面"></a>1.1.2 设计方面</h4></li>
-<li><p>对各种传输协议提供统一的 API（使用阻塞和非阻塞套接字时候使用的是同一个 API，只是需要设置的参数不一样）。</p>
-</li>
-<li><p>基于一个灵活、可扩展的事件模型来实现关注点清晰分离。</p>
-</li>
-<li><p>高度可定制的线程模型——单线程、一个或多个线程池。</p>
-</li>
-<li><p>真正的无数据报套接字（UDP）的支持（since 3.1）。</p>
-<h4 id="1-1-3-易用性"><a href="#1-1-3-易用性" class="headerlink" title="1.1.3 易用性"></a>1.1.3 易用性</h4></li>
-<li><p>完善的 Javadoc 文档和示例代码。</p>
-</li>
-<li><p>不需要额外的依赖，JDK 5 (Netty 3.x) 或者 JDK 6 (Netty 4.x) 已经足够。</p>
-<h4 id="1-1-4-性能"><a href="#1-1-4-性能" class="headerlink" title="1.1.4 性能"></a>1.1.4 性能</h4></li>
-<li><p>更好的吞吐量，更低的等待延迟。</p>
-</li>
-<li><p>更少的资源消耗。</p>
-</li>
-<li><p>最小化不必要的内存拷贝。</p>
-<h4 id="1-1-5-安全性"><a href="#1-1-5-安全性" class="headerlink" title="1.1.5 安全性"></a>1.1.5 安全性</h4></li>
-<li><p>完整的 SSL&#x2F;TLS 和 StartTLS 支持</p>
-</li>
+<li><code>Thrift</code>对<strong>软件栈</strong>的定义非常的清晰, 使得各个组件能够<strong>松散的耦合</strong>, 针对不同的应用场景, 选择不同是方式去搭建服务。 </li>
+<li><code>Thrift</code><strong>软件栈</strong>分层<strong>从下向上</strong>分别为：<strong>传输层</strong>(<code>Transport Layer</code>)、<strong>协议层</strong>(<code>Protocol Layer</code>)、<strong>处理层</strong>(<code>Processor Layer</code>)和<strong>服务层</strong>(<code>Server Layer</code>)。 </li>
+<li><strong>传输层</strong>(<code>Transport Layer</code>)：传输层负责直接从网络中<strong>读取</strong>和<strong>写入</strong>数据，它定义了具体的<strong>网络传输协议</strong>；比如说<code>TCP/IP</code>传输等。 </li>
+<li><strong>协议层</strong>(<code>Protocol Layer</code>)：协议层定义了<strong>数据传输格式</strong>，负责网络传输数据的<strong>序列化</strong>和<strong>反序列化</strong>；比如说<code>JSON</code>、<code>XML</code>、<strong>二进制数据</strong>等。 </li>
+<li><strong>处理层</strong>(<code>Processor Layer</code>)：处理层是由具体的<code>IDL</code>（<strong>接口描述语言</strong>）生成的，封装了具体的<strong>底层网络传输</strong>和<strong>序列化方式</strong>，并委托给用户实现的<code>Handler</code>进行处理。 </li>
+<li><strong>服务层</strong>(<code>Server Layer</code>)：整合上述组件，提供具体的<strong>网络线程&#x2F;IO服务模型</strong>，形成最终的服务。 </li>
+<li>这就是计算机网络中的分层设计，可以是各个组件各司其职，向上提供服务，向下接受服务。</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1645853552401-7917060e-db3e-4f9e-8f44-be9629b2392e.png" alt="components.png"></p>
-<h3 id="1-2-为啥学习Netty"><a href="#1-2-为啥学习Netty" class="headerlink" title="1.2 为啥学习Netty"></a>1.2 为啥学习Netty</h3><h4 id="1-2-1-传统的HTTP"><a href="#1-2-1-传统的HTTP" class="headerlink" title="1.2.1 传统的HTTP"></a>1.2.1 传统的HTTP</h4><ul>
-<li><p>创建一个ServerSocket，监听并绑定一个端口</p>
-</li>
-<li><p>一系列客户端来请求这个端口</p>
-</li>
-<li><p>服务器使用Accept，获得一个来自客户端的Socket连接对象</p>
-</li>
-<li><p>启动一个新线程处理连接 </p>
-<ul>
-<li>读Socket，得到字节流</li>
-<li>解码协议，得到Http请求对象</li>
-<li>处理Http请求，得到一个结果，封装成一个HttpResponse对象</li>
-<li>编码协议，将结果序列化字节流</li>
-<li>写Socket，将字节流发给客户端</li>
-<li>继续循环处理http请求</li>
-</ul>
-</li>
-<li><p>HTTP服务器之所以称为<strong>HTTP</strong>服务器，是因为编码解码协议是HTTP协议，如果协议是Redis协议，那它就成了Redis服务器，如果协议是WebSocket，那它就成了WebSocket服务器，等等。</p>
-</li>
-<li><p>使用Netty你就可以定制编解码协议，实现自己的特定协议的服务器。</p>
-<h4 id="1-2-2-并发线程下的NIO"><a href="#1-2-2-并发线程下的NIO" class="headerlink" title="1.2.2 并发线程下的NIO"></a>1.2.2 并发线程下的NIO</h4><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1645853586861-1723c158-3268-40ef-8029-93d488bf2b4e.png" alt="NIO模型.png"></p>
-</li>
-<li><p>NIO的全称是NoneBlocking IO，非阻塞IO，区别与BIO，BIO的全称是Blocking IO，阻塞IO。那这个阻塞是什么意思呢？ </p>
-<ol>
-<li>Accept是阻塞的，只有新连接来了，Accept才会返回，主线程才能继 </li>
-<li>Read是阻塞的，只有请求消息来了，Read才能返回，子线程才能继续处理 </li>
-<li>Write是阻塞的，只有客户端把消息收了，Write才能返回，子线程才能继续读取下一个请求</li>
-</ol>
-</li>
-<li><p>所以传统的多线程服务器是BlockingIO模式的，从头到尾所有的线程都是阻塞的。这些线程就干等在哪里，占用了操作系统的调度资源，什么事也不干，是浪费。 </p>
-</li>
-<li><p>那么NIO是怎么做到非阻塞的呢。它用的是事件机制。它可以用一个线程把Accept，读写操作，请求处理的逻辑全干了。如果什么事都没得做，它也不会死循环，它会将线程休眠起来，直到下一个事件来了再继续干活，这样的一个线程称之为NIO线程。 </p>
-</li>
-<li><p>如果了解NIO的详细知识，请参考前面的博客 </p>
-<h4 id="1-2-3-Netty"><a href="#1-2-3-Netty" class="headerlink" title="1.2.3 Netty"></a>1.2.3 Netty</h4></li>
-<li><p>Netty是建立在NIO基础之上，Netty在NIO之上又提供了更高层次的抽象。</p>
-</li>
-<li><p>在Netty里面，Accept连接可以使用单独的线程池去处理，读写操作又是另外的线程池来处理。</p>
-</li>
-<li><p>Accept连接和读写操作也可以使用同一个线程池来进行处理。而请求处理逻辑既可以使用单独的线程池进行处理，也可以跟放在读写线程一块处理。线程池中的每一个线程都是NIO线程。用户可以根据实际情况进行组装，构造出满足系统需求的并发模型。</p>
-<h3 id="1-3-Reactor线程模型"><a href="#1-3-Reactor线程模型" class="headerlink" title="1.3 Reactor线程模型"></a>1.3 Reactor线程模型</h3></li>
-</ul>
-<p><strong>Reactor单线程模型</strong></p>
-<p>一个NIO线程+一个accept线程：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1645875005066-66481386-d4aa-4477-8af9-cd4190259252.webp#"></p>
-<p><strong>Reactor多线程模型</strong></p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1645875005039-e50bcba8-2dab-4f87-9330-2dbe426694a8.webp#clientId=u8adfca5e-81b8-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=u06ab321e&margin=%5Bobject%20Object%5D&originHeight=890&originWidth=1504&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u50c1c3e8-57af-4439-a001-ced1de700d3&title="></p>
-<p><strong>Reactor主从模型</strong></p>
-<p>主从Reactor多线程：多个acceptor的NIO线程池用于接受客户端的连接<br><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1645875005027-7f3db4a7-59c3-40ba-988f-6af874326285.webp"></p>
-<h3 id="1-4-基本执行流程"><a href="#1-4-基本执行流程" class="headerlink" title="1.4 基本执行流程"></a>1.4 基本执行流程</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1646141446348-83fb6809-37a8-4658-8005-2fdd42a93224.webp"></p>
-<ul>
-<li>服务端</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>NettyHello<span class="token punctuation">;</span>
+<h3 id="2-2-基本语法"><a href="#2-2-基本语法" class="headerlink" title="2.2 基本语法"></a>2.2 基本语法</h3><h4 id="2-2-1-基础数据类型"><a href="#2-2-1-基础数据类型" class="headerlink" title="2.2.1 基础数据类型"></a>2.2.1 基础数据类型</h4><pre class=" language-java"><code class="language-java">bool<span class="token operator">:</span> A <span class="token keyword">boolean</span> <span class="token function">value</span> <span class="token punctuation">(</span><span class="token boolean">true</span> or <span class="token boolean">false</span><span class="token punctuation">)</span>
+<span class="token keyword">byte</span><span class="token operator">:</span> An <span class="token number">8</span><span class="token operator">-</span>bit signed integer
+i16<span class="token operator">:</span> A <span class="token number">16</span><span class="token operator">-</span>bit signed integer
+i32<span class="token operator">:</span> A <span class="token number">32</span><span class="token operator">-</span>bit signed integer
+i64<span class="token operator">:</span> A <span class="token number">64</span><span class="token operator">-</span>bit signed integer
+<span class="token keyword">double</span><span class="token operator">:</span> A <span class="token number">64</span><span class="token operator">-</span>bit floating point number
+string<span class="token operator">:</span> A text string encoded using UTF<span class="token operator">-</span><span class="token number">8</span> encoding
 
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>sun<span class="token punctuation">.</span>scenario<span class="token punctuation">.</span>effect<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>sw<span class="token punctuation">.</span>sse<span class="token punctuation">.</span>SSEBlend_SRC_OUTPeer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>bootstrap<span class="token punctuation">.</span>ServerBootstrap<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>ChannelHandlerContext<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>ChannelInboundHandlerAdapter<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>ChannelInitializer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>NioEventLoopGroup<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>socket<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>NioServerSocketChannel<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>socket<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>NioSocketChannel<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>codec<span class="token punctuation">.</span>string<span class="token punctuation">.</span>StringDecoder<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @Author shu
- * @Date: 2022/02/26/ 13:36
- * @Description
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloServer</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">new</span> <span class="token class-name">ServerBootstrap</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">group</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span>NioServerSocketChannel<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">childHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ChannelInitializer</span><span class="token operator">&lt;</span>NioSocketChannel<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                    <span class="token annotation punctuation">@Override</span>
-                    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">initChannel</span><span class="token punctuation">(</span>NioSocketChannel ch<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-                        ch<span class="token punctuation">.</span><span class="token function">pipeline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">StringDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        ch<span class="token punctuation">.</span><span class="token function">pipeline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ChannelInboundHandlerAdapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-                            <span class="token annotation punctuation">@Override</span>
-                            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">channelRead</span><span class="token punctuation">(</span>ChannelHandlerContext ctx<span class="token punctuation">,</span> Object msg<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-                                <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">channelRead</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                            <span class="token punctuation">}</span>
-                        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">}</span>
-                <span class="token punctuation">}</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token number">8082</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 定义别名:将thrift基本数据类型别名为Java数据类型，方便使用</span>
+typedef i16 <span class="token keyword">short</span>
+typedef i32 <span class="token keyword">int</span>
+typedef i64 <span class="token keyword">long</span>
+typedef string String
+typedef bool  Boolean
+typedef <span class="token keyword">double</span> Double
 </code></pre>
 <ul>
-<li>客服端</li>
+<li>基本上与Java语法差不多，理解起来很简单</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>NettyHello<span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>bootstrap<span class="token punctuation">.</span>Bootstrap<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>ChannelInitializer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>epoll<span class="token punctuation">.</span>EpollEventLoopGroup<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>NioEventLoopGroup<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>socket<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>NioSocketChannel<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>codec<span class="token punctuation">.</span>string<span class="token punctuation">.</span>StringDecoder<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>codec<span class="token punctuation">.</span>string<span class="token punctuation">.</span>StringEncoder<span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>net<span class="token punctuation">.</span>InetSocketAddress<span class="token punctuation">;</span>
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>channels<span class="token punctuation">.</span>SocketChannel<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @Author shu
- * @Date: 2022/02/26/ 13:36
- * @Description
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloClient</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
-        <span class="token keyword">new</span> <span class="token class-name">Bootstrap</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">group</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span>NioSocketChannel<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">handler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ChannelInitializer</span><span class="token operator">&lt;</span>NioSocketChannel<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                    <span class="token annotation punctuation">@Override</span>
-                    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">initChannel</span><span class="token punctuation">(</span>NioSocketChannel ch<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-                        ch<span class="token punctuation">.</span><span class="token function">pipeline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">StringEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-                    <span class="token punctuation">}</span>
-                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">InetSocketAddress</span><span class="token punctuation">(</span><span class="token string">"localhost"</span><span class="token punctuation">,</span><span class="token number">8082</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">sync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">writeAndFlush</span><span class="token punctuation">(</span><span class="token string">"hello word"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<h4 id="2-2-2-复杂结构"><a href="#2-2-2-复杂结构" class="headerlink" title="2.2.2 复杂结构"></a>2.2.2 复杂结构</h4><pre class=" language-java"><code class="language-java">list<span class="token operator">:</span> An ordered list of elements<span class="token punctuation">.</span> Translates to an STL vector<span class="token punctuation">,</span> Java ArrayList<span class="token punctuation">,</span> <span class="token keyword">native</span> arrays in scripting languages<span class="token punctuation">,</span> etc<span class="token punctuation">.</span>
+set<span class="token operator">:</span> An unordered set of unique elements<span class="token punctuation">.</span> Translates to an STL set<span class="token punctuation">,</span> Java HashSet<span class="token punctuation">,</span> set in Python<span class="token punctuation">,</span> etc<span class="token punctuation">.</span> Note<span class="token operator">:</span> PHP does not support sets<span class="token punctuation">,</span> so it is treated similar to a List
+map<span class="token operator">:</span> A map of strictly unique keys to values<span class="token punctuation">.</span> Translates to an STL map<span class="token punctuation">,</span> Java HashMap<span class="token punctuation">,</span> PHP associative array<span class="token punctuation">,</span> Python<span class="token operator">/</span>Ruby dictionary<span class="token punctuation">,</span> etc<span class="token punctuation">.</span> While defaults are provided<span class="token punctuation">,</span> the type mappings are not explicitly fixed<span class="token punctuation">.</span> Custom code generator directives have been added to allow substitution of custom types in various destination languages
+list<span class="token operator">&lt;</span>t<span class="token operator">></span>：元素类型为t的有序表，容许元素重复。对应java的ArrayList
+set<span class="token operator">&lt;</span>t<span class="token operator">></span>：元素类型为t的无序表，不容许元素重复。对应java的HashSet
+map<span class="token operator">&lt;</span>t<span class="token punctuation">,</span>t<span class="token operator">></span>：键类型为t，值类型为t的kv对，键不容许重复。对对应Java的HashMap
+</code></pre>
+<ul>
+<li>其实就是容器，<code>list set map</code></li>
+</ul>
+<h4 id="2-2-3-struct"><a href="#2-2-3-struct" class="headerlink" title="2.2.3 struct"></a>2.2.3 struct</h4><ul>
+<li>用来定义一个类。</li>
+<li>struct 不能继承，但是可以嵌套，不能嵌套自己,其成员都是有明确类型。</li>
+<li>成员是被正整数编号过的，其中的编号使不能重复的，这个是为了在传输过程中编码使用。</li>
+<li>成员分割符可以是逗号（,）或是分号（;），而且可以混用，但是为了清晰期间，比如java学习者可以就使用逗号（;）。</li>
+<li>字段会有optional和required之分。</li>
+<li>每个字段可以设置默认值。</li>
+<li>同一文件可以定义多个struct，也可以定义在不同的文件，进行include引入。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 定义一个struct:相当于Java中的类</span>
+struct person<span class="token punctuation">{</span>
+      <span class="token number">1</span><span class="token operator">:</span> required string name<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 必须字段，很明确</span>
+    <span class="token number">2</span><span class="token operator">:</span> required i64 age<span class="token punctuation">;</span>
+    <span class="token number">3</span><span class="token operator">:</span> optional string addr<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 可选字段</span>
+    <span class="token number">4</span><span class="token operator">:</span> optional string defaultValue <span class="token operator">=</span> <span class="token string">"DEFAULT"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 默认字段</span>
+    <span class="token number">5</span><span class="token operator">:</span> string otherValue<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 不是很明确!</span>
 <span class="token punctuation">}</span>
 </code></pre>
+<h4 id="2-2-4-service"><a href="#2-2-4-service" class="headerlink" title="2.2.4 service"></a>2.2.4 service</h4><ul>
+<li>可以把他理解为方法的集合。</li>
+<li>服务的定义方法在语义上等同于面向对象语言中的接口。Thrift 编译器会产生执行这些接口的 client 和 server 存根（详情下一节会具体描述）。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 定义一个异常</span>
+exception personexception<span class="token punctuation">{</span>
+<span class="token number">1</span><span class="token operator">:</span>optional <span class="token keyword">int</span> code<span class="token punctuation">;</span>
+<span class="token number">2</span><span class="token operator">:</span>optional String message<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 定义一个服务集合</span>
+service personservice<span class="token punctuation">{</span>
+
+ <span class="token comment" spellcheck="true">// 通过用户名获取信息,并扔出异常</span>
+ person <span class="token function">getPersonInfoByUserNmae</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span>required String username<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span> personexception exce <span class="token punctuation">)</span>
+
+ <span class="token comment" spellcheck="true">// 通过用户名检查是否可用</span>
+ Boolean <span class="token function">IsCheck</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span>required String username<span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="2-4-5-exception"><a href="#2-4-5-exception" class="headerlink" title="2.4.5 exception"></a>2.4.5 exception</h4><p>关于异常，在Thrift中就像定义 struct 一样，因为exception从概念上讲，也是一种class，所谓『万事万物皆对象』嘛。不过现在我们用『exception』这个关键字，也正好符合我前文所讲的，清晰的语义。</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 定义一个异常</span>
+exception personexception<span class="token punctuation">{</span>
+<span class="token number">1</span><span class="token operator">:</span>optional <span class="token keyword">int</span> code<span class="token punctuation">;</span>
+<span class="token number">2</span><span class="token operator">:</span>optional String message<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="2-4-6-枚举"><a href="#2-4-6-枚举" class="headerlink" title="2.4.6 枚举"></a>2.4.6 枚举</h4><p>枚举这个东西，真的是太重要了，和前面的exception类似，它也不过是一种class而已。不过Thrift中只支持枚举 int 值，比较遗憾，其实很多时候，对枚举的要求，我们是很丰富的，比如支持 枚举 string。Thrift中枚举如下：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">enum</span> Operation <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 功能着实比较孱弱</span>
+  ADD <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  SUBTRACT <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span>
+  MULTIPLY <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span>
+  DIVIDE <span class="token operator">=</span> <span class="token number">4</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="2-4-7-namespace"><a href="#2-4-7-namespace" class="headerlink" title="2.4.7 namespace"></a>2.4.7 namespace</h4><ul>
+<li>定义生成文件的包名。 </li>
+<li>Thrift 中的命名空间类似于 java 中的 package，它们提供了一种组织（隔离）代码的简便方式。名字空间也可以用于解决类型定义中的名字冲突。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 定义包名</span>
+namespace java com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>thrift
+</code></pre>
+<h4 id="2-4-8-typedef"><a href="#2-4-8-typedef" class="headerlink" title="2.4.8 typedef"></a>2.4.8 typedef</h4><p>将基本数据类型取别名</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 定义别名:将thrift基本数据类型别名为Java数据类型，方便使用</span>
+typedef i16 <span class="token keyword">short</span>
+typedef i32 <span class="token keyword">int</span>
+typedef i64 <span class="token keyword">long</span>
+typedef string String
+typedef bool  Boolean
+typedef <span class="token keyword">double</span> Double
+</code></pre>
+<h3 id="2-3-三大组件"><a href="#2-3-三大组件" class="headerlink" title="2.3 三大组件"></a>2.3 三大组件</h3><p>Thrift 包含三个主要的组件：protocol，transport 和 server。</p>
+<blockquote>
+<ul>
+<li>protocol 定义了消息是怎样序列化的。</li>
+<li>transport 定义了消息是怎样在客户端和服务器端之间通信的。</li>
+<li>server 用于从 transport 接收序列化的消息，根据 protocol 反序列化之，调用用户定义的消息处理器，并序列化消息处理器的响应，然后再将它们写回 transport。</li>
+</ul>
+</blockquote>
+<h4 id="2-3-1-transport"><a href="#2-3-1-transport" class="headerlink" title="2.3.1 transport"></a>2.3.1 transport</h4><ul>
+<li><code>TTransport</code> 是所有 <code>Transport</code>类的父类，为上层提供了统一的接口而且通过 <code>TTransport</code> 即可访问各个子类不同实现，类似多态。</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287298891-98681026-4c34-4acd-bba8-a58703885280.png" alt="image-20220207135742284.png"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287316335-2e689036-7d87-4052-82c1-93782626416f.png" alt="image-20220207140253125.png"></p>
+<ul>
+<li><code>TSocket</code>：阻塞型 socket，用于<strong>客户端</strong>，采用系统函数 <code>read</code> 和 <code>write</code>进行读写数据。</li>
+<li><code>TServerSocket</code>：非阻塞型 socket，<strong>用于服务器端</strong>，accecpt 到的 socket 类型都是 TSocket（即阻塞型 socket）。</li>
+<li><code>TBufferedTransport</code> 和 <code>TFramedTransport</code>都是有缓存的，均继承<code>TBufferBase</code>，调用下一层 TTransport 类进行读写操作吗，结构极为相似。<strong>其中 TFramedTransport 以帧为传输单位</strong>，<strong>帧结构为：4个字节（int32_t）+传输字节串</strong>，头4个字节是存储后面字节串的长度，该字节串才是正确需要传输的数据，因此 <code>TFramedTransport</code>每传一帧要比 <code>TBufferedTransport</code>和 <code>TSocket</code>多传4个字节。</li>
+<li><code>TMemoryBuffer</code>继承 <code>TBufferBase</code>，用于程序内部通信用，不涉及任何网络I&#x2F;O，可用于三种模式：（1）OBSERVE模式，不可写数据到缓存；（2）TAKE_OWNERSHIP模式，需负责释放缓存；（3）COPY模式，拷贝外面的内存块到TMemoryBuffer。</li>
+<li><code>TFileTransport</code>直接继承 TTransport，用于写数据到文件。对事件的形式写数据，主线程负责将事件入列，写线程将事件入列，并将事件里的数据写入磁盘。这里面用到了两个队列，类型为 TFileTransportBuffer，一个用于主线程写事件，另一个用于写线程读事件，这就避免了线程竞争。在读完队列事件后，就会进行队列交换，由于由两个指针指向这两个队列，交换只要交换指针即可。它还支持以 chunk（块）的形式写数据到文件。</li>
+<li><code>TFDTransport</code>是非常简单地写数据到文件和从文件读数据，它的 write 和 read 函数都是直接调用系统函数 write 和 read 进行写和读文件。</li>
+<li><code>TSimpleFileTransport</code>直接继承 TFDTransport，没有添加任何成员函数和成员变量，不同的是构造函数的参数和在 TSimpleFileTransport 构造函数里对父类进行了初始化（打开指定文件并将fd传给父类和设置父类的close_policy为CLOSE_ON_DESTROY）。</li>
+<li><code>TZlibTransport</code>跟 TBufferedTransport 和 TFramedTransport一样，调用下一层 TTransport 类进行读写操作。它采用&lt;zlib.h&gt;提供的 zlib 压缩和解压缩库函数来进行压解缩，写时先压缩再调用底层 TTransport 类发送数据，读时先调用 TTransport 类接收数据再进行解压，最后供上层处理。</li>
+<li><code>TSSLSocket</code>继承 TSocket，阻塞型 socket，用于客户端。采用 openssl 的接口进行读写数据。checkHandshake(）函数调用 SSL_set_fd 将 fd 和 ssl 绑定在一起，之后就可以通过 ssl 的 SSL_read和SSL_write 接口进行读写网络数据。</li>
+<li><code>TSSLServerSocket</code> 继承 TServerSocket，非阻塞型 socket， 用于服务器端。accecpt 到的 socket 类型都是 TSSLSocket 类型。</li>
+<li><code>THttpClient</code>和 <code>THttpServe</code> 是基于 Http1.1 协议的继承 Transport 类型，均继承 THttpTransport，其中 THttpClient 用于客户端，THttpServer 用于服务器端。两者都调用下一层 TTransport 类进行读写操作，均用到TMemoryBuffer 作为读写缓存，只有调用 flush() 函数才会将真正调用网络 I&#x2F;O 接口发送数据。</li>
+</ul>
+<h4 id="2-3-2-protocol"><a href="#2-3-2-protocol" class="headerlink" title="2.3.2 protocol"></a>2.3.2 protocol</h4><p>Thrift 支持多种传输协议，用户可以根据实际需求选择合适的类型。Thrift 传输协议上总体可划分为文本 (text) 和二进制 (binary) 传输协议两大类，一般在生产环境中使用二进制类型的传输协议为多数（相对于文本和 JSON 具有更高的传输效率）。常用的协议包含：</p>
+<ul>
+<li><code>TBinaryProtocol</code>：是Thrift的默认协议，使用二进制编码格式进行数据传输，基本上直接发送原始数据</li>
+<li><code>TCompactProtocol</code>：压缩的、密集的数据传输协议，基于Variable-length quantity的zigzag 编码格式</li>
+<li><code>TJSONProtocol</code>：以JSON (JavaScript Object Notation)数据编码协议进行数据传输</li>
+<li><code>TDebugProtocol</code>：常常用以编码人员测试，以文本的形式展现方便阅读</li>
+</ul>
+<h4 id="2-3-3-server"><a href="#2-3-3-server" class="headerlink" title="2.3.3 server"></a>2.3.3 server</h4><ul>
+<li>Thrift 模块化的结构使得它能提供各种 server 实现。下面列出了 Java 中可用的 server 实现</li>
+</ul>
+<pre class=" language-java"><code class="language-java">TSimpleServer
+TNonblockingServer
+THsHaServer
+TThreadedSelectorServer
+TThreadPoolServer
+</code></pre>
+<ul>
+<li><code>TSimplerServer</code>接受一个连接，处理连接请求，直到客户端关闭了连接，它才回去接受一个新的连接。正因为它只在一个单独的线程中以阻塞 I&#x2F;O 的方式完成这些工作，所以它只能服务一个客户端连接，其他所有客户端在被服务器端接受之前都只能等待。 </li>
+<li><code>TNonblockingServer</code>使用非阻塞的 I&#x2F;O 解决了 <code>TSimpleServer</code>一个客户端阻塞其他所有客户端的问题。它使用了<code>java.nio.channels.Selector</code>，通过调用 select()，它使得你阻塞在多个连接上，而不是阻塞在单一的连接上。当一或多个连接准备好被接受&#x2F;读&#x2F;写时，select() 调用便会返回。TNonblockingServer 处理这些连接的时候，要么接受它，要么从它那读数据，要么把数据写到它那里，然后再次调用 select() 来等待下一个可用的连接。通用这种方式，server 可同时服务多个客户端，而不会出现一个客户端把其他客户端全部“饿死”的情况。然而，还有个棘手的问题：所有消息是被调用 select() 方法的同一个线程处理的。假设有10个客户端，处理每条消息所需时间为100毫秒，那么，latency 和吞吐量分别是多少？当一条消息被处理的时候，其他9个客户端就等着被 select，所以客户端需要等待1秒钟才能从服务器端得到回应，吞吐量就是10个请求&#x2F;秒。如果可以同时处理多条消息的话，会很不错吧？ </li>
+<li><code>THsHaServer（半同步/半异步的 server）</code>就应运而生了。它使用一个单独的线程来处理网络I&#x2F;O，一个独立的 worker 线程池来处理消息。这样，只要有空闲的 worker 线程，消息就会被立即处理，因此多条消息能被并行处理。用上面的例子来说，现在的 latency 就是100毫秒，而吞吐量就是100个请求&#x2F;秒。 </li>
+<li><code>TThreadedSelectorServer</code>。它与 THsHaServer 的主要区别在于，TThreadedSelectorServer 允许你用多个线程来处理网络 I&#x2F;O。它维护了两个线程池，一个用来处理网络 I&#x2F;O，另一个用来进行请求的处理。当网络 I&#x2F;O 是瓶颈的时候，TThreadedSelectorServer 比 THsHaServer 的表现要好。为了展现它们的区别进行一个测试，令其消息处理器在不做任何工作的情况下立即返回，以衡量在不同客户端数量的情况下的平均 latency 和吞吐量。对 THsHaServer，使用32个 worker 线程；对 TThreadedSelectorServer，使用16个 worker 线程和16个 selector 线程。 </li>
+<li><code>TThreadPoolServer</code>与其他三种 <code>server</code>不同的是：<br>这意味着，如果有1万个并发的客户端连接，你就需要运行1万个线程。所以它对系统资源的消耗不像其他类型的 server 一样那么友好。此外，如果客户端数量超过了线程池中的最大线程数，在有一个 <code>worker</code>线程可用之前，请求将被一直阻塞在那里。<br>我们已经说过，<code>TThreadPoolServer</code> 的表现非常优异。在我正在使用的计算机上，它可以支持1万个并发连接而没有任何问题。如果你提前知道了将要连接到你服务器上的客户端数量，并且你不介意运行大量线程的话，<code>TThreadPoolServer</code>对你可能是个很好的选择。</li>
+</ul>
+<pre class=" language-java"><code class="language-java">有一个专用的线程用来接受连接``一旦接受了一个连接，它就会被放入 ThreadPoolExecutor 中的一个 worker 线程里处理。
+``worker 线程被绑定到特定的客户端连接上，直到它关闭。一旦连接关闭，该 worker 线程就又回到了线程池中。``你可以配置线程池的最小、最大线程数，默认值分别是``<span class="token number">5</span>``（最小）和 Integer<span class="token punctuation">.</span>MAX_VALUE（最大）。
+</code></pre>
+<h3 id="2-4-基本流程"><a href="#2-4-基本流程" class="headerlink" title="2.4 基本流程"></a>2.4 基本流程</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644475246218-aa44198c-9038-44a7-8744-e40dcfa0e61e.png" alt="o020yvqf05.png"></p>
+<h4 id="2-4-1-server调用流程"><a href="#2-4-1-server调用流程" class="headerlink" title="2.4.1  server调用流程"></a>2.4.1  server调用流程</h4><ul>
+<li>HelloServiceServer 启动的过程，以及服务被客户端调用时服务器的响应过程。</li>
+<li>我们可以看到，程序调用了 TThreadPoolServer 的 serve() 方法后，server 进入阻塞监听状态，其阻塞在 TServerSocket 的 accept()方法上。</li>
+<li>当接收到来自客户端的消息后，服务器发起一个新线程处理这个消息请求，原线程再次进入阻塞状态。</li>
+<li>在新线程中，服务器通过 TBinaryProtocol 协议读取消息内容，调用 HelloServiceImpl 的 helloVoid() 方法，并将结果写入 helloVoid_result 中传回客户端。</li>
+</ul>
+<h4 id="2-4-2-client调用流程"><a href="#2-4-2-client调用流程" class="headerlink" title="2.4.2 client调用流程"></a>2.4.2 client调用流程</h4><ul>
+<li>上图展示的是 HelloServiceClient 调用服务的过程，以及接收到服务器端的返回值后处理结果的过程。</li>
+<li>我们可以看到，程序调用了 Hello.Client 的 helloVoid() 方法，在 helloVoid() 方法中，通过 send_helloVoid() 方法发送对服务的调用请求，通过 recv_helloVoid() 方法接收服务处理请求后返回的结果。</li>
+</ul>
+<blockquote>
+<p>参考博客：<a href="https://www.cnblogs.com/cyfonly/p/6059374.html" target="_blank" rel="noopener">https://www.cnblogs.com/cyfonly/p/6059374.html</a></p>
+</blockquote>
 
                 
             </div>
@@ -812,7 +822,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://www.xiaolin.store/archives/195e3ef3.html">http://www.xiaolin.store/archives/195e3ef3.html</a>
+                    <a href="http://www.xiaolin.store/archives/999aece.html">http://www.xiaolin.store/archives/999aece.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -850,8 +860,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Netty/">
-                                    <span class="chip bg-color">Netty</span>
+                                <a href="/tags/Thrift/">
+                                    <span class="chip bg-color">Thrift</span>
                                 </a>
                             
                         </div>
@@ -1029,13 +1039,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/archives/398f4216.html">
+                <a href="/archives/44870d9c.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Apache Thrift 官网学习（一）">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Apache Thrift 官网学习（三）">
                         
-                        <span class="card-title">Apache Thrift 官网学习（一）</span>
+                        <span class="card-title">Apache Thrift 官网学习（三）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1078,31 +1088,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/archives/2d7aedc9.html">
+                <a href="/archives/398f4216.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Netty基础入门（二）组件基本使用">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Apache Thrift 官网学习（一）">
                         
-                        <span class="card-title">Netty基础入门（二）组件基本使用</span>
+                        <span class="card-title">Apache Thrift 官网学习（一）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。
+                            Thrift是一个轻量级、跨语言的远程服务调用框架，最初由Facebook开发，后面进入Apache开源项目。它通过自身的IDL中间语言, 并借助代码生成引擎生成各种主流语言的RPC服务端/客户端模板代码。 套接字服务器等网络编程。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Netty/" class="post-category">
-                                    Netty
+                            <a href="/categories/Thrift/" class="post-category">
+                                    Thrift
                                 </a>
                             
                             
@@ -1112,8 +1122,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Netty/">
-                        <span class="chip bg-color">Netty</span>
+                    <a href="/tags/Thrift/">
+                        <span class="chip bg-color">Thrift</span>
                     </a>
                     
                 </div>

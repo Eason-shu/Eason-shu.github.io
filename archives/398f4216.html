@@ -4,8 +4,8 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Netty基础入门（一）基本知识介绍, Eason_Shu">
-    <meta name="description" content="Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。">
+    <meta name="keywords" content="Apache Thrift 官网学习（一）, Eason_Shu">
+    <meta name="description" content="Thrift是一个轻量级、跨语言的远程服务调用框架，最初由Facebook开发，后面进入Apache开源项目。它通过自身的IDL中间语言, 并借助代码生成引擎生成各种主流语言的RPC服务端/客户端模板代码。 套接字服务器等网络编程。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Netty基础入门（一）基本知识介绍 | Eason_Shu</title>
+    <title>Apache Thrift 官网学习（一） | Eason_Shu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -433,12 +433,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Netty基础入门（一）基本知识介绍</h1>
+                    <h1 class="description center-align post-title">Apache Thrift 官网学习（一）</h1>
                 </div>
             </div>
         </div>
@@ -554,8 +554,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Netty/">
-                                <span class="chip bg-color">Netty</span>
+                            <a href="/tags/Thrift/">
+                                <span class="chip bg-color">Thrift</span>
                             </a>
                         
                     </div>
@@ -566,8 +566,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Netty/" class="post-category">
-                                Netty
+                            <a href="/categories/Thrift/" class="post-category">
+                                Thrift
                             </a>
                         
                     </div>
@@ -579,7 +579,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-09
+                    2022-03-10
                 </div>
                 
 
@@ -593,7 +593,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.4k
                 </div>
                 
 
@@ -620,172 +620,231 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <meta name="referrer" content="no-referrer">
+                <p>学习视频：<a href="https://www.bilibili.com/video/BV1HP4y177St?p=13" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1HP4y177St</a><br>学习视频：<a href="https://www.bilibili.com/video/BV1j44y1q7fy?from=search&seid=9897528802909219793&spm_id_from=333.337.0.0" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1j44y1q7fy</a><br>参考博客：<a href="https://juejin.cn/post/6844903622384287751#heading-28" target="_blank" rel="noopener">https://juejin.cn/post/6844903622384287751#heading-28</a><br>参考博客：<a href="https://www.cnblogs.com/cyfonly/p/6059374.html" target="_blank" rel="noopener">https://www.cnblogs.com/cyfonly/p/6059374.html</a>        </p>
+<h2 id="一-基本概述与入门"><a href="#一-基本概述与入门" class="headerlink" title="一 基本概述与入门"></a>一 基本概述与入门</h2><h3 id="1-1-官网知识"><a href="#1-1-官网知识" class="headerlink" title="1.1 官网知识"></a>1.1 官网知识</h3><ul>
+<li>Thrift是一个轻量级、跨语言的远程服务调用框架，最初由Facebook开发，后面进入Apache开源项目。它通过自身的IDL中间语言, 并借助代码生成引擎生成各种主流语言的RPC服务端&#x2F;客户端模板代码。</li>
+<li>Thrift支持多种不同的编程语言，包括C++、Java、Python、PHP、Ruby等，本系列主要讲述基于Java语言的Thrift的配置方式和具体使用。</li>
+<li>官网：<a href="https://thrift.apache.org/" target="_blank" rel="noopener">https://thrift.apache.org/</a></li>
+</ul>
+<h3 id="1-2-下载安装"><a href="#1-2-下载安装" class="headerlink" title="1.2 下载安装"></a>1.2 下载安装</h3><ul>
+<li>下载地址：<a href="http://www.apache.org/dyn/closer.cgi?path=/thrift/0.15.0/thrift-0.15.0.exe" target="_blank" rel="noopener">http://www.apache.org/dyn/closer.cgi?path=/thrift/0.15.0/thrift-0.15.0.exe</a></li>
+<li>配置环境变量到path路径中</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287189845-43688353-b45d-4d90-8a61-23961b4e6ebd.png" alt="image-20220206201005007.png"></p>
+<ul>
+<li>验证：<code>thrift -version</code></li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287203428-105b43d4-0960-4720-9d9d-7997016fc1b4.png" alt="image-20220206201047114.png"></p>
+<ul>
+<li>idea中安装<code>thrift</code>插件，可以实现<code>thrift</code>语法自动提示</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287211276-e7d40f19-8dbc-4102-85ce-6cd6fd0fa459.png" alt="image-20220206201402547.png"></p>
+<ul>
+<li>由官网可知这是一门新的语言，当然有他的基本语法，下面我们来认识下</li>
+</ul>
+<h3 id="1-3-基本数据结构"><a href="#1-3-基本数据结构" class="headerlink" title="1.3 基本数据结构"></a>1.3 基本数据结构</h3><ul>
+<li>基本类型：<br><code>bool</code>: 布尔值；<code>byte</code>: 8位有符号整数；  <code>i16</code>: 16位有符号整数<br>　　<code>i32</code>: 32位有符号整数；<code>i64</code>: 64位有符号整数；<code>double</code>: 64位浮点数<br>　　<code>string</code>: UTF-8编码的字符串；<code>binary</code>: 二进制串</li>
+<li>结构体类型：<br><code>struct</code>: 定义的结构体对象</li>
+<li>容器类型：<br><code>list</code>: 有序元素列表；<code>set</code>: 无序无重复元素集合；<code>map</code>: 有序的key&#x2F;value集合</li>
+<li>异常类型：<br><code>exception</code>: 异常类型</li>
+<li>服务类型：<br><code>service</code>: 具体对应服务的类</li>
+</ul>
+<h3 id="1-4-基本案例入门"><a href="#1-4-基本案例入门" class="headerlink" title="1.4 基本案例入门"></a>1.4 基本案例入门</h3><h5 id="1-4-1-编写thrift文件"><a href="#1-4-1-编写thrift文件" class="headerlink" title="1.4.1 编写thrift文件"></a>1.4.1 编写thrift文件</h5><p><strong>idea中编写一个Person.thrift文件</strong></p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 定义包名</span>
+namespace java com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>thrift
+
+<span class="token comment" spellcheck="true">/**
+* 基本类型：
+  　　bool: 布尔值
+  　　byte: 8位有符号整数
+  　　i16: 16位有符号整数
+  　　i32: 32位有符号整数
+  　　i64: 64位有符号整数
+  　　double: 64位浮点数
+  　　string: UTF-8编码的字符串
+  　　binary: 二进制串
+  结构体类型：
+  　　struct: 定义的结构体对象
+  容器类型：
+  　　list: 有序元素列表
+  　　set: 无序无重复元素集合
+  　　map: 有序的key/value集合
+  异常类型：
+  　　exception: 异常类型
+  服务类型：
+  　　service: 具体对应服务的类
+**/</span>
 
 
-<h2 id="一-基本介绍"><a href="#一-基本介绍" class="headerlink" title="一 基本介绍"></a>一 基本介绍</h2><h3 id="1-1-Netty知识了解"><a href="#1-1-Netty知识了解" class="headerlink" title="1.1 Netty知识了解"></a>1.1 Netty知识了解</h3><h4 id="1-1-1-概述"><a href="#1-1-1-概述" class="headerlink" title="1.1.1 概述"></a>1.1.1 概述</h4><p>官网：<a href="https://netty.io/" target="_blank" rel="noopener">https://netty.io/</a></p>
-<ul>
-<li><p>Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。</p>
-</li>
-<li><p>Netty 是基于 Java NIO 的异步事件驱动的网络应用框架，使用 Netty 可以快速开发网络应用，Netty 提供了高层次的抽象来简化 TCP 和 UDP 服务器的编程，但是你仍然可以使用底层的 API。</p>
-</li>
-<li><p>Netty 的内部实现是很复杂的，但是 Netty 提供了简单易用的API从网络处理代码中解耦业务逻辑。Netty 是完全基于 NIO 实现的，所以整个 Netty 都是异步的。</p>
-</li>
-<li><p>Netty 是最流行的 NIO 框架，它已经得到成百上千的商业、商用项目验证，许多框架和开源组件的底层 rpc 都是使用的 Netty，如 Dubbo、Elasticsearch 等等。下面是官网给出的一些 Netty 的特性：</p>
-<h4 id="1-1-2-设计方面"><a href="#1-1-2-设计方面" class="headerlink" title="1.1.2 设计方面"></a>1.1.2 设计方面</h4></li>
-<li><p>对各种传输协议提供统一的 API（使用阻塞和非阻塞套接字时候使用的是同一个 API，只是需要设置的参数不一样）。</p>
-</li>
-<li><p>基于一个灵活、可扩展的事件模型来实现关注点清晰分离。</p>
-</li>
-<li><p>高度可定制的线程模型——单线程、一个或多个线程池。</p>
-</li>
-<li><p>真正的无数据报套接字（UDP）的支持（since 3.1）。</p>
-<h4 id="1-1-3-易用性"><a href="#1-1-3-易用性" class="headerlink" title="1.1.3 易用性"></a>1.1.3 易用性</h4></li>
-<li><p>完善的 Javadoc 文档和示例代码。</p>
-</li>
-<li><p>不需要额外的依赖，JDK 5 (Netty 3.x) 或者 JDK 6 (Netty 4.x) 已经足够。</p>
-<h4 id="1-1-4-性能"><a href="#1-1-4-性能" class="headerlink" title="1.1.4 性能"></a>1.1.4 性能</h4></li>
-<li><p>更好的吞吐量，更低的等待延迟。</p>
-</li>
-<li><p>更少的资源消耗。</p>
-</li>
-<li><p>最小化不必要的内存拷贝。</p>
-<h4 id="1-1-5-安全性"><a href="#1-1-5-安全性" class="headerlink" title="1.1.5 安全性"></a>1.1.5 安全性</h4></li>
-<li><p>完整的 SSL&#x2F;TLS 和 StartTLS 支持</p>
-</li>
-</ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1645853552401-7917060e-db3e-4f9e-8f44-be9629b2392e.png" alt="components.png"></p>
-<h3 id="1-2-为啥学习Netty"><a href="#1-2-为啥学习Netty" class="headerlink" title="1.2 为啥学习Netty"></a>1.2 为啥学习Netty</h3><h4 id="1-2-1-传统的HTTP"><a href="#1-2-1-传统的HTTP" class="headerlink" title="1.2.1 传统的HTTP"></a>1.2.1 传统的HTTP</h4><ul>
-<li><p>创建一个ServerSocket，监听并绑定一个端口</p>
-</li>
-<li><p>一系列客户端来请求这个端口</p>
-</li>
-<li><p>服务器使用Accept，获得一个来自客户端的Socket连接对象</p>
-</li>
-<li><p>启动一个新线程处理连接 </p>
-<ul>
-<li>读Socket，得到字节流</li>
-<li>解码协议，得到Http请求对象</li>
-<li>处理Http请求，得到一个结果，封装成一个HttpResponse对象</li>
-<li>编码协议，将结果序列化字节流</li>
-<li>写Socket，将字节流发给客户端</li>
-<li>继续循环处理http请求</li>
-</ul>
-</li>
-<li><p>HTTP服务器之所以称为<strong>HTTP</strong>服务器，是因为编码解码协议是HTTP协议，如果协议是Redis协议，那它就成了Redis服务器，如果协议是WebSocket，那它就成了WebSocket服务器，等等。</p>
-</li>
-<li><p>使用Netty你就可以定制编解码协议，实现自己的特定协议的服务器。</p>
-<h4 id="1-2-2-并发线程下的NIO"><a href="#1-2-2-并发线程下的NIO" class="headerlink" title="1.2.2 并发线程下的NIO"></a>1.2.2 并发线程下的NIO</h4><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1645853586861-1723c158-3268-40ef-8029-93d488bf2b4e.png" alt="NIO模型.png"></p>
-</li>
-<li><p>NIO的全称是NoneBlocking IO，非阻塞IO，区别与BIO，BIO的全称是Blocking IO，阻塞IO。那这个阻塞是什么意思呢？ </p>
-<ol>
-<li>Accept是阻塞的，只有新连接来了，Accept才会返回，主线程才能继 </li>
-<li>Read是阻塞的，只有请求消息来了，Read才能返回，子线程才能继续处理 </li>
-<li>Write是阻塞的，只有客户端把消息收了，Write才能返回，子线程才能继续读取下一个请求</li>
-</ol>
-</li>
-<li><p>所以传统的多线程服务器是BlockingIO模式的，从头到尾所有的线程都是阻塞的。这些线程就干等在哪里，占用了操作系统的调度资源，什么事也不干，是浪费。 </p>
-</li>
-<li><p>那么NIO是怎么做到非阻塞的呢。它用的是事件机制。它可以用一个线程把Accept，读写操作，请求处理的逻辑全干了。如果什么事都没得做，它也不会死循环，它会将线程休眠起来，直到下一个事件来了再继续干活，这样的一个线程称之为NIO线程。 </p>
-</li>
-<li><p>如果了解NIO的详细知识，请参考前面的博客 </p>
-<h4 id="1-2-3-Netty"><a href="#1-2-3-Netty" class="headerlink" title="1.2.3 Netty"></a>1.2.3 Netty</h4></li>
-<li><p>Netty是建立在NIO基础之上，Netty在NIO之上又提供了更高层次的抽象。</p>
-</li>
-<li><p>在Netty里面，Accept连接可以使用单独的线程池去处理，读写操作又是另外的线程池来处理。</p>
-</li>
-<li><p>Accept连接和读写操作也可以使用同一个线程池来进行处理。而请求处理逻辑既可以使用单独的线程池进行处理，也可以跟放在读写线程一块处理。线程池中的每一个线程都是NIO线程。用户可以根据实际情况进行组装，构造出满足系统需求的并发模型。</p>
-<h3 id="1-3-Reactor线程模型"><a href="#1-3-Reactor线程模型" class="headerlink" title="1.3 Reactor线程模型"></a>1.3 Reactor线程模型</h3></li>
-</ul>
-<p><strong>Reactor单线程模型</strong></p>
-<p>一个NIO线程+一个accept线程：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1645875005066-66481386-d4aa-4477-8af9-cd4190259252.webp#"></p>
-<p><strong>Reactor多线程模型</strong></p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1645875005039-e50bcba8-2dab-4f87-9330-2dbe426694a8.webp#clientId=u8adfca5e-81b8-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=u06ab321e&margin=%5Bobject%20Object%5D&originHeight=890&originWidth=1504&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u50c1c3e8-57af-4439-a001-ced1de700d3&title="></p>
-<p><strong>Reactor主从模型</strong></p>
-<p>主从Reactor多线程：多个acceptor的NIO线程池用于接受客户端的连接<br><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1645875005027-7f3db4a7-59c3-40ba-988f-6af874326285.webp"></p>
-<h3 id="1-4-基本执行流程"><a href="#1-4-基本执行流程" class="headerlink" title="1.4 基本执行流程"></a>1.4 基本执行流程</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1646141446348-83fb6809-37a8-4658-8005-2fdd42a93224.webp"></p>
-<ul>
-<li>服务端</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>NettyHello<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 定义别名:将thrift基本数据类型别名为Java数据类型，方便使用</span>
+typedef i16 <span class="token keyword">short</span>
+typedef i32 <span class="token keyword">int</span>
+typedef i64 <span class="token keyword">long</span>
+typedef string String
+typedef bool  Boolean
+typedef <span class="token keyword">double</span> Double
 
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>sun<span class="token punctuation">.</span>scenario<span class="token punctuation">.</span>effect<span class="token punctuation">.</span>impl<span class="token punctuation">.</span>sw<span class="token punctuation">.</span>sse<span class="token punctuation">.</span>SSEBlend_SRC_OUTPeer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>bootstrap<span class="token punctuation">.</span>ServerBootstrap<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>ChannelHandlerContext<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>ChannelInboundHandlerAdapter<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>ChannelInitializer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>NioEventLoopGroup<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>socket<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>NioServerSocketChannel<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>socket<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>NioSocketChannel<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>codec<span class="token punctuation">.</span>string<span class="token punctuation">.</span>StringDecoder<span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">// 定义一个struct:相当于Java中的类</span>
+struct person<span class="token punctuation">{</span>
+<span class="token number">1</span><span class="token operator">:</span>optional String id<span class="token punctuation">;</span>
+<span class="token number">2</span><span class="token operator">:</span>optional String userName<span class="token punctuation">;</span>
+<span class="token number">3</span><span class="token operator">:</span>optional String passWord<span class="token punctuation">;</span>
+<span class="token number">4</span><span class="token operator">:</span>optional Boolean isCheck<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 定义一个异常</span>
+exception personexception<span class="token punctuation">{</span>
+<span class="token number">1</span><span class="token operator">:</span>optional <span class="token keyword">int</span> code<span class="token punctuation">;</span>
+<span class="token number">2</span><span class="token operator">:</span>optional String message<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 定义一个服务集合</span>
+service personservice<span class="token punctuation">{</span>
+
+ <span class="token comment" spellcheck="true">// 通过用户名获取信息,并扔出异常</span>
+ person <span class="token function">getPersonInfoByUserNmae</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span>required String username<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span> personexception exce <span class="token punctuation">)</span>
+
+ <span class="token comment" spellcheck="true">// 通过用户名检查是否可用</span>
+ Boolean <span class="token function">IsCheck</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span>required String username<span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 生成命令:thrift -gen java Person.thrift</span>
+</code></pre>
+<h5 id="1-4-2-新建springBoot项目"><a href="#1-4-2-新建springBoot项目" class="headerlink" title="1.4.2 新建springBoot项目"></a>1.4.2 新建springBoot项目</h5><pre class=" language-xml"><code class="language-xml"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.thrift<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>libthrift<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>0.15.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</code></pre>
+<h5 id="1-4-3-生成文件"><a href="#1-4-3-生成文件" class="headerlink" title="1.4.3 生成文件"></a>1.4.3 生成文件</h5><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 格式</span>
+thrift -gen <span class="token operator">&lt;</span>language<span class="token operator">></span> <span class="token operator">&lt;</span>Thrift filename<span class="token operator">></span>
+<span class="token comment" spellcheck="true"># 命令，进入该文件目录，cmd中执行</span>
+thrift -gen java Person.thrift
+<span class="token comment" spellcheck="true"># 把生成的文件拷到SpringBoot项目中</span>
+</code></pre>
+<h5 id="1-4-4-文件解析"><a href="#1-4-4-文件解析" class="headerlink" title="1.4.4 文件解析"></a>1.4.4 文件解析</h5><ul>
+<li><code>Iface</code>：服务端通过实现HelloWorldService.Iface接口，向客户端的提供具体的同步业务逻辑。</li>
+<li><code>AsyncIface</code>：服务端通过实现HelloWorldService.Iface接口，向客户端的提供具体的异步业务逻辑。</li>
+<li><code>Client</code>：客户端通过HelloWorldService.Client的实例对象，以同步的方式访问服务端提供的服务方法。</li>
+<li><code>AsyncClient</code>：客户端通过HelloWorldService.AsyncClient的实例对象，以异步的方式访问服务端提供的服务方法。</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287227922-28dfd03d-3225-4ada-99de-70cc08e6d164.png" alt="image-20220206203622757.png"></p>
+<h5 id="1-4-5-定义实现类"><a href="#1-4-5-定义实现类" class="headerlink" title="1.4.5 定义实现类"></a>1.4.5 定义实现类</h5><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>person<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>personexception<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>personservice<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException<span class="token punctuation">;</span>
+
 
 <span class="token comment" spellcheck="true">/**
  * @Author shu
- * @Date: 2022/02/26/ 13:36
- * @Description
+ * @Description 实现接口，自定义方法逻辑
  **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloServer</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PersonServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">personservice<span class="token punctuation">.</span>Iface</span><span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> person <span class="token function">getPersonInfoByUserNmae</span><span class="token punctuation">(</span>String username<span class="token punctuation">)</span> <span class="token keyword">throws</span> personexception<span class="token punctuation">,</span> TException <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"客服端数据："</span><span class="token operator">+</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        person person<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        person<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        person<span class="token punctuation">.</span><span class="token function">setUserName</span><span class="token punctuation">(</span><span class="token string">"admin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        person<span class="token punctuation">.</span><span class="token function">setPassWord</span><span class="token punctuation">(</span><span class="token string">"123456"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        person<span class="token punctuation">.</span><span class="token function">setIsCheck</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> person<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">IsCheck</span><span class="token punctuation">(</span>String username<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"客服端数据："</span><span class="token operator">+</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h5 id="1-4-6-服务端"><a href="#1-4-6-服务端" class="headerlink" title="1.4.6 服务端"></a>1.4.6 服务端</h5><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>server<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>PersonServiceImpl<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>personservice<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TProcessorFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TCompactProtocol<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>server<span class="token punctuation">.</span>THsHaServer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>server<span class="token punctuation">.</span>TServer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TNonblockingServerSocket<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TTransportException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>layered<span class="token punctuation">.</span>TFastFramedTransport<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Description 服务端
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThriftServer</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> TTransportException <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 建立连接</span>
+        TNonblockingServerSocket serverSocket <span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">TNonblockingServerSocket</span><span class="token punctuation">(</span><span class="token number">8803</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 建立高可用server</span>
+        THsHaServer<span class="token punctuation">.</span>Args arg<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">THsHaServer<span class="token punctuation">.</span>Args</span><span class="token punctuation">(</span>serverSocket<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">maxWorkerThreads</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">minWorkerThreads</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 处理器</span>
+        personservice<span class="token punctuation">.</span>Processor<span class="token operator">&lt;</span>PersonServiceImpl<span class="token operator">></span> processor <span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">personservice<span class="token punctuation">.</span>Processor</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PersonServiceImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 设置协议处理器</span>
+        arg<span class="token punctuation">.</span><span class="token function">protocolFactory</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TCompactProtocol<span class="token punctuation">.</span>Factory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 设置传输处理器</span>
+        arg<span class="token punctuation">.</span><span class="token function">transportFactory</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TFastFramedTransport<span class="token punctuation">.</span>Factory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 处理器工厂</span>
+        arg<span class="token punctuation">.</span><span class="token function">processorFactory</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TProcessorFactory</span><span class="token punctuation">(</span>processor<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 开始执行</span>
+        TServer tServer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">THsHaServer</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Running Simple Server"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        tServer<span class="token punctuation">.</span><span class="token function">serve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h5 id="1-4-7-客服端"><a href="#1-4-7-客服端" class="headerlink" title="1.4.7 客服端"></a>1.4.7 客服端</h5><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>client<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>person<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>personservice<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TCompactProtocol<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TProtocol<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TSocket<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TTransport<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>layered<span class="token punctuation">.</span>TFramedTransport<span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Description 客服端
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThriftClient</span> <span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">new</span> <span class="token class-name">ServerBootstrap</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">group</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span>NioServerSocketChannel<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">childHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ChannelInitializer</span><span class="token operator">&lt;</span>NioSocketChannel<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                    <span class="token annotation punctuation">@Override</span>
-                    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">initChannel</span><span class="token punctuation">(</span>NioSocketChannel ch<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-                        ch<span class="token punctuation">.</span><span class="token function">pipeline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">StringDecoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        ch<span class="token punctuation">.</span><span class="token function">pipeline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ChannelInboundHandlerAdapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-                            <span class="token annotation punctuation">@Override</span>
-                            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">channelRead</span><span class="token punctuation">(</span>ChannelHandlerContext ctx<span class="token punctuation">,</span> Object msg<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-                                <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">channelRead</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                            <span class="token punctuation">}</span>
-                        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">}</span>
-                <span class="token punctuation">}</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token number">8082</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        TTransport transport <span class="token operator">=</span>null<span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 连接</span>
+            transport <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TFramedTransport</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TSocket</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span><span class="token number">8803</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">600</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 协议,注意服务端保持一致</span>
+            TProtocol protocol <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TCompactProtocol</span><span class="token punctuation">(</span>transport<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 调用方法</span>
+            personservice<span class="token punctuation">.</span>Client client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">personservice<span class="token punctuation">.</span>Client</span><span class="token punctuation">(</span>protocol<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 打开连接</span>
+            transport<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 调用方法</span>
+            person result <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">getPersonInfoByUserNmae</span><span class="token punctuation">(</span><span class="token string">"Leo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Result =: "</span> <span class="token operator">+</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">TException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">!=</span> transport<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                transport<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<ul>
-<li>客服端</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>NettyHello<span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>bootstrap<span class="token punctuation">.</span>Bootstrap<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>ChannelInitializer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>epoll<span class="token punctuation">.</span>EpollEventLoopGroup<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>NioEventLoopGroup<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>socket<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>NioSocketChannel<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>codec<span class="token punctuation">.</span>string<span class="token punctuation">.</span>StringDecoder<span class="token punctuation">;</span>
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>codec<span class="token punctuation">.</span>string<span class="token punctuation">.</span>StringEncoder<span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>net<span class="token punctuation">.</span>InetSocketAddress<span class="token punctuation">;</span>
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>channels<span class="token punctuation">.</span>SocketChannel<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @Author shu
- * @Date: 2022/02/26/ 13:36
- * @Description
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloClient</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
-        <span class="token keyword">new</span> <span class="token class-name">Bootstrap</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">group</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span>NioSocketChannel<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">handler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ChannelInitializer</span><span class="token operator">&lt;</span>NioSocketChannel<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                    <span class="token annotation punctuation">@Override</span>
-                    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">initChannel</span><span class="token punctuation">(</span>NioSocketChannel ch<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-                        ch<span class="token punctuation">.</span><span class="token function">pipeline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">StringEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-                    <span class="token punctuation">}</span>
-                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">InetSocketAddress</span><span class="token punctuation">(</span><span class="token string">"localhost"</span><span class="token punctuation">,</span><span class="token number">8082</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">sync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">writeAndFlush</span><span class="token punctuation">(</span><span class="token string">"hello word"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
+<h5 id="1-4-8-测试"><a href="#1-4-8-测试" class="headerlink" title="1.4.8 测试"></a>1.4.8 测试</h5><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287274626-014900ff-59ec-4ab0-8394-2dd4eebdc938.png" alt="image-20220206203940270.png"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287282148-32aefe87-24da-42d9-a18a-3f27469bc86b.png" alt="image-20220206203954257.png"></p>
+<blockquote>
+<p>到此一个简单的入门就完成了</p>
+</blockquote>
 
                 
             </div>
@@ -812,7 +871,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://www.xiaolin.store/archives/195e3ef3.html">http://www.xiaolin.store/archives/195e3ef3.html</a>
+                    <a href="http://www.xiaolin.store/archives/398f4216.html">http://www.xiaolin.store/archives/398f4216.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -850,8 +909,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Netty/">
-                                    <span class="chip bg-color">Netty</span>
+                                <a href="/tags/Thrift/">
+                                    <span class="chip bg-color">Thrift</span>
                                 </a>
                             
                         </div>
@@ -1029,13 +1088,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/archives/398f4216.html">
+                <a href="/archives/999aece.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Apache Thrift 官网学习（一）">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Apache Thrift 官网学习（二）">
                         
-                        <span class="card-title">Apache Thrift 官网学习（一）</span>
+                        <span class="card-title">Apache Thrift 官网学习（二）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1078,13 +1137,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/archives/2d7aedc9.html">
+                <a href="/archives/195e3ef3.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Netty基础入门（二）组件基本使用">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Netty基础入门（一）基本知识介绍">
                         
-                        <span class="card-title">Netty基础入门（二）组件基本使用</span>
+                        <span class="card-title">Netty基础入门（一）基本知识介绍</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
