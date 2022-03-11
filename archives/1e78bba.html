@@ -4,8 +4,8 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="计算器基础, Eason_Shu">
-    <meta name="description" content="计算器基础">
+    <meta name="keywords" content="大端序与小端序, Eason_Shu">
+    <meta name="description" content="字节序，又称端序或尾序（英语中用单词：Endianness 表示），在计算机领域中，指[电脑内存]中或在数字通信链路中，占用多个字节的数据的字节排列顺序。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>计算器基础 | Eason_Shu</title>
+    <title>大端序与小端序 | Eason_Shu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -433,12 +433,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">计算器基础</h1>
+                    <h1 class="description center-align post-title">大端序与小端序</h1>
                 </div>
             </div>
         </div>
@@ -552,12 +552,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+                                <span class="chip bg-color">计算机基础</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category">
+                                计算机基础
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -580,14 +593,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5
+                    1.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -607,7 +620,88 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="计算器基础"><a href="#计算器基础" class="headerlink" title="计算器基础"></a>计算器基础</h1>
+                <meta name="referrer" content="no-referrer">
+
+<h2 id="一-大端序与小端序"><a href="#一-大端序与小端序" class="headerlink" title="一 大端序与小端序"></a>一 大端序与小端序</h2><h3 id="1-1-什么是字节序？"><a href="#1-1-什么是字节序？" class="headerlink" title="1.1 什么是字节序？"></a>1.1 什么是字节序？</h3><ul>
+<li><strong>字节序</strong>，又称<strong>端序</strong>或<strong>尾序</strong>（英语中用单词：<strong>Endianness</strong> 表示），在计算机领域中，指<a href="https://link.juejin.cn/?target=https://zh.wikipedia.org/wiki/%E5%AD%98%E5%82%A8%E5%99%A8">电脑内存</a>中或在数字通信链路中，占用多个字节的数据的字节排列顺序。 </li>
+<li>在几乎所有的平台上，多字节对象都被存储为连续的字节序列。例如在 Go 语言中，一个类型为<code>int</code>的变量<code>x</code>地址为<code>0x100</code>，那么其指针<code>&amp;x</code>的值为<code>0x100</code>。且<code>x</code>的四个字节将被存储在内存的<code>0x100, 0x101, 0x102, 0x103</code>位置。 </li>
+<li>大端序（<code>Big-Endian</code>）将数据的<strong>低位字节存放在内存的高位地址</strong>，<strong>高位字节存放在低位地址</strong>。这种排列方式与数据用字节表示时的书写顺序一致，符合人类的阅读习惯。 </li>
+<li>小端序（<code>Little-Endian</code>），将一个多位数的<strong>低位放在较小的地址处，高位放在较大的地址处</strong>，则称<strong>小端序</strong>。小端序与人类的阅读习惯相反，但更符合计算机读取内存的方式，因为CPU读取内存中的数据时，是从低地址向高地址方向进行读取的。 </li>
+<li>高字节与低字节： 在编程语言中，字符一般是占16位，8位为一字节，所以有高位字节和低位字节。一个16进制数有两个字节组成，例如：A9。高字节就是指16进制数的前8位（权重高的8位），如上例中的A。低字节就是指16进制数的后8位（权重低的8位），如上例中的9。</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1646987236993-95ce0d3f-6887-4e3e-8956-fd5f2f862a49.webp"></p>
+<ul>
+<li>很多人会问，为什么会有字节序，统一用大端序不行吗？答案是，计算机电路先处理低位字节，效率比较高，因为计算都是从低位开始的。所以，<strong>计算机的内部处理都是小端字节序。在计算机内部，小端序被广泛应用于现代 CPU 内部存储数据；而在其他场景，比如网络传输和文件存储则使用大端序</strong>。<h3 id="1-2-Java中高低位字节的运用"><a href="#1-2-Java中高低位字节的运用" class="headerlink" title="1.2 Java中高低位字节的运用"></a>1.2 Java中高低位字节的运用</h3>1、不同端模式的处理器进行数据传递时必须要考虑端模式的不同(<strong>因主机CPU不同，不同的机器会出现高、低两种字节序问题</strong>)。<br>2、在网络上传输数据时，由于数据传输的两端对应不同的硬件平台，采用的存储字节顺序可能不一致。所以在TCP&#x2F;IP协议规定了在网络上必须采用<strong>网络字节顺序</strong>，也就是<strong>大端模式</strong>。对于char型数据只占一个字节，无所谓大端和小端。而对于<strong>非char类型数据</strong>，必须在数据发送到网络上之前将其转换成大端模式。接收网络数据时按符合接受主机的环境接收。</li>
+</ul>
+<pre class=" language-java"><code class="language-java">          <span class="token keyword">int</span> value <span class="token operator">=</span> <span class="token number">515</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> big <span class="token operator">=</span> <span class="token punctuation">(</span>value <span class="token operator">&amp;</span> <span class="token number">0xFF00</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">8</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> little <span class="token operator">=</span> value <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">;</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>big<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>little<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><p>十六进制文字0xFF是一个相等的int（255）。</p>
+</li>
+<li><p>0xFF是<a href="https://so.csdn.net/so/search?q=16%E8%BF%9B%E5%88%B6&spm=1001.2101.3001.7020" target="_blank" rel="noopener">16进制</a>的表达方式，F是15；十进制为：255，二进制为：1111 1111</p>
+</li>
+<li><p>&amp;运算符：如果2个bit都是1，则得1，否则得0</p>
+<h4 id="1-2-1-原码"><a href="#1-2-1-原码" class="headerlink" title="1.2.1 原码"></a>1.2.1 原码</h4></li>
+<li><p><strong>原码</strong>：一个整数，按照绝对值大小转换成的二进制数，称为原码。</p>
+</li>
+<li><p>比如 00000000 00000000 00000000 00000101 是 5的 原码。</p>
+<h4 id="1-2-2-反码"><a href="#1-2-2-反码" class="headerlink" title="1.2.2 反码"></a>1.2.2 反码</h4></li>
+<li><p><strong>反码</strong>：将二进制数按位取反，所得的新二进制数称为原二进制数的<a href="https://so.csdn.net/so/search?q=%E5%8F%8D%E7%A0%81&spm=1001.2101.3001.7020" target="_blank" rel="noopener">反码</a>。</p>
+</li>
+<li><p>取反操作指：原为1，得0；原为0，得1。（1变0；0变1）</p>
+</li>
+<li><p>比如：将00000000 00000000 00000000 00000101每一位取反，得11111111 11111111 11111111 11111010。</p>
+</li>
+<li><p>反码是相互的，所以也可称：11111111 11111111 11111111 11111010 和 00000000 00000000 00000000 00000101 互为反码。</p>
+<h4 id="1-2-3-补码"><a href="#1-2-3-补码" class="headerlink" title="1.2.3 补码"></a>1.2.3 补码</h4></li>
+<li><p><strong>补码</strong>：反码加1称为补码。</p>
+</li>
+<li><p>也就是说，要得到一个数的补码，先得到反码，然后将反码加上1，所得数称为补码。</p>
+</li>
+<li><p>比如：00000000 00000000 00000000 00000101 的反码是：11111111 11111111 11111111 11111010。</p>
+</li>
+<li><p>那么，补码为：11111111 11111111 11111111 11111010 + 1 &#x3D; 11111111 11111111 11111111 11111011</p>
+<h4 id="1-2-4-解释"><a href="#1-2-4-解释" class="headerlink" title="1.2.4 解释"></a>1.2.4 解释</h4></li>
+<li><p><strong>首先我们要都知道, &amp;表示按位与,只有两个位同时为1,才能得到1, 0x代表16进制数,0xff表示的数二进制1111 1111 占一个字节.和其进行&amp;操作的数,最低8位,不会发生变化</strong></p>
+</li>
+<li><p>例如:java <a href="https://so.csdn.net/so/search?q=socket&spm=1001.2101.3001.7020" target="_blank" rel="noopener">socket</a>通信中基于长度的成帧方法中，如果发送的信息长度小于65535字节，长度信息的字节</p>
+</li>
+</ul>
+<p>定义为两个字节长度。这时候将两个字节长的长度信息，以Big-Endian的方式写到内存中</p>
+<pre class=" language-java"><code class="language-java">out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token punctuation">(</span>message<span class="token punctuation">.</span>length<span class="token operator">>></span><span class="token number">8</span><span class="token punctuation">)</span><span class="token operator">&amp;</span><span class="token number">0xff</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//取高八位写入地址</span>
+out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>message<span class="token punctuation">.</span>length<span class="token operator">&amp;</span><span class="token number">0xff</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//取低八位写入高地址中</span>
+</code></pre>
+<ul>
+<li>例如，有个数字 0x1234,如果只想将低8位写入到内存中 0x1234&amp;0xff，0x1234 表示为二进制 0001001000110100，0xff 表示为二进制 11111111，两个数做与操作，显然将0xff补充到16位，就是高位补0，此时0xff 为 0000000011111111，与操作 1&amp;0 &#x3D;0 1&amp;1 &#x3D;1 这样 0x1234只能保留低八位的数 0000000000110100 也就是 0x34。</li>
+<li><strong>我们只关心二进制的机器数而不关注十进制的值,那么byte &amp;0xff只是对其最低8位的复制,通常配合逻辑或 ‘’|’’使用,达到字节的拼接,但不保证其十进制真值不变</strong></li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">byte</span> b <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">127</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//10000001</span>
+        <span class="token keyword">int</span> a <span class="token operator">=</span>  b<span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        a <span class="token operator">=</span>  b<span class="token operator">&amp;</span><span class="token number">0xff</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token comment" spellcheck="true">//输出结果-127,129</span>
+</code></pre>
+<ul>
+<li>乍一看，b是8位的二进制数，在与上0xff(也就是 11111111)，不就是其本身吗,输出在控制台结果为什么是129呢?</li>
+<li>首先计算机内的存储都是按照补码存储的，-127补码表示为 1000 0001，int a &#x3D; b;将byte 类型提升为int时候，b的补码提升为 32位，补码的高位补1，也就是1111 1111 1111 1111 1111 1111 1000 0001</li>
+<li>负数的补码转为原码，符号位不变，其他位取反，在加1，正数的补码，反码都是本身结果是 1000 0000 0000 0000 0000 0000 0111 1111表示为十进制 也是 -127</li>
+<li>也就是 当 byte -&gt; int 能保证十进制数不变，但是有些时候比如文件流转为byte数组时候，我们不是关心的是十进制数有没有变，而是补码有没有变，这时候需要&amp;上0xff</li>
+<li>本例子中，将byte转为int 高24位必将补1，此时补码显然发生变化，在与上0xff，将高24重新置0，这样能保证补码的一致性，当然由于符号位发生变化，表示的十进制数就会变了</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1000</span> <span class="token number">0001</span> 
+<span class="token operator">&amp;</span>
+<span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">1111</span> <span class="token number">1111</span>
+结果是
+<span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">1000</span> <span class="token number">0001</span>
+</code></pre>
+
                 
             </div>
             <hr/>
@@ -633,7 +727,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://www.xiaolin.store/archives/46af4d88.html">http://www.xiaolin.store/archives/46af4d88.html</a>
+                    <a href="http://www.xiaolin.store/archives/1e78bba.html">http://www.xiaolin.store/archives/1e78bba.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -670,7 +764,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+                                    <span class="chip bg-color">计算机基础</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -847,19 +945,19 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/archives/46af4d88.html">
+                <a href="/archives/1e78bba.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="计算器基础">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="大端序与小端序">
                         
-                        <span class="card-title">计算器基础</span>
+                        <span class="card-title">大端序与小端序</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            字节序，又称端序或尾序（英语中用单词：Endianness 表示），在计算机领域中，指[电脑内存]中或在数字通信链路中，占用多个字节的数据的字节排列顺序。
                         
                     </div>
                     <div class="publish-info">
@@ -868,13 +966,25 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Eason_Shu
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    计算机基础
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">计算机基础</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -1135,7 +1245,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">66.7k</span>
+                        class="white-color">68.4k</span>
             
             
             
