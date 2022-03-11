@@ -1,0 +1,2058 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="Protocol Buffer基本入门, Eason_Shu">
+    <meta name="description" content="一种 结构化[数据] 的数据存储格式（类似于 XML、Json ）rotocol Buffer 目前有两个版本：proto2 和 proto3">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Protocol Buffer基本入门 | Eason_Shu</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+ 
+    <style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },2500);
+        },1000);//强制显示loading page 1s
+    };
+    loaded();
+})()
+</script>
+
+ 
+<body>
+    
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading-container">
+             <p class="loading-text">嘘~  正在从服务器偷取页面 . . . </p>
+             <div class="loading-image">
+                 <div></div>
+                 <div></div>
+                 <div></div>
+                 <div></div>
+                 <div></div>
+             </div>
+        </div>
+    
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Eason_Shu</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fa fa-rocket" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Eason_Shu</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-rocket"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Eason-shu" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Eason-shu" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Protocol Buffer基本入门</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Protocol-Buffer/">
+                                <span class="chip bg-color">Protocol Buffer</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96/">
+                                <span class="chip bg-color">序列化</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Protocol-Buffer/" class="post-category">
+                                Protocol Buffer
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-03-11
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-03-11
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    21 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <meta name="referrer" content="no-referrer">
+
+<p>参考博客：<a href="https://www.cnblogs.com/dkblog/archive/2012/03/27/2419010.html" target="_blank" rel="noopener">https://www.cnblogs.com/dkblog/archive/2012/03/27/2419010.html</a><br>参考博客：<a href="https://blog.csdn.net/carson_ho/category_9272167.html" target="_blank" rel="noopener">https://blog.csdn.net/carson_ho&#x2F;category_9272167.html</a><br>官网文档：<a href="https://developers.google.cn/protocol-buffers/docs/proto" target="_blank" rel="noopener">https://developers.google.cn/protocol-buffers/docs/proto</a><br><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646187131727-7ff9ed1b-1260-4513-884c-83cde6e12cfc.png" alt="image.png"></p>
+<h2 id="一-基本知识"><a href="#一-基本知识" class="headerlink" title="一 基本知识"></a>一 基本知识</h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><ul>
+<li><p>一种 结构化<a href="https://so.csdn.net/so/search?q=%E6%95%B0%E6%8D%AE&spm=1001.2101.3001.7020" target="_blank" rel="noopener">数据</a> 的数据存储格式（类似于 XML、Json ）</p>
+</li>
+<li><p>Protocol Buffer 目前有两个版本：proto2 和 proto3</p>
+</li>
+<li><p><a href="https://developers.google.cn/protocol-buffers/" target="_blank" rel="noopener">https://developers.google.cn/protocol-buffers/</a></p>
+</li>
+<li><p>协议缓冲区是一种与语言无关、与平台无关的可扩展机制，用于序列化结构化数据。</p>
+</li>
+<li><p>协议缓冲区提供了一种语言中立、平台中立、可扩展的机制，用于以向前兼容和向后兼容的方式序列化结构化数据。</p>
+</li>
+<li><p>它类似于 JSON，只是它更小更快，并且生成本地语言绑定。</p>
+</li>
+<li><p>协议缓冲区是定义语言（在 .proto文件中创建）、proto 编译器生成的与数据接口的代码、特定于语言的运行时库以及写入文件（或通过网络连接）。</p>
+<h3 id="1-2-作用"><a href="#1-2-作用" class="headerlink" title="1.2 作用"></a>1.2 作用</h3></li>
+<li><p>通过将 结构化的数据 进行 串行化（<strong>序列化</strong>），从而实现 <strong>数据存储 &#x2F; RPC 数据交换</strong>的功能</p>
+</li>
+<li><p>序列化： 将 数据结构或对象 转换成 二进制串 的过程</p>
+</li>
+<li><p>反序列化：将在序列化过程中所生成的二进制串 转换成 数据结构或者对象 的过程</p>
+<h3 id="1-3-特点"><a href="#1-3-特点" class="headerlink" title="1.3 特点"></a>1.3 特点</h3><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646054855125-c72e1226-242c-4c73-a3ae-c524656a5377.png"></p>
+<h3 id="1-4-安装"><a href="#1-4-安装" class="headerlink" title="1.4 安装"></a>1.4 安装</h3></li>
+<li><p>官网下载安装包：<a href="https://github.com/protocolbuffers/protobuf/releases/latest" target="_blank" rel="noopener">https://github.com/protocolbuffers/protobuf/releases/latest</a></p>
+</li>
+<li><p>配置环境变量：</p>
+</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646097996042-0d393be5-4bec-45dd-8103-4d510024852e.png" alt="image.png"></p>
+<ul>
+<li>验证：protoc –version</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646098031814-b3eb4752-4b50-4fed-8917-00270712505b.png" alt="image.png"></p>
+<ul>
+<li>idea 插件安装</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646098565819-7fa1b946-af34-4d59-9b2c-540b4ab8f1dc.png" alt="image.png"></p>
+<h2 id="二-基本语法"><a href="#二-基本语法" class="headerlink" title="二 基本语法"></a>二 基本语法</h2><h3 id="2-1-包名"><a href="#2-1-包名" class="headerlink" title="2.1 包名"></a>2.1 包名</h3><ul>
+<li><p>防止不同 .proto 项目间命名 发生冲突</p>
+</li>
+<li><p>每个包会被看作是其父类包的内部类</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> person<span class="token punctuation">;</span>
+</code></pre>
+<h3 id="2-2-Option选项"><a href="#2-2-Option选项" class="headerlink" title="2.2 Option选项"></a>2.2 Option选项</h3></li>
+<li><p>作用：影响 特定环境下 的处理方式</p>
+</li>
+<li><p>在 ProtocolBuffers 中允许 自定义选项 并 使用</p>
+</li>
+</ul>
+<pre class=" language-java"><code class="language-java">option java_package <span class="token operator">=</span> <span class="token string">"com.carson.proto"</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 定义：Java包名</span>
+<span class="token comment" spellcheck="true">// 作用：指定生成的类应该放在什么Java包名下</span>
+<span class="token comment" spellcheck="true">// 注：如不显式指定，默认包名为：按照应用名称倒序方式进行排序</span>
+
+option java_outer_classname <span class="token operator">=</span> <span class="token string">"Demo"</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 定义：类名</span>
+<span class="token comment" spellcheck="true">// 作用：生成对应.java 文件的类名（不能跟下面message的类名相同）</span>
+<span class="token comment" spellcheck="true">// 注：如不显式指定，则默认为把.proto文件名转换为首字母大写来生成</span>
+<span class="token comment" spellcheck="true">// 如.proto文件名="my_proto.proto"，默认情况下，将使用 "MyProto" 做为类名</span>
+
+option optimize_for <span class="token operator">=</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 作用：影响 C++  &amp; java 代码的生成</span>
+<span class="token comment" spellcheck="true">// ***参数如下：</span>
+<span class="token comment" spellcheck="true">// 1. SPEED (默认):：protocol buffer编译器将通过在消息类型上执行序列化、语法分析及其他通用的操作。（最优方式）</span>
+<span class="token comment" spellcheck="true">// 2. CODE_SIZE:：编译器将会产生最少量的类，通过共享或基于反射的代码来实现序列化、语法分析及各种其它操作。</span>
+  <span class="token comment" spellcheck="true">// 特点：采用该方式产生的代码将比SPEED要少很多， 但是效率较低；</span>
+  <span class="token comment" spellcheck="true">// 使用场景：常用在 包含大量.proto文件 但 不追求效率 的应用中。</span>
+<span class="token comment" spellcheck="true">//3.  LITE_RUNTIME:：编译器依赖于运行时 核心类库 来生成代码（即采用libprotobuf-lite 替代libprotobuf）。</span>
+  <span class="token comment" spellcheck="true">// 特点：这种核心类库要比全类库小得多（忽略了 一些描述符及反射 ）；编译器采用该模式产生的方法实现与SPEED模式不相上下，产生的类通过实现 MessageLite接口，但它仅仅是Messager接口的一个子集。</span>
+  <span class="token comment" spellcheck="true">// 应用场景：移动手机平台应用</span>
+
+option cc_generic_services <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+option java_generic_services <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+option py_generic_services <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 作用：定义在C++、java、python中，protocol buffer编译器是否应该 基于服务定义 产生 抽象服务代码（2.3.0版本前该值默认 = true）</span>
+<span class="token comment" spellcheck="true">// 自2.3.0版本以来，官方认为通过提供 代码生成器插件 来对 RPC实现 更可取，而不是依赖于“抽象”服务</span>
+
+optional repeated int32 samples <span class="token operator">=</span> <span class="token number">4</span> <span class="token punctuation">[</span>packed<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 如果该选项在一个整型基本类型上被设置为真，则采用更紧凑的编码方式（不会对数值造成损失）</span>
+<span class="token comment" spellcheck="true">// 在2.3.0版本前，解析器将会忽略 非期望的包装值。因此，它不可能在 不破坏现有框架的兼容性上 而 改变压缩格式。</span>
+<span class="token comment" spellcheck="true">// 在2.3.0之后，这种改变将是安全的，解析器能够接受上述两种格式。</span>
+
+optional int32 old_field <span class="token operator">=</span> <span class="token number">6</span> <span class="token punctuation">[</span>deprecated<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 作用：判断该字段是否已经被弃用</span>
+<span class="token comment" spellcheck="true">// 作用同 在java中的注解@Deprecated</span>
+</code></pre>
+<h3 id="2-3-消息模型"><a href="#2-3-消息模型" class="headerlink" title="2.3 消息模型"></a>2.3 消息模型</h3><ul>
+<li>作用：真正用于描述 数据结构</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 消息对象用message修饰</span>
+message Person <span class="token punctuation">{</span>
+
+  required string name <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  required int32 id <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+  optional string email <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">enum</span> PhoneType <span class="token punctuation">{</span>
+    MOBILE <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    HOME <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    WORK <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  message PhoneNumber <span class="token punctuation">{</span>
+    optional PhoneType type <span class="token operator">=</span> <span class="token number">2</span> <span class="token punctuation">[</span><span class="token keyword">default</span> <span class="token operator">=</span> HOME<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  repeated PhoneNumber phone <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+message AddressBook <span class="token punctuation">{</span>
+  repeated Person person <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="2-3-1-消息对象"><a href="#2-3-1-消息对象" class="headerlink" title="2.3.1 消息对象"></a>2.3.1 消息对象</h4><ul>
+<li>一个消息对象（Message） &#x3D; 一个 结构化数据</li>
+<li>消息对象用 修饰符 message 修饰</li>
+<li>消息对象 含有 字段：消息对象（Message）里的 字段 &#x3D; 结构化数据 里的成员变量</li>
+</ul>
+<pre class=" language-java"><code class="language-java">message person<span class="token punctuation">{</span>
+   required int32 id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+   optional string userName<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+   required <span class="token keyword">double</span> check<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+   repeated string sex<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="2-3-2-字段"><a href="#2-3-2-字段" class="headerlink" title="2.3.2 字段"></a>2.3.2 字段</h4><ul>
+<li>消息对象的字段 组成主要是：<strong>字段 &#x3D; 字段修饰符 + 字段类型 +字段名 +标识号</strong></li>
+<li>required: 格式良好的消息必须恰好具有该字段之一。</li>
+<li>optional：一个格式良好的消息可以有零个或一个这个字段（但不能超过一个）。</li>
+<li>repeated：该字段可以在格式良好的消息中重复任意次数（包括零次）。重复值的顺序将被保留。</li>
+</ul>
+<p>由于历史原因，repeated标量数字类型的字段（例如 , , int32）没有尽可能高效地编码。新代码应该使用特殊选项来获得更有效的编码。例如：int64enum[packed &#x3D; true]<br><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646100944224-20019971-85df-4412-94aa-8d38d5bcb8b0.png"></p>
+<h4 id="2-3-3-基本数据类型"><a href="#2-3-3-基本数据类型" class="headerlink" title="2.3.3 基本数据类型"></a>2.3.3 基本数据类型</h4><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646101081780-08f5bcef-ccf2-47d0-9a99-763865dea5f6.png"></p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 基本数据类型</span>
+<span class="token comment" spellcheck="true">// message:定义消息模型，java基本实体类</span>
+message person<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">// 必须</span>
+   <span class="token comment" spellcheck="true">// 字段修饰符 字段类型 字段名 标识符 </span>
+   required int32 id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 可选</span>
+   optional string userName<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 必须</span>
+   required <span class="token keyword">double</span> check<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 必须</span>
+   required string sex<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="2-3-4-枚举类"><a href="#2-3-4-枚举类" class="headerlink" title="2.3.4 枚举类"></a>2.3.4 枚举类</h4><ul>
+<li>为字段指定一个 可能取值的字段集合。</li>
+<li>枚举类型的定义可在一个消息对象的内部或外部。</li>
+<li>都可以在 同一.proto文件 中的任何消息对象里使用。</li>
+<li>当枚举类型是在一消息内部定义，希望在 另一个消息中 使用时，需要MessageType.EnumType的语法格式。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 基本数据类型,message:定义消息模型</span>
+message person<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">// 必须</span>
+   required int32 id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 可选</span>
+   optional string userName<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+   required <span class="token keyword">double</span> check<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 可复用赋值</span>
+   repeated string sex<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">;</span>
+
+   <span class="token comment" spellcheck="true">// 性别枚举类</span>
+   <span class="token keyword">enum</span> SexType<span class="token punctuation">{</span>
+      man<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+      woman<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="2-3-5-消息对象的引用"><a href="#2-3-5-消息对象的引用" class="headerlink" title="2.3.5 消息对象的引用"></a>2.3.5 消息对象的引用</h4><ul>
+<li>消息内部使用</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> person<span class="token punctuation">;</span>
+
+option java_package<span class="token operator">=</span><span class="token string">"com.shu.proto"</span><span class="token punctuation">;</span>
+option java_outer_classname<span class="token operator">=</span><span class="token string">"Person"</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 编码格式</span>
+option java_string_check_utf8<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 是否生成hash与equal方法</span>
+option java_generate_equals_and_hash<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">// 基本数据类型,message:定义消息模型</span>
+message person<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">// 必须</span>
+   required int32 id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 可选</span>
+   optional string userName<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+   required <span class="token keyword">double</span> check<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 可复用赋值</span>
+   repeated string sex<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">;</span>
+
+   <span class="token comment" spellcheck="true">// 性别枚举类</span>
+   <span class="token keyword">enum</span> SexType<span class="token punctuation">{</span>
+      man<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+      woman<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+
+    
+   <span class="token comment" spellcheck="true">// 嵌套消息模型</span>
+   message Person_Sex <span class="token punctuation">{</span>
+      optional SexType type <span class="token operator">=</span> <span class="token number">2</span> <span class="token punctuation">[</span><span class="token keyword">default</span> <span class="token operator">=</span> man<span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>外部消息使用</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> person<span class="token punctuation">;</span>
+
+option java_package<span class="token operator">=</span><span class="token string">"com.shu.proto"</span><span class="token punctuation">;</span>
+option java_outer_classname<span class="token operator">=</span><span class="token string">"Person"</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 编码格式</span>
+option java_string_check_utf8<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 是否生成hash与equal方法</span>
+option java_generate_equals_and_hash<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">// 基本数据类型,message:定义消息模型</span>
+message person<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">// 必须</span>
+   required int32 id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 可选</span>
+   optional string userName<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+   required <span class="token keyword">double</span> check<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 可复用赋值</span>
+   repeated string sex<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">;</span>
+
+   <span class="token comment" spellcheck="true">// 性别枚举类</span>
+   <span class="token keyword">enum</span> SexType<span class="token punctuation">{</span>
+      man<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+      woman<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+
+   <span class="token comment" spellcheck="true">// 嵌套消息模型</span>
+   message Person_Sex <span class="token punctuation">{</span>
+      optional SexType type <span class="token operator">=</span> <span class="token number">2</span> <span class="token punctuation">[</span><span class="token keyword">default</span> <span class="token operator">=</span> man<span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 外部消息</span>
+message AddressBook <span class="token punctuation">{</span>
+   repeated person person <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 直接使用了 Person消息类型作为消息字段</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>使用不同的protoc文件</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> <span class="token string">"myproject/other_protos.proto"</span>
+<span class="token comment" spellcheck="true">// 在A.proto 文件中添加 B.proto文件路径的导入声明</span>
+<span class="token comment" spellcheck="true">// ProtocolBuffer编译器 会在 该目录中 查找需要被导入的 .proto文件</span>
+<span class="token comment" spellcheck="true">// 如果不提供参数，编译器就在 其调用的目录下 查找</span>
+</code></pre>
+<h4 id="2-3-6-标识符"><a href="#2-3-6-标识符" class="headerlink" title="2.3.6 标识符"></a>2.3.6 标识符</h4><ul>
+<li><p>一旦开始使用就不能够再改变</p>
+</li>
+<li><p>标识号使用范围：[1,2的29次方 - 1]</p>
+</li>
+<li><p>不可使用 [19000－19999] 标识号， 因为 Protobuf 协议实现中对这些标识号进行了预留。假若使用，则会报错</p>
+</li>
+<li><p>消息定义中的每个字段都有一个<strong>唯一的编号</strong>。这些数字用于在 <a href="https://developers.google.cn/protocol-buffers/docs/encoding" target="_blank" rel="noopener">消息二进制格式</a>中标识您的字段，并且一旦您的消息类型在使用中就不应更改。<a href="https://developers.google.cn/protocol-buffers/docs/encoding#structure" target="_blank" rel="noopener">1 到 15 范围内的字段编号需要一个字节进行编码，包括字段编号和字段类型（您可以在Protocol Buffer Encoding</a>中找到更多相关信息 ）。16 到 2047 范围内的字段编号占用两个字节。因此，您应该为非常频繁出现的消息元素保留字段编号 1 到 15。</p>
+<h4 id="2-3-7-保留字段"><a href="#2-3-7-保留字段" class="headerlink" title="2.3.7 保留字段"></a>2.3.7 保留字段</h4></li>
+<li><p>如果您通过完全删除某个字段或将其注释掉来<a href="https://developers.google.cn/protocol-buffers/docs/proto#updating" target="_blank" rel="noopener">更新消息类型，未来的用户可以在对类型进行自己的更新时重用该字段编号。</a></p>
+</li>
+<li><p>如果他们稍后加载相同的旧版本，这可能会导致严重问题.proto，包括数据损坏、隐私错误等。</p>
+</li>
+<li><p>确保不会发生这种情况的一种方法是指定已删除字段的字段编号（和&#x2F;或名称，这也可能导致 JSON 序列化问题）为reserved. 如果将来有任何用户尝试使用这些字段标识符，protocol buffer 编译器会抱怨。</p>
+</li>
+</ul>
+<pre class=" language-java"><code class="language-java">message Foo <span class="token punctuation">{</span>
+  reserved <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">9</span> to <span class="token number">11</span><span class="token punctuation">;</span>
+  reserved <span class="token string">"foo"</span><span class="token punctuation">,</span> <span class="token string">"bar"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 保留最大值</span>
+<span class="token keyword">enum</span> Foo <span class="token punctuation">{</span>
+  reserved <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">9</span> to <span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">40</span> to max<span class="token punctuation">;</span>
+  reserved <span class="token string">"FOO"</span><span class="token punctuation">,</span> <span class="token string">"BAR"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="2-3-8-默认值选项"><a href="#2-3-8-默认值选项" class="headerlink" title="2.3.8 默认值选项"></a>2.3.8 默认值选项</h4><ul>
+<li>如果未为可选元素指定默认值，则使用特定于类型的默认值：对于字符串，默认值为空字符串。</li>
+<li>对于字节，默认值为空字节字符串。</li>
+<li>对于布尔值，默认值为 false。</li>
+<li>对于数字类型，默认值为零。</li>
+<li>对于枚举，默认值是枚举类型定义中列出的第一个值。这意味着在枚举值列表的开头添加值时必须小心。</li>
+</ul>
+<pre class=" language-java"><code class="language-java">message person<span class="token punctuation">{</span>
+   required int32 id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// 设置默认值</span>
+   optional string userName<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">[</span><span class="token keyword">default</span> <span class="token operator">=</span> <span class="token string">'测试'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   required string sex<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="2-3-9-更新消息类型"><a href="#2-3-9-更新消息类型" class="headerlink" title="2.3.9 更新消息类型"></a>2.3.9 更新消息类型</h4><ul>
+<li>如果现有的消息类型不再满足您的所有需求 - 例如，您希望消息格式有一个额外的字段 - 但您仍然希望使用以旧格式创建的代码，请不要担心！在不破坏任何现有代码的情况下更新消息类型非常简单。只需记住以下规则：</li>
+<li>不要更改任何现有字段的字段编号。</li>
+<li>您添加的任何新字段都应该是optional或repeated。这意味着使用“旧”消息格式的代码序列化的任何消息都可以由新生成的代码解析，因为它们不会丢失任何required 元素。您应该为这些元素设置合理的<a href="https://developers.google.cn/protocol-buffers/docs/proto#optional" target="_blank" rel="noopener">默认值</a>，以便新代码可以与旧代码生成的消息正确交互。类似地，新代码创建的消息可以由旧代码解析：旧二进制文件在解析时会忽略新字段。但是，未知字段不会被丢弃，如果消息稍后被序列化，未知字段也会随之序列化——因此，如果将消息传递给新代码，新字段仍然可用。</li>
+<li>只要在更新的消息类型中不再使用字段编号，就可以删除非必填字段。您可能想要重命名该字段，可能添加前缀“OBSOLETE_”，或将字段编号设为 <a href="https://developers.google.cn/protocol-buffers/docs/proto#reserved" target="_blank" rel="noopener">保留</a>，以便您的未来用户.proto不会意外重用该编号。</li>
+<li>只要类型和编号保持不变，非必填字段可以转换为<a href="https://developers.google.cn/protocol-buffers/docs/proto#extensions" target="_blank" rel="noopener">扩展名，反之亦然。</a></li>
+<li>int32、uint32、int64、uint64和bool都是兼容的——这意味着您可以将字段从其中一种类型更改为另一种类型，而不会破坏向前或向后兼容性。如果从不适合相应类型的线路中解析出一个数字，您将获得与在 C++ 中将该数字强制转换为该类型相同的效果（例如，如果一个 64 位数字被读取为int32，它将被截断为 32 位）。</li>
+<li>sint32并且sint64彼此兼容，但与其他整数类型_不_ 兼容。</li>
+<li>string并且bytes只要字节是有效的 UTF-8 就兼容。</li>
+<li>bytes如果字节包含消息的编码版本，则嵌入消息是兼容的。</li>
+<li>fixed32与sfixed32和fixed64兼容sfixed64。</li>
+<li>对于string、bytes和 消息字段，optional与 兼容 repeated。给定重复字段的序列化数据作为输入，optional如果它是原始类型字段，则期望此字段的客户端将采用最后一个输入值，如果它是消息类型字段，则合并所有输入元素。请注意，这对于数字类型（包括布尔值和枚举）通常不安全<strong>。</strong>数字类型的重复字段可以以 <a href="https://developers.google.cn/protocol-buffers/docs/encoding#packed" target="_blank" rel="noopener">打包</a>optional格式序列化，当需要字段时将无法正确解析。</li>
+<li>更改默认值通常是可以的，只要您记住默认值永远不会通过网络发送。因此，如果程序接收到未设置特定字段的消息，则程序将看到在该程序的协议版本中定义的默认值。它不会看到发件人代码中定义的默认值。</li>
+<li>enum与int32, uint32, int64, 和uint64有线格式兼容（请注意，如果值不合适，将被截断），但请注意，当消息被反序列化时，客户端代码可能会以不同方式处理它们。值得注意的是，enum当消息被反序列化时，无法识别的值将被丢弃，这使得该字段的has..访问器返回 false 并且其 getter 返回定义中列出的第一个值enum，或者如果指定了一个则返回默认值。在重复枚举字段的情况下，任何无法识别的值都会从列表中删除。但是，整数字段将始终保留其值。因此，在将整数升级到 an 时，您需要非常小心，因为enum在线路上接收超出范围的枚举值。</li>
+<li>在当前的 Java 和 C++ 实现中，当enum去除无法识别的值时，它们会与其他未知字段一起存储。请注意，如果此数据被序列化然后由识别这些值的客户端重新解析，这可能会导致奇怪的行为。在可选字段的情况下，即使在原始消息反序列化后写入了新值，旧值仍会被识别它的客户端读取。在重复字段的情况下，旧值将出现在任何已识别和新添加的值之后，这意味着将不会保留顺序。</li>
+<li>将单个optional值更改为<strong>new</strong> oneof的成员是安全且二进制兼容的。如果您确定没有代码一次设置多个字段，则将多个optional字段移动到一个新字段 中可能是安全的。oneof将任何字段移动到现有字段oneof中是不安全的。</li>
+<li>在 amap&lt;K, V&gt;和相应的repeated 消息字段之间更改字段是二进制兼容的（请参阅下面的<a href="https://developers.google.cn/protocol-buffers/docs/proto#maps" target="_blank" rel="noopener">地图</a>，了解消息布局和其他限制）。但是，更改的安全性取决于应用程序：在反序列化和重新序列化消息时，使用repeated字段定义的客户端将产生语义相同的结果；但是，使用map字段定义的客户端可能会重新排序条目并删除具有重复键的条目。</li>
+</ul>
+<h3 id="2-4-RPC服务"><a href="#2-4-RPC服务" class="headerlink" title="2.4  RPC服务"></a>2.4  RPC服务</h3><ul>
+<li>定义服务</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> person<span class="token punctuation">;</span>
+
+option java_package<span class="token operator">=</span><span class="token string">"com.shu.proto"</span><span class="token punctuation">;</span>
+option java_outer_classname<span class="token operator">=</span><span class="token string">"Person"</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 编码格式</span>
+option java_string_check_utf8<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 是否生成hash与equal方法</span>
+option java_generate_equals_and_hash<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">// 返回参数</span>
+message person<span class="token punctuation">{</span>
+   required int32 id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+   optional string userName<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+   repeated string sex<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token comment" spellcheck="true">// 查询参数</span>
+message SearchRequest <span class="token punctuation">{</span>
+   repeated int32 id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token comment" spellcheck="true">// 定义RPC服务</span>
+service SearchPersonService <span class="token punctuation">{</span>
+   rpc <span class="token function">Search</span> <span class="token punctuation">(</span>SearchRequest<span class="token punctuation">)</span> <span class="token function">returns</span> <span class="token punctuation">(</span>person<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// // 生成命令 protoc -I=E:\Project\Java\src\Demo --java_out=E:\Project E:\Project\Java\src\Demo\Person.proto</span>
+</code></pre>
+<h3 id="2-5-生成命令"><a href="#2-5-生成命令" class="headerlink" title="2.5 生成命令"></a>2.5 生成命令</h3><ul>
+<li>Protoco Buffer提供 C++、Java、Python 三种开发语言的 API</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646104008542-9d6081bb-3789-49b6-b244-0287d69bb9e6.png"></p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 在 终端 输入下列命令进行编译</span>
+protoc <span class="token operator">-</span>I<span class="token operator">=</span>$SRC_DIR <span class="token operator">--</span>xxx_out<span class="token operator">=</span>$DST_DIR   $SRC_DIR<span class="token operator">/</span>addressbook<span class="token punctuation">.</span>proto
+
+<span class="token comment" spellcheck="true">// 参数说明</span>
+<span class="token comment" spellcheck="true">// 1. $SRC_DIR：指定需要编译的.proto文件目录 (如没有提供则使用当前目录)</span>
+<span class="token comment" spellcheck="true">// 2. --xxx_out：xxx根据需要生成代码的类型进行设置</span>
+<span class="token comment" spellcheck="true">// 对于 Java ，xxx =  java ，即 -- java_out</span>
+<span class="token comment" spellcheck="true">// 对于 C++ ，xxx =  cpp ，即 --cpp_out</span>
+<span class="token comment" spellcheck="true">// 对于 Python，xxx =  python，即 --python_out</span>
+
+<span class="token comment" spellcheck="true">// 3. $DST_DIR ：编译后代码生成的目录 (通常设置与$SRC_DIR相同)</span>
+<span class="token comment" spellcheck="true">// 4. 最后的路径参数：需要编译的.proto 文件的具体路径</span>
+
+<span class="token comment" spellcheck="true">// 编译通过后，Protoco Buffer会根据不同平台生成对应的代码文件</span>
+<span class="token comment" spellcheck="true">// eg:protoc -I=E:\Project\Java\src\Demo --java_out=E:\Project E:\Project\Java\src\Demo\Person.proto</span>
+</code></pre>
+<h2 id="三-基本使用"><a href="#三-基本使用" class="headerlink" title="三 基本使用"></a>三 基本使用</h2><h3 id="3-1-依赖导入"><a href="#3-1-依赖导入" class="headerlink" title="3.1 依赖导入"></a>3.1 依赖导入</h3><ul>
+<li>注意这里的依赖与安装的版本一致</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml">        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.google.protobuf<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>protobuf-java<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.5.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</code></pre>
+<h3 id="3-2-消息对象类介绍"><a href="#3-2-消息对象类介绍" class="headerlink" title="3.2 消息对象类介绍"></a>3.2 消息对象类介绍</h3><ul>
+<li><p>通过.proto文件 转换的 Java源代码 &#x3D; Protocol Buffer 类 + 消息对象类（含Builder内部类）</p>
+<h4 id="3-2-1-Message类"><a href="#3-2-1-Message类" class="headerlink" title="3.2.1 Message类"></a>3.2.1 Message类</h4></li>
+<li><p>基本方法</p>
+</li>
+</ul>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>--</span> <span class="token attr-name">方式1：直接序列化和反序列化</span> <span class="token attr-name">消息</span> <span class="token attr-name">--</span><span class="token punctuation">></span></span>
+protocolBuffer.toByteArray()；
+// 序列化消息 并 返回一个包含它的原始字节的字节数组
+protocolBuffer.parseFrom(byte[] data)；
+// 从一个字节数组 反序列化（解析） 消息
+
+&lt;-- 方式2：通过输入/ 输出流（如网络输出流） 序列化和反序列化消息 -->
+protocolBuffer.writeTo(OutputStream output)；
+output.toByteArray();
+// 将消息写入 输出流 ，然后再 序列化消息 
+
+protocolBuffer.parseFrom(InputStream input)；
+
+// 基本的get与set方法
+</code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>proto<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>ByteArrayInputStream<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>ByteArrayOutputStream<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Date: 2022/03/01/ 13:39
+ * @Description proto方法
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PersonTest</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 通过 消息类的内部类Builder类 构造 消息类的消息构造器</span>
+        Person<span class="token punctuation">.</span>person<span class="token punctuation">.</span>Builder builder <span class="token operator">=</span> Person<span class="token punctuation">.</span>person<span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 设置值</span>
+        builder<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        builder<span class="token punctuation">.</span><span class="token function">setUserName</span><span class="token punctuation">(</span><span class="token string">"xiaoMing"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 通过 消息构造器 创建 消息类 对象</span>
+        Person<span class="token punctuation">.</span>person person <span class="token operator">=</span> builder<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">/**
+         * 直接序列化
+         */</span>
+        <span class="token comment" spellcheck="true">// 序列化</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> array <span class="token operator">=</span> person<span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 打印日志</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Arrays<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 反序列化消息</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+
+            Person<span class="token punctuation">.</span>person parse <span class="token operator">=</span> Person<span class="token punctuation">.</span>person<span class="token punctuation">.</span><span class="token function">parseFrom</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 当接收到字节数组byte[] 反序列化为 person消息类对象</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parse<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parse<span class="token punctuation">.</span><span class="token function">getUserName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 输出反序列化后的消息</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+
+
+        <span class="token comment" spellcheck="true">/**
+         * 流序列化
+         */</span>
+        ByteArrayOutputStream output <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayOutputStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            person<span class="token punctuation">.</span><span class="token function">writeTo</span><span class="token punctuation">(</span>output<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 将消息序列化 并写入 输出流(此处用 ByteArrayOutputStream 代替)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> byteArray <span class="token operator">=</span> output<span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 通过 输出流 转化成二进制字节流</span>
+        <span class="token comment" spellcheck="true">// b. 反序列化</span>
+        ByteArrayInputStream input <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayInputStream</span><span class="token punctuation">(</span>byteArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 通过 输入流 接收消息流(此处用 ByteArrayInputStream 代替)</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+
+            Person<span class="token punctuation">.</span>person parse <span class="token operator">=</span> Person<span class="token punctuation">.</span>person<span class="token punctuation">.</span><span class="token function">parseFrom</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 通过输入流 反序列化 消息</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parse<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parse<span class="token punctuation">.</span><span class="token function">getUserName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 输出消息</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="3-2-2-Builder类"><a href="#3-2-2-Builder类" class="headerlink" title="3.2.2 Builder类"></a>3.2.2 Builder类</h4><ul>
+<li>创建 消息构造器 &amp; 设置&#x2F; 获取消息对象的字段值 &amp; 创建 消息类 实例</li>
+<li>属于 消息对象类 的内部类</li>
+</ul>
+<pre class=" language-java"><code class="language-java">  <span class="token comment" spellcheck="true">// 通过 消息类的内部类Builder类 构造 消息类的消息构造器</span>
+   Person<span class="token punctuation">.</span>person<span class="token punctuation">.</span>Builder builder <span class="token operator">=</span> Person<span class="token punctuation">.</span>person<span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// 通过 消息构造器 创建 消息类 对象</span>
+    Person<span class="token punctuation">.</span>person person <span class="token operator">=</span> builder<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> Builder <span class="token function">isInitialized</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<span class="token comment" spellcheck="true">// 检查所有 required 字段 是否都已经被设置</span>
+
+<span class="token keyword">public</span> Builder <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span>
+<span class="token comment" spellcheck="true">// 返回一个人类可读的消息表示（用于调试）</span>
+
+<span class="token keyword">public</span> Builder <span class="token function">mergeFrom</span><span class="token punctuation">(</span>Message other<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 将 其他内容 合并到这个消息中，覆写单数的字段，附接重复的。</span>
+
+<span class="token keyword">public</span> Builder <span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<h3 id="3-3-使用步骤"><a href="#3-3-使用步骤" class="headerlink" title="3.3 使用步骤"></a>3.3 使用步骤</h3><ul>
+<li><strong>步骤1：</strong>通过 消息类的内部类Builder类 构造 消息构造器</li>
+<li><strong>步骤2：</strong>通过 消息构造器 设置 消息字段的值</li>
+<li><strong>步骤3：</strong>通过 消息构造器 创建 消息类 对象</li>
+<li><strong>步骤4：</strong><a href="https://so.csdn.net/so/search?q=%E5%BA%8F%E5%88%97%E5%8C%96&spm=1001.2101.3001.7020" target="_blank" rel="noopener">序列化</a> &#x2F; 反序列化 消息</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>proto<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>ByteArrayInputStream<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>ByteArrayOutputStream<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Author shu
+ * @Date: 2022/03/01/ 13:39
+ * @Description proto方法
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PersonTest</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 通过 消息类的内部类Builder类 构造 消息类的消息构造器</span>
+        Person<span class="token punctuation">.</span>person<span class="token punctuation">.</span>Builder builder <span class="token operator">=</span> Person<span class="token punctuation">.</span>person<span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 设置值</span>
+        builder<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        builder<span class="token punctuation">.</span><span class="token function">setUserName</span><span class="token punctuation">(</span><span class="token string">"xiaoMing"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 通过 消息构造器 创建 消息类 对象</span>
+        Person<span class="token punctuation">.</span>person person <span class="token operator">=</span> builder<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">/**
+         * 直接序列化
+         */</span>
+        <span class="token comment" spellcheck="true">// 序列化</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> array <span class="token operator">=</span> person<span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 打印日志</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Arrays<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 反序列化消息</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+
+            Person<span class="token punctuation">.</span>person parse <span class="token operator">=</span> Person<span class="token punctuation">.</span>person<span class="token punctuation">.</span><span class="token function">parseFrom</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 当接收到字节数组byte[] 反序列化为 person消息类对象</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parse<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parse<span class="token punctuation">.</span><span class="token function">getUserName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 输出反序列化后的消息</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+
+
+        <span class="token comment" spellcheck="true">/**
+         * 流序列化
+         */</span>
+        ByteArrayOutputStream output <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayOutputStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            person<span class="token punctuation">.</span><span class="token function">writeTo</span><span class="token punctuation">(</span>output<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 将消息序列化 并写入 输出流(此处用 ByteArrayOutputStream 代替)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> byteArray <span class="token operator">=</span> output<span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 通过 输出流 转化成二进制字节流</span>
+        <span class="token comment" spellcheck="true">// b. 反序列化</span>
+        ByteArrayInputStream input <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayInputStream</span><span class="token punctuation">(</span>byteArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 通过 输入流 接收消息流(此处用 ByteArrayInputStream 代替)</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+
+            Person<span class="token punctuation">.</span>person parse <span class="token operator">=</span> Person<span class="token punctuation">.</span>person<span class="token punctuation">.</span><span class="token function">parseFrom</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 通过输入流 反序列化 消息</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parse<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>parse<span class="token punctuation">.</span><span class="token function">getUserName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 输出消息</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="3-4-基本方法"><a href="#3-4-基本方法" class="headerlink" title="3.4 基本方法"></a>3.4 基本方法</h3><p>该<a href="https://developers.google.cn/protocol-buffers/docs/reference/java/com/google/protobuf/Message" target="_blank" rel="noopener">Message</a>接口定义了允许您检查、操作、读取或写入整个消息的方法。除了这些方法，Foo该类还定义了以下静态方法：</p>
+<ul>
+<li>static Foo getDefaultInstance(): 返回 的_单例_实例Foo。此实例的内容与您调用时获得的内容相同Foo.newBuilder().build()（因此所有单数字段均未设置，所有重复字段均为空）。<a href="https://developers.google.cn/protocol-buffers/docs/reference/java/com/google/protobuf/Message#newBuilderForType--" target="_blank" rel="noopener">newBuilderForType()</a>请注意，可以通过调用其方法 将消息的默认实例用作工厂。</li>
+<li>static <a href="https://developers.google.cn/protocol-buffers/docs/reference/java/com/google/protobuf/Descriptors.Descriptor" target="_blank" rel="noopener">Descriptor</a> getDescriptor()：返回类型的描述符。这包含有关类型的信息，包括它具有哪些字段以及它们的类型。这可以与反射方法一起使用<a href="https://developers.google.cn/protocol-buffers/docs/reference/java/com/google/protobuf/Message" target="_blank" rel="noopener">Message</a>，例如<a href="https://developers.google.cn/protocol-buffers/docs/reference/java/com/google/protobuf/MessageOrBuilder#getField-com.google.protobuf.Descriptors.FieldDescriptor-" target="_blank" rel="noopener">getField()</a>.</li>
+<li>static Foo parseFrom(…)：解析Foo来自给定源的类型消息并返回它。接口中的每个变体都有一个parseFrom方法对应。请注意，从不抛出mergeFrom()<a href="https://developers.google.cn/protocol-buffers/docs/reference/java/com/google/protobuf/Message.Builder" target="_blank" rel="noopener">Message.Builder</a>parseFrom()<a href="https://developers.google.cn/protocol-buffers/docs/reference/java/com/google/protobuf/UninitializedMessageException" target="_blank" rel="noopener">UninitializedMessageException</a>; <a href="https://developers.google.cn/protocol-buffers/docs/reference/java/com/google/protobuf/InvalidProtocolBufferException" target="_blank" rel="noopener">InvalidProtocolBufferException</a>如果解析的消息缺少必填字段，它会抛出。这使它与 call 略有不同Foo.newBuilder().mergeFrom(…).build()。</li>
+<li>static <a href="https://developers.google.cn/protocol-buffers/docs/reference/java/com/google/protobuf/Parser" target="_blank" rel="noopener">Parser</a> parser(): 返回一个实例Parser，它实现了各种parseFrom()方法。</li>
+<li>Foo.Builder newBuilder()：创建一个新的构建器（如下所述）。</li>
+<li>Foo.Builder newBuilder(Foo prototype)：创建一个新的构建器，将所有字段初始化为它们在其中的相同值prototype。由于嵌入的消息和字符串对象是不可变的，它们在原始和副本之间共享。</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Eason_Shu</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://www.xiaolin.store/archives/8a092a16.html">http://www.xiaolin.store/archives/8a092a16.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Eason_Shu</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Protocol-Buffer/">
+                                    <span class="chip bg-color">Protocol Buffer</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96/">
+                                    <span class="chip bg-color">序列化</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/archives/8a092a16.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Protocol Buffer基本入门">
+                        
+                        <span class="card-title">Protocol Buffer基本入门</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一种 结构化[数据] 的数据存储格式（类似于 XML、Json ）rotocol Buffer 目前有两个版本：proto2 和 proto3
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Protocol-Buffer/" class="post-category">
+                                    Protocol Buffer
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Protocol-Buffer/">
+                        <span class="chip bg-color">Protocol Buffer</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96/">
+                        <span class="chip bg-color">序列化</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/archives/7a82ab9a.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Netty进阶学习（四）WebSocket协议开发">
+                        
+                        <span class="card-title">Netty进阶学习（四）WebSocket协议开发</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Netty/" class="post-category">
+                                    Netty
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Netty/">
+                        <span class="chip bg-color">Netty</span>
+                    </a>
+                    
+                    <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                        <span class="chip bg-color">Netty权威指南</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Eason_Shu<br />'
+            + '文章作者: Eason_Shu<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <a href="/about" target="_blank">Eason_Shu</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">65.1k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "1";
+                        var startDate = "28";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Eason-shu" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:3138066125@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=3138066125" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 3138066125" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>
