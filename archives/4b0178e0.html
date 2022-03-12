@@ -776,7 +776,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646921153641-b1c02fbd-ad7d-4624-a885-ff7d2c3acd7d.png#clientId=u3d1b89a0-2c47-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=223&id=u631fb61e&margin=%5Bobject%20Object%5D&name=image.png&originHeight=445&originWidth=1825&originalType=binary&ratio=1&rotation=0&showTitle=false&size=30982&status=done&style=none&taskId=uadfdfa01-3ed0-4b6c-a4a1-aee3eab0e12&title=&width=912.5" alt="image.png"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646921153641-b1c02fbd-ad7d-4624-a885-ff7d2c3acd7d.png" alt="image.png"></p>
 <h2 id="2-2-队列"><a href="#2-2-队列" class="headerlink" title="2.2 队列"></a>2.2 队列</h2><ul>
 <li>队列是一个<strong>有序列表</strong>，可以用<strong>数组</strong>或是<strong>链表</strong>来实现。</li>
 <li>遵循<strong>先入先出</strong>的原则。即：先存入队列的数据，要先取出。后存入的要后取出</li>
@@ -920,106 +920,115 @@
 <li>队列为空的判定条件：front &#x3D;&#x3D; rear</li>
 <li>队列为满的判定条件：(rear + 1) % maxSize &#x3D;&#x3D; front</li>
 <li>队列中有效元素的个数：(rear - front + maxSize) % maxSize</li>
-<li>入队和出队时，都需要让标记<strong>对maxSize取模</strong><br>&#96;&#96;&#96;java<br>package Queue;</li>
+<li>入队和出队时，都需要让标记<strong>对maxSize取模</strong></li>
 </ul>
-<p>&#x2F;**</p>
-<ul>
-<li>@Project_Name DataStructures</li>
-<li>@Author shu</li>
-<li>@Version 1.0</li>
-<li>@Date: 2022&#x2F;03&#x2F;12&#x2F; 14:49</li>
-<li>@Description 环形队列</li>
-</ul>
-<p> **&#x2F;<br>public class ArrayAroundQueue {<br>    &#x2F;&#x2F;队列的大小<br>    int maxSize;<br>    &#x2F;&#x2F;用数组来实现队列<br>    int[] arr;<br>    &#x2F;&#x2F;指向队列首元素的前一个位置<br>    int front;<br>    &#x2F;&#x2F;指向队列的尾元素<br>    int rear;</p>
-<pre><code>public ArrayAroundQueue(int maxSize) {
-    this.maxSize = maxSize;
-    arr = new int[this.maxSize];
-    //front指向队列首元素的前一个位置
-    front = 0;
-    rear = 0;
-}
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> Queue<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Project_Name DataStructures
+ * @Author shu
+ * @Version 1.0
+ * @Date: 2022/03/12/ 14:49
+ * @Description 环形队列
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ArrayAroundQueue</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//队列的大小</span>
+    <span class="token keyword">int</span> maxSize<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//用数组来实现队列</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//指向队列首元素的前一个位置</span>
+    <span class="token keyword">int</span> front<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//指向队列的尾元素</span>
+    <span class="token keyword">int</span> rear<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">ArrayAroundQueue</span><span class="token punctuation">(</span><span class="token keyword">int</span> maxSize<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>maxSize <span class="token operator">=</span> maxSize<span class="token punctuation">;</span>
+        arr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span>maxSize<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//front指向队列首元素的前一个位置</span>
+        front <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        rear <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
 
-public boolean isFull() {
-    return (rear+1)%maxSize == front;
-}
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isFull</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>rear<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>maxSize <span class="token operator">==</span> front<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
 
-public boolean isEmpty() {
-    return front == rear;
-}
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> front <span class="token operator">==</span> rear<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
 
-public void addNum(int num) {
-    if(isFull()) {
-        System.out.println(&quot;队列已满，无法在进行入队操作&quot;);
-        return;
-    }
-    //先放入元素，在后移队尾标记
-    arr[rear] = num;
-    rear = (rear+1)%maxSize;
-}
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addNum</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"队列已满，无法在进行入队操作"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">//先放入元素，在后移队尾标记</span>
+        arr<span class="token punctuation">[</span>rear<span class="token punctuation">]</span> <span class="token operator">=</span> num<span class="token punctuation">;</span>
+        rear <span class="token operator">=</span> <span class="token punctuation">(</span>rear<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>maxSize<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-public int getNum() {
-    if(isEmpty()) {
-        throw new RuntimeException(&quot;队列为空，无法出队&quot;);
-    }
-    //队首标记后移，指向队首元素
-    System.out.print(&quot;出队元素是：&quot;);
-    int num = arr[front];
-    front = (front+1)%maxSize;
-    return num;
-}
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"队列为空，无法出队"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">//队首标记后移，指向队首元素</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"出队元素是："</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> num <span class="token operator">=</span> arr<span class="token punctuation">[</span>front<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        front <span class="token operator">=</span> <span class="token punctuation">(</span>front<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>maxSize<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> num<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-public void showQueue() {
-    if(isEmpty()) {
-        throw new RuntimeException(&quot;队列为空，无法遍历&quot;);
-    }
-    System.out.println(&quot;遍历队列&quot;);
-    //当front + 1 == rear时停止遍历
-    int start = front;
-    while(start != rear) {
-        System.out.println(arr[start]);
-        //移动到下一个元素
-        start = (start+1)%maxSize;
-    }
-}
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">showQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"队列为空，无法遍历"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"遍历队列"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//当front + 1 == rear时停止遍历</span>
+        <span class="token keyword">int</span> start <span class="token operator">=</span> front<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>start <span class="token operator">!=</span> rear<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>start<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//移动到下一个元素</span>
+            start <span class="token operator">=</span> <span class="token punctuation">(</span>start<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>maxSize<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-public void getHead() {
-    if(isEmpty()) {
-        throw new RuntimeException(&quot;队列为空&quot;);
-    }
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getHead</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"队列为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-    System.out.println(&quot;队首元素为：&quot;+arr[front]);
-}
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"队首元素为："</span><span class="token operator">+</span>arr<span class="token punctuation">[</span>front<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
-<p>}</p>
-<pre><code>```java
-package Queue;
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> Queue<span class="token punctuation">;</span>
 
-/**
+<span class="token comment" spellcheck="true">/**
  * @Project_Name DataStructures
  * @Author shu
  * @Version 1.0
  * @Date: 2022/03/12/ 14:49
  * @Description
- **/
-public class ArrayAroundQueueTwst {
-    public static void main(String[] args) {
-        ArrayAroundQueue aroundQueue = new ArrayAroundQueue(5);
-        aroundQueue.addNum(1);
-        aroundQueue.addNum(2);
-        aroundQueue.addNum(3);
-        aroundQueue.addNum(4);
-        aroundQueue.showQueue();
-        System.out.println(aroundQueue.getNum());
-        System.out.println(aroundQueue.getNum());
-        aroundQueue.addNum(5);
-        aroundQueue.addNum(6);
-        aroundQueue.showQueue();
-        aroundQueue.getHead();
-    }
-}
+ **/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ArrayAroundQueueTwst</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ArrayAroundQueue aroundQueue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayAroundQueue</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aroundQueue<span class="token punctuation">.</span><span class="token function">showQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>aroundQueue<span class="token punctuation">.</span><span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>aroundQueue<span class="token punctuation">.</span><span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aroundQueue<span class="token punctuation">.</span><span class="token function">showQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aroundQueue<span class="token punctuation">.</span><span class="token function">getHead</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1647069649803-9be37586-8b3a-4e60-bf01-8d0e0425e3ee.png#clientId=u2558f904-5de7-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=315&id=u8aa50cb6&margin=%5Bobject%20Object%5D&name=image.png&originHeight=630&originWidth=1415&originalType=binary&ratio=1&rotation=0&showTitle=false&size=51872&status=done&style=none&taskId=u2976c11b-7c47-4241-8d9b-1c949296338&title=&width=707.5" alt="image.png"></p>
 
