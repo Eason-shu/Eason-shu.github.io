@@ -586,21 +586,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-21
+                    2022-03-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.1k
+                    6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    20 分
+                    25 分
                 </div>
                 
 
@@ -1135,7 +1135,181 @@ User extra <span class="token operator">=</span> <span class="token punctuation"
  Person extra <span class="token operator">=</span> <span class="token punctuation">(</span>Person<span class="token punctuation">)</span> intent<span class="token punctuation">.</span><span class="token function">getParcelableExtra</span><span class="token punctuation">(</span><span class="token string">"数据"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p><strong>Serializable的方式较为简单，但由于会把整个对象进行序列化，因此效率会比Parcelable方式低一些，所以在通常情况下还是更加推荐使用Parcelable的方式来实现Intent传递对象的功能。</strong></p>
-<h3 id="4-7-碎片（Fragment）"><a href="#4-7-碎片（Fragment）" class="headerlink" title="4.7 碎片（Fragment）"></a>4.7 碎片（Fragment）</h3><p><strong>碎片（Fragment）是一种可以嵌入在活动当中的UI片段，它能让程序更加合理和充分地利用大屏幕的空间，因而在平板上应用得非常广泛。有两种基本方式，静态碎片和动态碎片。</strong></p>
+<h3 id="4-7-ListView控件"><a href="#4-7-ListView控件" class="headerlink" title="4.7 ListView控件"></a>4.7 ListView控件</h3><ul>
+<li>ListView绝对可以称得上是Android中最常用的控件之一，几乎所有的应用程序都会用到它。</li>
+<li>由于手机屏幕空间都比较有限，能够一次性在屏幕上显示的内容并不多，当我们的程序中有大量的数据需要展示的时候，就可以借助ListView来实现。ListView允许用户通过手指上下滑动的方式将屏幕外的数据滚动到屏幕内，同时屏幕上原有的数据则会滚动出屏幕。相信你其实每天都在使用这个控件，比如查看QQ聊天记录，翻阅微博最新消息，等等。</li>
+</ul>
+<p><strong>布局文件</strong></p>
+<pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="utf-8"?></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>androidx.appcompat.widget.LinearLayoutCompat</span>
+    <span class="token attr-name"><span class="token namespace">android:</span>layout_width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>match_parent<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">android:</span>layout_height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>match_parent<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">xmlns:</span>android</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://schemas.android.com/apk/res/android<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ListView</span>
+        <span class="token attr-name"><span class="token namespace">android:</span>id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>@+id/listview<span class="token punctuation">"</span></span>
+        <span class="token attr-name"><span class="token namespace">android:</span>layout_width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>match_parent<span class="token punctuation">"</span></span>
+        <span class="token attr-name"><span class="token namespace">android:</span>layout_height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>match_parent<span class="token punctuation">"</span></span>
+        <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>androidx.appcompat.widget.LinearLayoutCompat</span><span class="token punctuation">></span></span>
+</code></pre>
+<p><strong>代码文件</strong></p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> androidx<span class="token punctuation">.</span>appcompat<span class="token punctuation">.</span>app<span class="token punctuation">.</span>AppCompatActivity<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>os<span class="token punctuation">.</span>Bundle<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>ArrayAdapter<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>ListView<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThirdActivity</span> <span class="token keyword">extends</span> <span class="token class-name">AppCompatActivity</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">// 数据来源，可以是数据库数据</span>
+    <span class="token keyword">private</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> data<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">"01"</span><span class="token punctuation">,</span><span class="token string">"02"</span><span class="token punctuation">,</span><span class="token string">"03"</span><span class="token punctuation">,</span><span class="token string">"04"</span><span class="token punctuation">,</span><span class="token string">"05"</span><span class="token punctuation">,</span><span class="token string">"06"</span><span class="token punctuation">,</span><span class="token string">"07"</span><span class="token punctuation">,</span><span class="token string">"08"</span><span class="token punctuation">,</span>
+                           <span class="token string">"09"</span><span class="token punctuation">,</span><span class="token string">"10"</span><span class="token punctuation">,</span><span class="token string">"11"</span><span class="token punctuation">,</span><span class="token string">"12"</span><span class="token punctuation">,</span><span class="token string">"13"</span><span class="token punctuation">,</span><span class="token string">"14"</span><span class="token punctuation">,</span><span class="token string">"15"</span><span class="token punctuation">,</span><span class="token string">"16"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>Bundle savedInstanceState<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setContentView</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>layout<span class="token punctuation">.</span>activity_third<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 创建一个适配器， ArrayAdapter&lt;T></span>
+        ArrayAdapter<span class="token operator">&lt;</span>String<span class="token operator">></span> adapter <span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">ArrayAdapter</span><span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span>ThirdActivity<span class="token punctuation">.</span><span class="token keyword">this</span><span class="token punctuation">,</span>android<span class="token punctuation">.</span>R<span class="token punctuation">.</span>layout<span class="token punctuation">.</span>simple_list_item_1<span class="token punctuation">,</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 布局文件</span>
+        ListView listView <span class="token operator">=</span> <span class="token punctuation">(</span>ListView<span class="token punctuation">)</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>listview<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 将构建好的适配器对象传递进去，这样ListView和数据之间的关联就建立完成了。</span>
+        listView<span class="token punctuation">.</span><span class="token function">setAdapter</span><span class="token punctuation">(</span>adapter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>自定义适配器</strong></p>
+<p>继承ArrayAdapter方法重写getView方法</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>adapter<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>SuppressLint<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>content<span class="token punctuation">.</span>Context<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>view<span class="token punctuation">.</span>LayoutInflater<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>view<span class="token punctuation">.</span>View<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>view<span class="token punctuation">.</span>ViewGroup<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>ArrayAdapter<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>ImageView<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>TextView<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>R<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>pojo<span class="token punctuation">.</span>Fruit<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+
+
+
+<span class="token comment" spellcheck="true">/**
+ * 自定义适配器
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FruitAdapter</span> <span class="token keyword">extends</span> <span class="token class-name">ArrayAdapter</span><span class="token operator">&lt;</span>Fruit<span class="token operator">></span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> resourceId<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">FruitAdapter</span><span class="token punctuation">(</span>Context context<span class="token punctuation">,</span> <span class="token keyword">int</span> textViewResourceId<span class="token punctuation">,</span> List<span class="token operator">&lt;</span>Fruit<span class="token operator">></span> objects<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span>textViewResourceId<span class="token punctuation">,</span>objects<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        resourceId <span class="token operator">=</span> textViewResourceId<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> View <span class="token function">getView</span><span class="token punctuation">(</span><span class="token keyword">int</span> position<span class="token punctuation">,</span> View convertView<span class="token punctuation">,</span> ViewGroup parent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 获取当前项的Fruit实例</span>
+        Fruit fruit <span class="token operator">=</span> <span class="token function">getItem</span><span class="token punctuation">(</span>position<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 获取自定义的组件视图</span>
+        <span class="token annotation punctuation">@SuppressLint</span><span class="token punctuation">(</span><span class="token string">"ViewHolder"</span><span class="token punctuation">)</span> View view<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 组件再次加载判断是否已加载过</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>convertView<span class="token operator">==</span>null<span class="token punctuation">)</span>
+               view<span class="token operator">=</span> LayoutInflater<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">inflate</span><span class="token punctuation">(</span>resourceId<span class="token punctuation">,</span>parent<span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> 
+               view<span class="token operator">=</span>convertView<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 获取组件资源</span>
+        ImageView fruitImage <span class="token operator">=</span> <span class="token punctuation">(</span>ImageView<span class="token punctuation">)</span>view<span class="token punctuation">.</span><span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>fruit_image<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        TextView fruitName <span class="token operator">=</span> <span class="token punctuation">(</span>TextView<span class="token punctuation">)</span>view<span class="token punctuation">.</span><span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>fruit_name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 将获取实例设置到当中</span>
+        fruitImage<span class="token punctuation">.</span><span class="token function">setImageResource</span><span class="token punctuation">(</span>fruit<span class="token punctuation">.</span><span class="token function">getImageId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        fruitName<span class="token punctuation">.</span><span class="token function">setText</span><span class="token punctuation">(</span>fruit<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 返回视图</span>
+        <span class="token keyword">return</span> view<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>为选项绑定事件</strong></p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> androidx<span class="token punctuation">.</span>appcompat<span class="token punctuation">.</span>app<span class="token punctuation">.</span>AppCompatActivity<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>os<span class="token punctuation">.</span>Bundle<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>view<span class="token punctuation">.</span>View<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>AdapterView<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>ArrayAdapter<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>ListView<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>Toast<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>adapter<span class="token punctuation">.</span>FruitAdapter<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>pojo<span class="token punctuation">.</span>Fruit<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>ArrayList<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThirdActivity</span> <span class="token keyword">extends</span> <span class="token class-name">AppCompatActivity</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> List<span class="token operator">&lt;</span>Fruit<span class="token operator">></span> fruitList <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+
+    <span class="token keyword">private</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> data <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"Apple"</span><span class="token punctuation">,</span><span class="token string">"Banana"</span><span class="token punctuation">,</span><span class="token string">"Orange"</span><span class="token punctuation">,</span><span class="token string">"Watermelon"</span><span class="token punctuation">,</span><span class="token string">"Pear"</span><span class="token punctuation">,</span><span class="token string">"Grape"</span><span class="token punctuation">,</span><span class="token string">"Pineapple"</span><span class="token punctuation">,</span><span class="token string">"Strawberry"</span><span class="token punctuation">,</span><span class="token string">"Cherry"</span><span class="token punctuation">,</span><span class="token string">"Mango"</span><span class="token punctuation">,</span>
+            <span class="token string">"Apple"</span><span class="token punctuation">,</span><span class="token string">"Banana"</span><span class="token punctuation">,</span><span class="token string">"Orange"</span><span class="token punctuation">,</span><span class="token string">"Watermelon"</span><span class="token punctuation">,</span><span class="token string">"Pear"</span><span class="token punctuation">,</span><span class="token string">"Grape"</span><span class="token punctuation">,</span><span class="token string">"Pineapple"</span><span class="token punctuation">,</span><span class="token string">"Strawberry"</span><span class="token punctuation">,</span><span class="token string">"Cherry"</span><span class="token punctuation">,</span><span class="token string">"Mango"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>Bundle savedInstanceState<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setContentView</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>layout<span class="token punctuation">.</span>activity_third<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">initFruits</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//初始化水果数据</span>
+        FruitAdapter adapter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FruitAdapter</span><span class="token punctuation">(</span>ThirdActivity<span class="token punctuation">.</span><span class="token keyword">this</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>layout<span class="token punctuation">.</span>fruit_item<span class="token punctuation">,</span>fruitList<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ListView listView<span class="token operator">=</span> <span class="token punctuation">(</span>ListView<span class="token punctuation">)</span><span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>listview<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        listView<span class="token punctuation">.</span><span class="token function">setAdapter</span><span class="token punctuation">(</span>adapter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 为其增加绑定事件</span>
+        listView<span class="token punctuation">.</span><span class="token function">setOnItemClickListener</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">AdapterView<span class="token punctuation">.</span>OnItemClickListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onItemClick</span><span class="token punctuation">(</span>AdapterView<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> parent<span class="token punctuation">,</span> View view<span class="token punctuation">,</span> <span class="token keyword">int</span> position<span class="token punctuation">,</span> <span class="token keyword">long</span> id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                Fruit fruit <span class="token operator">=</span> fruitList<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>position<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                Toast<span class="token punctuation">.</span><span class="token function">makeText</span><span class="token punctuation">(</span>ThirdActivity<span class="token punctuation">.</span><span class="token keyword">this</span><span class="token punctuation">,</span>fruit<span class="token punctuation">.</span><span class="token function">getImageId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>Toast<span class="token punctuation">.</span>LENGTH_SHORT<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">initFruits</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i  <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            Fruit apple <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Fruit</span><span class="token punctuation">(</span><span class="token string">"Apple"</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>ic_launcher_background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fruitList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>apple<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Fruit banana <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Fruit</span><span class="token punctuation">(</span><span class="token string">"Banana"</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>ic_launcher_background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fruitList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>banana<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Fruit orange <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Fruit</span><span class="token punctuation">(</span><span class="token string">"Orange"</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>ic_launcher_background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fruitList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>orange<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Fruit watermelon <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Fruit</span><span class="token punctuation">(</span><span class="token string">"Watermelon"</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>ic_launcher_background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fruitList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>watermelon<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Fruit pear <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Fruit</span><span class="token punctuation">(</span><span class="token string">"Pear"</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>ic_launcher_background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fruitList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>pear<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Fruit grape <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Fruit</span><span class="token punctuation">(</span><span class="token string">"Grape"</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>ic_launcher_background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fruitList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>grape<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Fruit pineapple <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Fruit</span><span class="token punctuation">(</span><span class="token string">"Pineapple"</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>ic_launcher_background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fruitList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>pineapple<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Fruit strawberry <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Fruit</span><span class="token punctuation">(</span><span class="token string">"Strawberry"</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>ic_launcher_background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fruitList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>strawberry<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Fruit cherry <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Fruit</span><span class="token punctuation">(</span><span class="token string">"Cherry"</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>ic_launcher_background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fruitList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>cherry<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Fruit mango <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Fruit</span><span class="token punctuation">(</span><span class="token string">"Mango"</span><span class="token punctuation">,</span>R<span class="token punctuation">.</span>drawable<span class="token punctuation">.</span>ic_launcher_background<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fruitList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>mango<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="4-8-RecyclerView-控件"><a href="#4-8-RecyclerView-控件" class="headerlink" title="4.8 RecyclerView 控件"></a>4.8 RecyclerView 控件</h3><ul>
+<li>Android提供了一个更强大的滚动控件——RecyclerView。它可以说是一个增强版的ListView，不仅可以轻松实现和ListView同样的效果，还优化了ListView中存在的各种不足之处。目前Android官方更加推荐使用。</li>
+<li>RecyclerView，未来也会有更多的程序逐渐从ListView转向RecyclerView，那么本节我们就来详细讲解一下RecyclerView的用法。</li>
+</ul>
+<h3 id="4-9-碎片（Fragment）"><a href="#4-9-碎片（Fragment）" class="headerlink" title="4.9 碎片（Fragment）"></a>4.9 碎片（Fragment）</h3><p><strong>碎片（Fragment）是一种可以嵌入在活动当中的UI片段，它能让程序更加合理和充分地利用大屏幕的空间，因而在平板上应用得非常广泛。有两种基本方式，静态碎片和动态碎片。</strong></p>
 <blockquote>
 <p>动态碎片</p>
 </blockquote>
@@ -1774,7 +1948,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">100.6k</span>
+                        class="white-color">105k</span>
             
             
             

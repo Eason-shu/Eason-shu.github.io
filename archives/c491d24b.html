@@ -1,0 +1,1868 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="Netty源码分析 （二） AbstractReferenceCountedByteBuf, Eason_Shu">
+    <meta name="description" content="Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Netty源码分析 （二） AbstractReferenceCountedByteBuf | Eason_Shu</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+ 
+    <style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },2500);
+        },1000);//强制显示loading page 1s
+    };
+    loaded();
+})()
+</script>
+
+ 
+<body>
+    
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading-container">
+             <p class="loading-text">嘘~  正在从服务器偷取页面 . . . </p>
+             <div class="loading-image">
+                 <div></div>
+                 <div></div>
+                 <div></div>
+                 <div></div>
+                 <div></div>
+             </div>
+        </div>
+    
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Eason_Shu</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fa fa-heart" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fa fa-rocket" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Eason_Shu</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-heart"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fa fa-rocket"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Eason-shu" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Eason-shu" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Netty源码分析 （二） AbstractReferenceCountedByteBuf</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                                <span class="chip bg-color">Netty权威指南</span>
+                            </a>
+                        
+                            <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                                <span class="chip bg-color">Netty源码分析</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                Netty源码分析
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-03-24
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-03-24
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    14 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <meta name="referrer" content="no-referrer">
+
+<h2 id="Netty源码分析-（二）-AbstractReferenceCountedByteBuf"><a href="#Netty源码分析-（二）-AbstractReferenceCountedByteBuf" class="headerlink" title="Netty源码分析 （二） AbstractReferenceCountedByteBuf"></a>Netty源码分析 （二） AbstractReferenceCountedByteBuf</h2><h3 id="4-2-Reference-引用计数"><a href="#4-2-Reference-引用计数" class="headerlink" title="4.2 Reference 引用计数"></a>4.2 Reference 引用计数</h3><ul>
+<li>为了管理和释放资源，netty 采用了<strong>引用计数</strong>的方式，当某个对象不在被其他对象引用时，释放这个对象锁所持有的资源来优化内存使用和性能。</li>
+<li>在netty中，这个对象必须实现 ReferenceCounted 接口。</li>
+<li>引用计数的原理并不复杂： ReferenceCounted实例通常以<strong>引用计数</strong>为 1 作为开始。只要<strong>引用计数</strong>大于 0，就能保证对象不会被释放。</li>
+<li><strong>注意：</strong>虽然释放的确切语义可能是特定于实现的，但是访问一个已经被释放的<strong>引用计数</strong>的ReferenceCounted对象，一定会抛出IllegalReferenceCountException 异常。</li>
+<li>而 AbstractReferenceCountedByteBuf 类就是处理缓存区<strong>引用计数</strong>相关的实现。</li>
+</ul>
+<h4 id="4-2-1-ReferenceCounted-类"><a href="#4-2-1-ReferenceCounted-类" class="headerlink" title="4.2.1 ReferenceCounted 类"></a>4.2.1 ReferenceCounted 类</h4><h5 id="4-2-1-1-基本概述"><a href="#4-2-1-1-基本概述" class="headerlink" title="4.2.1.1 基本概述"></a>4.2.1.1 基本概述</h5><pre class=" language-java"><code class="language-java">A reference<span class="token operator">-</span>counted object that requires explicit deallocation<span class="token punctuation">.</span>
+When a <span class="token keyword">new</span> <span class="token class-name">ReferenceCounted</span> is instantiated<span class="token punctuation">,</span> it starts with the reference count of <span class="token number">1</span><span class="token punctuation">.</span> <span class="token function">retain</span><span class="token punctuation">(</span><span class="token punctuation">)</span> increases the reference count<span class="token punctuation">,</span> and <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> decreases the reference count<span class="token punctuation">.</span> If the reference count is decreased to <span class="token number">0</span><span class="token punctuation">,</span> the object will be deallocated explicitly<span class="token punctuation">,</span> and accessing the deallocated object will usually result in an access violation<span class="token punctuation">.</span>
+If an object that <span class="token keyword">implements</span> <span class="token class-name">ReferenceCounted</span> is a container of other objects that implement ReferenceCounted<span class="token punctuation">,</span> the contained objects will also be released via <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> when the container's reference count becomes <span class="token number">0</span><span class="token punctuation">.</span>
+</code></pre>
+<ul>
+<li>首先说明 ReferenceCounted 是一个显式要求重新分配资源的用计数对象。</li>
+<li>第二段说明了，当实例化一个新的ReferenceCounted对象时，它从引用计数1开始。retain() 方法将增加引用计数，release() 方法将减少引用计数。如果引用计数减少到0，对象将被显式释放，而访问一个被释放的对象通常会导致访问冲突。</li>
+<li>如果一个ReferenceCounted对象，它里面包含了其他的ReferenceCounted对象，那么当这个ReferenceCounted对象被释放时，它会调用它包含了的那些ReferenceCounted对象的release() 方法去释放它们。</li>
+</ul>
+<h5 id="4-2-1-2-基本方法"><a href="#4-2-1-2-基本方法" class="headerlink" title="4.2.1.2 基本方法"></a>4.2.1.2 基本方法</h5><pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">// 返回此对象的引用计数。如果0 ，则表示该对象已被释放。</span>
+    <span class="token keyword">int</span> <span class="token function">refCnt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 计数器加一</span>
+    ReferenceCounted <span class="token function">retain</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 按指定的increment增加引用计数。</span>
+    ReferenceCounted <span class="token function">retain</span><span class="token punctuation">(</span><span class="token keyword">int</span> increment<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+   <span class="token comment" spellcheck="true">// 记录此对象的当前访问位置以进行调试。如果确定该对象被泄露，该操作记录的信息将通过    ResourceLeakDetector提供给您。此方法是touch(null)的快捷方式。</span>
+    ReferenceCounted <span class="token function">touch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+     <span class="token comment" spellcheck="true">// 记录此对象的当前访问位置以及用于调试目的的附加任意信息。如果确定该对象被泄露，该操作记录的信息将通过ResourceLeakDetector提供给您。</span>
+    ReferenceCounted <span class="token function">touch</span><span class="token punctuation">(</span>Object hint<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+   <span class="token comment" spellcheck="true">//如果引用计数达到0 ，则将引用计数减1并释放此对象。</span>
+    <span class="token keyword">boolean</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 如果引用计数达到0 ，则按指定的decrement减少引用计数并释放此对象</span>
+    <span class="token keyword">boolean</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token keyword">int</span> decrement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="4-2-2-ReferenceCountUpdater"><a href="#4-2-2-ReferenceCountUpdater" class="headerlink" title="4.2.2 ReferenceCountUpdater"></a>4.2.2 ReferenceCountUpdater</h4><h5 id="4-2-2-1-实现原理"><a href="#4-2-2-1-实现原理" class="headerlink" title="4.2.2.1 实现原理"></a>4.2.2.1 实现原理</h5><ul>
+<li>相信很多人第一次看 ReferenceCountUpdater 实现源码时，都是一脸懵逼，感觉和我们想象中<strong>引用计数</strong>实现原理不一样啊。</li>
+<li>在我们的理解中，实现原理就是调用 retain() 方法引用计数就加一，调用release() 方法引用计数就减一，当引用计数是0的时候，就释放资源。</li>
+<li>但是netty 为了提高性能，它没有采用加法器这种实现，而是采用位运算的实现，那么它是如何工作的呢。</li>
+<li>初始时<strong>引用计数</strong>的值是 2，当调用 retain() 方法，就采用左移位运算 2 &lt;&lt; 1 变成 4。当调用release() 方法，就采用右移位运算 4 &gt;&gt; 1 又变成了 2。</li>
+<li>此时你会发现，因为初始值是 2，而且每次引用的时候，都是用左移位运算(相当于乘以2)，那么引用还存在的情况下，引用计数一定是一个偶数啊。</li>
+<li>当每次调用release() 方法释放时，就采用右移位运算(相当于除以2)，直到到了引用计数是2 时，再次调用release() 方法，进行右移位运算，引用计数变成1，这时就应该释放对象了啊。</li>
+<li>那么我们就可以得到，引用计数是偶数表示引用还存在，引用计数是1 表示要释放对象了，这时就可以用简单地位运算就可以判断了(引用计数 &amp; 1)。</li>
+<li>(引用计数 &amp; 1) 等于 0，那么引用计数就是偶数啊，因为偶数的最低一位是 0；当 (引用计数 &amp; 1)不等于 0，那么引用计数就是奇数，因为奇数的最低一位是 1，而在我们上述的运算规则中，引用计数只会有一个奇数1，也就是说引用计数是奇数的话，表示这个对象被释放了。</li>
+<li>因此在ReferenceCountUpdater 实现中，它使用<strong>奇偶性</strong>来判断对象是否要释放，通过位运算代替加法器提高性能。</li>
+<li>但是你在 ReferenceCountUpdater 实现中，看到很多类似 (rawCnt &#x3D;&#x3D; 2 || rawCnt &#x3D;&#x3D; 4 || (rawCnt &amp; 1) &#x3D;&#x3D; 0) 判断。</li>
+<li>通过 (rawCnt &amp; 1) 判断<strong>奇偶性</strong>，不就可以了么，为什么还要判断 rawCnt &#x3D;&#x3D; 2。<br>那是因为<strong>位与</strong>操作(x &amp; y)比直接<strong>相等</strong>操作 (x &#x3D;&#x3D; y) 操作更耗 CPU 性能，而且大部分引用计数都是 2 和 4 的数，因此 netty 为了提高性能，就先使用了<strong>相等</strong>判断，为了提高性能 netty 也是丧心病狂啊。</li>
+</ul>
+<h5 id="4-2-2-2-基本方法"><a href="#4-2-2-2-基本方法" class="headerlink" title="4.2.2.2 基本方法"></a>4.2.2.2 基本方法</h5><blockquote>
+<p>AtomicIntegerFieldUpdater</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">   <span class="token keyword">protected</span> <span class="token keyword">abstract</span> AtomicIntegerFieldUpdater<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>这是一个抽样方法，有子类实现，返回<strong>引用计数</strong>原子化更新器AtomicIntegerFieldUpdater。例如在 AbstractReferenceCountedByteBuf 的实现中。</li>
+</ul>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> REFCNT_FIELD_OFFSET <span class="token operator">=</span>
+            ReferenceCountUpdater<span class="token punctuation">.</span><span class="token function">getUnsafeOffset</span><span class="token punctuation">(</span>AbstractReferenceCountedByteBuf<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token string">"refCnt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> AtomicIntegerFieldUpdater<span class="token operator">&lt;</span>AbstractReferenceCountedByteBuf<span class="token operator">></span> AIF_UPDATER <span class="token operator">=</span>
+            AtomicIntegerFieldUpdater<span class="token punctuation">.</span><span class="token function">newUpdater</span><span class="token punctuation">(</span>AbstractReferenceCountedByteBuf<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token string">"refCnt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> ReferenceCountUpdater<span class="token operator">&lt;</span>AbstractReferenceCountedByteBuf<span class="token operator">></span> updater <span class="token operator">=</span>
+            <span class="token keyword">new</span> <span class="token class-name">ReferenceCountUpdater</span><span class="token operator">&lt;</span>AbstractReferenceCountedByteBuf<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">protected</span> AtomicIntegerFieldUpdater<span class="token operator">&lt;</span>AbstractReferenceCountedByteBuf<span class="token operator">></span> <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> AIF_UPDATER<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">protected</span> <span class="token keyword">long</span> <span class="token function">unsafeOffset</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> REFCNT_FIELD_OFFSET<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> refCnt <span class="token operator">=</span> updater<span class="token punctuation">.</span><span class="token function">initialValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>AtomicIntegerFieldUpdater 的作用和 AtomicInteger 一样，采用 CAS的原理，原子化更新数据，防止并发冲突。</li>
+<li>至于为什么不直接使用 AtomicInteger，是因为AtomicInteger是一个对象，每个<strong>引用计数</strong>ReferenceCounted实例都产生一个AtomicInteger实例。而采用AtomicIntegerFieldUpdater 和 refCnt 组合， 每个<strong>引用计数</strong>ReferenceCounted实例共享AtomicIntegerFieldUpdater实例，和一个基本数据类型 refCnt。</li>
+<li>为什么不在 ReferenceCountUpdater 中定义refCnt 变量，那是因为引用计数是属于每个ReferenceCounted实例的而不是工具类ReferenceCountUpdater的。</li>
+</ul>
+<blockquote>
+<p>unsafeOffset</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">protected</span> <span class="token keyword">abstract</span> <span class="token keyword">long</span> <span class="token function">unsafeOffset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>返回<strong>引用计数</strong> refCnt 的内存地址</li>
+</ul>
+<blockquote>
+<p>initialValue()</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">initialValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>返回默认<strong>引用计数</strong>初始值是 2。</li>
+</ul>
+<blockquote>
+<p>realRefCnt</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">realRefCnt</span><span class="token punctuation">(</span><span class="token keyword">int</span> rawCnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> rawCnt <span class="token operator">!=</span> <span class="token number">2</span> <span class="token operator">&amp;&amp;</span> rawCnt <span class="token operator">!=</span> <span class="token number">4</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>rawCnt <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> rawCnt <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>返回<strong>引用计数</strong>真实值。这里我们将<strong>引用计数</strong>分为原始值和真实值。</p>
+<ol>
+<li>原始值：就是<strong>引用计数</strong>变量refCnt 的值，初始值是2，每次引用都是乘以2。</li>
+<li>真实值: 就是<strong>引用计数</strong>象征意义上的值，那么它的初始值是1，每次引用就是加1。也就是说一般情况下，原始值是真实值的2倍。</li>
+</ol>
+<ul>
+<li>这里，(rawCnt &amp; 1) !&#x3D; 0 表示是奇数，那就是表示被释放了，<strong>引用计数</strong>的真实值就是 0，所以直接返回 0；否则就使用右移位运算返回真实值。</li>
+<li>至于 rawCnt !&#x3D; 2 &amp;&amp; rawCnt !&#x3D; 4 就是为了提高性能，因为相等判断比位与 &amp; 操作快，当 rawCnt 是 2 或者 4 的时候，不用进行位与操作判断了，直接返回 rawCnt &gt;&gt;&gt; 1 。</li>
+</ul>
+<blockquote>
+<p>toLiveRealRefCnt</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">toLiveRealRefCnt</span><span class="token punctuation">(</span><span class="token keyword">int</span> rawCnt<span class="token punctuation">,</span> <span class="token keyword">int</span> decrement<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>rawCnt <span class="token operator">==</span> <span class="token number">2</span> <span class="token operator">||</span> rawCnt <span class="token operator">==</span> <span class="token number">4</span> <span class="token operator">||</span> <span class="token punctuation">(</span>rawCnt <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> rawCnt <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// odd rawCnt => already deallocated</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalReferenceCountException</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span>decrement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>这个方法与realRefCnt(int) 功能一样，只不过当<strong>引用计数</strong>真实值是 0 的时候，本方法会直接抛出 IllegalReferenceCountException 异常，而realRefCnt(int) 是返回 0。</li>
+<li>这个方法一般都在 release 方法中被调用，因此当发现<strong>引用计数</strong>真实值是 0 ，就会抛出异常，提示正在 release 一个已经释放的对象。</li>
+</ul>
+<blockquote>
+<p>nonVolatileRawCnt</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">nonVolatileRawCnt</span><span class="token punctuation">(</span>T instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// TODO: Once we compile against later versions of Java we can replace the Unsafe usage here by varhandles.</span>
+        <span class="token keyword">final</span> <span class="token keyword">long</span> offset <span class="token operator">=</span> <span class="token function">unsafeOffset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> offset <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">?</span> PlatformDependent<span class="token punctuation">.</span><span class="token function">getInt</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> offset<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>获取<strong>引用计数</strong>变量refCnt 的值，即原始值。</li>
+</ul>
+<blockquote>
+<p>refCnt</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">refCnt</span><span class="token punctuation">(</span>T instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">realRefCnt</span><span class="token punctuation">(</span><span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>获取<strong>引用计数</strong>真实值，这个方法被 ReferenceCounted 实例的 refCnt() 方法调用。</p>
+<blockquote>
+<p>isLiveNonVolatile</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">isLiveNonVolatile</span><span class="token punctuation">(</span>T instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">final</span> <span class="token keyword">long</span> offset <span class="token operator">=</span> <span class="token function">unsafeOffset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">final</span> <span class="token keyword">int</span> rawCnt <span class="token operator">=</span> offset <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">?</span> PlatformDependent<span class="token punctuation">.</span><span class="token function">getInt</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> offset<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// The "real" ref count is > 0 if the rawCnt is even.</span>
+        <span class="token keyword">return</span> rawCnt <span class="token operator">==</span> <span class="token number">2</span> <span class="token operator">||</span> rawCnt <span class="token operator">==</span> <span class="token number">4</span> <span class="token operator">||</span> rawCnt <span class="token operator">==</span> <span class="token number">6</span> <span class="token operator">||</span> rawCnt <span class="token operator">==</span> <span class="token number">8</span> <span class="token operator">||</span> <span class="token punctuation">(</span>rawCnt <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>判断对象是否还在被引用。返回true 表示这个对象还在被别人引用，返回false 表示这个对应已经被释放了。</li>
+<li>(rawCnt &amp; 1) &#x3D;&#x3D; 0 表示是偶数，那么就还在被引用；rawCnt &#x3D;&#x3D; 2 || rawCnt &#x3D;&#x3D; 4 || rawCnt &#x3D;&#x3D; 6 || rawCnt &#x3D;&#x3D; 8 都是用来加快性能的。</li>
+</ul>
+<blockquote>
+<p>setRefCnt(T instance, int refCnt) 和 resetRefCnt(T instance)</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">setRefCnt</span><span class="token punctuation">(</span>T instance<span class="token punctuation">,</span> <span class="token keyword">int</span> refCnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> refCnt <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">?</span> refCnt <span class="token operator">&lt;&lt;</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// overflow OK here</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**
+     * Resets the reference count to 1
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">resetRefCnt</span><span class="token punctuation">(</span>T instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token function">initialValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>直接设置<strong>引用计数</strong>。注意这里即使 refCnt &lt;&lt; 1 溢出 int 最大值，也无所谓。</li>
+</ul>
+<h5 id="4-2-2-3-retain-系列方法"><a href="#4-2-2-3-retain-系列方法" class="headerlink" title="4.2.2.3 retain 系列方法"></a>4.2.2.3 retain 系列方法</h5><pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">final</span> T <span class="token function">retain</span><span class="token punctuation">(</span>T instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">retain0</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">final</span> T <span class="token function">retain</span><span class="token punctuation">(</span>T instance<span class="token punctuation">,</span> <span class="token keyword">int</span> increment<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 所有对原始值的更改是真实值更改的2倍，溢出是可以的</span>
+        <span class="token keyword">int</span> rawIncrement <span class="token operator">=</span> <span class="token function">checkPositive</span><span class="token punctuation">(</span>increment<span class="token punctuation">,</span> <span class="token string">"increment"</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">retain0</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> increment<span class="token punctuation">,</span> rawIncrement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// rawIncrement == increment &lt;&lt; 1 rawIncrement 是increment的两倍</span>
+    <span class="token keyword">private</span> T <span class="token function">retain0</span><span class="token punctuation">(</span>T instance<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> increment<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> rawIncrement<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 通过 updater()，原子化增加原始值，并返回改变前的值</span>
+        <span class="token keyword">int</span> oldRef <span class="token operator">=</span> <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getAndAdd</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> rawIncrement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 如果改变前的值oldRef是奇数，即对象已经被释放了，那么就要抛出异常。</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>oldRef <span class="token operator">!=</span> <span class="token number">2</span> <span class="token operator">&amp;&amp;</span> oldRef <span class="token operator">!=</span> <span class="token number">4</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>oldRef <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalReferenceCountException</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> increment<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// don't pass 0!</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>oldRef <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> oldRef <span class="token operator">+</span> rawIncrement <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                <span class="token operator">||</span> <span class="token punctuation">(</span>oldRef <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> oldRef <span class="token operator">+</span> rawIncrement <span class="token operator">&lt;</span> oldRef<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// overflow case</span>
+            <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getAndAdd</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token operator">-</span>rawIncrement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalReferenceCountException</span><span class="token punctuation">(</span><span class="token function">realRefCnt</span><span class="token punctuation">(</span>oldRef<span class="token punctuation">)</span><span class="token punctuation">,</span> increment<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li>因为原始值是真实值的两倍，所以增加值 rawIncrement 也是increment 的两倍。</li>
+<li>通过 updater() 的 getAndAdd 方法进行原子化更新。</li>
+<li>oldRef !&#x3D; 2 &amp;&amp; oldRef !&#x3D; 4 &amp;&amp; (oldRef &amp; 1) !&#x3D; 0 判断，是表明有线程在本线程进行getAndAdd 方法时，先将本对象释放了，那么这里就需要抛出异常。</li>
+<li>don’t pass 0! 有溢出，我们就要进行处理。</li>
+</ul>
+<h5 id="4-2-2-4-release-系列方法"><a href="#4-2-2-4-release-系列方法" class="headerlink" title="4.2.2.4 release 系列方法"></a>4.2.2.4 release 系列方法</h5><blockquote>
+<p>release </p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">release</span><span class="token punctuation">(</span>T instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 返回引用计数原始值</span>
+    <span class="token keyword">int</span> rawCnt <span class="token operator">=</span> <span class="token function">nonVolatileRawCnt</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 当rawCnt == 2，表示就要释放了，调用 tryFinalRelease0(instance, 2) || retryRelease0(instance, 1)，</span>
+    <span class="token comment" spellcheck="true">// 否则调用nonFinalRelease0 方法，减少引用计数原始值</span>
+    <span class="token keyword">return</span> rawCnt <span class="token operator">==</span> <span class="token number">2</span> <span class="token operator">?</span> <span class="token function">tryFinalRelease0</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token function">retryRelease0</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token operator">:</span> <span class="token function">nonFinalRelease0</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> rawCnt<span class="token punctuation">,</span> <span class="token function">toLiveRealRefCnt</span><span class="token punctuation">(</span>rawCnt<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">release</span><span class="token punctuation">(</span>T instance<span class="token punctuation">,</span> <span class="token keyword">int</span> decrement<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 返回引用计数原始值</span>
+    <span class="token keyword">int</span> rawCnt <span class="token operator">=</span> <span class="token function">nonVolatileRawCnt</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 返回引用计数真实值</span>
+    <span class="token keyword">int</span> realCnt <span class="token operator">=</span> <span class="token function">toLiveRealRefCnt</span><span class="token punctuation">(</span>rawCnt<span class="token punctuation">,</span> <span class="token function">checkPositive</span><span class="token punctuation">(</span>decrement<span class="token punctuation">,</span> <span class="token string">"decrement"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 当待减值 decrement 等于引用计数真实值，表示就要释放了，调用 tryFinalRelease0 和 retryRelease0 方法，</span>
+    <span class="token comment" spellcheck="true">// 否则调用nonFinalRelease0 方法，减少引用计数原始值</span>
+    <span class="token keyword">return</span> decrement <span class="token operator">==</span> realCnt <span class="token operator">?</span> <span class="token function">tryFinalRelease0</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> rawCnt<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token function">retryRelease0</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> decrement<span class="token punctuation">)</span>
+            <span class="token operator">:</span> <span class="token function">nonFinalRelease0</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> decrement<span class="token punctuation">,</span> rawCnt<span class="token punctuation">,</span> realCnt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>tryFinalRelease0 </p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">boolean</span> <span class="token function">tryFinalRelease0</span><span class="token punctuation">(</span>T instance<span class="token punctuation">,</span> <span class="token keyword">int</span> expectRawCnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">return</span> <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> expectRawCnt<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// any odd number will work</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>尝试将引用计数原始值设置为 1 ，如果设置成功那么就代表这个对象就要被释放了。</p>
+<blockquote>
+<p>retryRelease0 </p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">boolean</span> <span class="token function">retryRelease0</span><span class="token punctuation">(</span>T instance<span class="token punctuation">,</span> <span class="token keyword">int</span> decrement<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">// 死循环采用 CAS 更新</span>
+   <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       <span class="token comment" spellcheck="true">// 获取引用计数原始值 rawCnt 和 引用计数真实值 realCnt</span>
+       <span class="token keyword">int</span> rawCnt <span class="token operator">=</span> <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span><span class="token punctuation">,</span> realCnt <span class="token operator">=</span> <span class="token function">toLiveRealRefCnt</span><span class="token punctuation">(</span>rawCnt<span class="token punctuation">,</span> decrement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token comment" spellcheck="true">// 待减值 decrement 等于引用计数真实值 realCnt,就尝试进行释放</span>
+       <span class="token keyword">if</span> <span class="token punctuation">(</span>decrement <span class="token operator">==</span> realCnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+           <span class="token comment" spellcheck="true">// 调用 tryFinalRelease0 方法进行释放，成功就跳出死循环，返回 true</span>
+           <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">tryFinalRelease0</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> rawCnt<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+               <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span>
+           <span class="token comment" spellcheck="true">// 待减值 decrement 小于 引用计数真实值 realCnt</span>
+       <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>decrement <span class="token operator">&lt;</span> realCnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+           <span class="token comment" spellcheck="true">// 对引用计数原始值更改要乘以2，即 decrement &lt;&lt; 1，如果compareAndSet返回true，也表示设置成功，</span>
+           <span class="token comment" spellcheck="true">// 跳出死循环，返回 false，对象还在被引用</span>
+           <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> rawCnt<span class="token punctuation">,</span> rawCnt <span class="token operator">-</span> <span class="token punctuation">(</span>decrement <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+               <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span>
+       <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+           <span class="token comment" spellcheck="true">// 待减值 decrement 大于 引用计数真实值 realCnt，那么抛出异常</span>
+           <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalReferenceCountException</span><span class="token punctuation">(</span>realCnt<span class="token punctuation">,</span> <span class="token operator">-</span>decrement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token punctuation">}</span>
+       <span class="token comment" spellcheck="true">// 这有利于在高争用情况下的吞吐量</span>
+       Thread<span class="token punctuation">.</span><span class="token function">yield</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>利用死循环采用 CAS 更新， CAS 原理可以看我的<a href="https://www.jianshu.com/p/a142350e9b7a" target="_blank" rel="noopener">另一篇</a>文章。</p>
+<blockquote>
+<p>nonFinalRelease0 </p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">boolean</span> <span class="token function">nonFinalRelease0</span><span class="token punctuation">(</span>T instance<span class="token punctuation">,</span> <span class="token keyword">int</span> decrement<span class="token punctuation">,</span> <span class="token keyword">int</span> rawCnt<span class="token punctuation">,</span> <span class="token keyword">int</span> realCnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">// 先尝试一次更新</span>
+   <span class="token keyword">if</span> <span class="token punctuation">(</span>decrement <span class="token operator">&lt;</span> realCnt
+           <span class="token comment" spellcheck="true">// all changes to the raw count are 2x the "real" change - overflow is OK</span>
+           <span class="token operator">&amp;&amp;</span> <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> rawCnt<span class="token punctuation">,</span> rawCnt <span class="token operator">-</span> <span class="token punctuation">(</span>decrement <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token comment" spellcheck="true">// 更新不成功，就调用 retryRelease0 方法，保证更新成功</span>
+   <span class="token keyword">return</span> <span class="token function">retryRelease0</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> decrement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>这个方法就是先尝试一次更新，不成功继续调用 retryRelease0 去更新。</p>
+<ul>
+<li>AbstractReferenceCountedByteBuf的方法</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractReferenceCountedByteBuf</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractByteBuf</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> REFCNT_FIELD_OFFSET <span class="token operator">=</span>
+            ReferenceCountUpdater<span class="token punctuation">.</span><span class="token function">getUnsafeOffset</span><span class="token punctuation">(</span>AbstractReferenceCountedByteBuf<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token string">"refCnt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> AtomicIntegerFieldUpdater<span class="token operator">&lt;</span>AbstractReferenceCountedByteBuf<span class="token operator">></span> AIF_UPDATER <span class="token operator">=</span>
+            AtomicIntegerFieldUpdater<span class="token punctuation">.</span><span class="token function">newUpdater</span><span class="token punctuation">(</span>AbstractReferenceCountedByteBuf<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token string">"refCnt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> ReferenceCountUpdater<span class="token operator">&lt;</span>AbstractReferenceCountedByteBuf<span class="token operator">></span> updater <span class="token operator">=</span>
+            <span class="token keyword">new</span> <span class="token class-name">ReferenceCountUpdater</span><span class="token operator">&lt;</span>AbstractReferenceCountedByteBuf<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">protected</span> AtomicIntegerFieldUpdater<span class="token operator">&lt;</span>AbstractReferenceCountedByteBuf<span class="token operator">></span> <span class="token function">updater</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> AIF_UPDATER<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">protected</span> <span class="token keyword">long</span> <span class="token function">unsafeOffset</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> REFCNT_FIELD_OFFSET<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// Value might not equal "real" reference count, all access should be via the updater</span>
+    <span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">"unused"</span><span class="token punctuation">,</span> <span class="token string">"FieldMayBeFinal"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> refCnt <span class="token operator">=</span> updater<span class="token punctuation">.</span><span class="token function">initialValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">protected</span> <span class="token function">AbstractReferenceCountedByteBuf</span><span class="token punctuation">(</span><span class="token keyword">int</span> maxCapacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>maxCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">boolean</span> <span class="token function">isAccessible</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// Try to do non-volatile read for performance as the ensureAccessible() is racy anyway and only provide</span>
+        <span class="token comment" spellcheck="true">// a best-effort guard.</span>
+        <span class="token keyword">return</span> updater<span class="token punctuation">.</span><span class="token function">isLiveNonVolatile</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">refCnt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> updater<span class="token punctuation">.</span><span class="token function">refCnt</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * An unsafe operation intended for use by a subclass that sets the reference count of the buffer directly
+     */</span>
+    <span class="token keyword">protected</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">setRefCnt</span><span class="token punctuation">(</span><span class="token keyword">int</span> refCnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        updater<span class="token punctuation">.</span><span class="token function">setRefCnt</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> refCnt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * An unsafe operation intended for use by a subclass that resets the reference count of the buffer to 1
+     */</span>
+    <span class="token keyword">protected</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">resetRefCnt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        updater<span class="token punctuation">.</span><span class="token function">resetRefCnt</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> ByteBuf <span class="token function">retain</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> updater<span class="token punctuation">.</span><span class="token function">retain</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> ByteBuf <span class="token function">retain</span><span class="token punctuation">(</span><span class="token keyword">int</span> increment<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> updater<span class="token punctuation">.</span><span class="token function">retain</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> increment<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> ByteBuf <span class="token function">touch</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> ByteBuf <span class="token function">touch</span><span class="token punctuation">(</span>Object hint<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">handleRelease</span><span class="token punctuation">(</span>updater<span class="token punctuation">.</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token keyword">int</span> decrement<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">handleRelease</span><span class="token punctuation">(</span>updater<span class="token punctuation">.</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> decrement<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span> <span class="token function">handleRelease</span><span class="token punctuation">(</span><span class="token keyword">boolean</span> result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">deallocate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Called once {@link #refCnt()} is equals 0.
+     */</span>
+    <span class="token keyword">protected</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">deallocate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Eason_Shu</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://www.xiaolin.store/archives/c491d24b.html">http://www.xiaolin.store/archives/c491d24b.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Eason_Shu</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                                    <span class="chip bg-color">Netty权威指南</span>
+                                </a>
+                            
+                                <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                                    <span class="chip bg-color">Netty源码分析</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 500px;
+        height: 500px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 400px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 400px;
+        height: 400px;
+        transform:scale(0.7);
+
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/archives/c491d24b.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Netty源码分析 （二） AbstractReferenceCountedByteBuf">
+                        
+                        <span class="card-title">Netty源码分析 （二） AbstractReferenceCountedByteBuf</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                    Netty源码分析
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                        <span class="chip bg-color">Netty权威指南</span>
+                    </a>
+                    
+                    <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                        <span class="chip bg-color">Netty源码分析</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/archives/98143977.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Netty源码分析 （一） AbstractByteBuf">
+                        
+                        <span class="card-title">Netty源码分析 （一） AbstractByteBuf</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                    Netty源码分析
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                        <span class="chip bg-color">Netty权威指南</span>
+                    </a>
+                    
+                    <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                        <span class="chip bg-color">Netty源码分析</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Eason_Shu<br />'
+            + '文章作者: Eason_Shu<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <a href="/about" target="_blank">Eason_Shu</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">105k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "1";
+                        var startDate = "28";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Eason-shu" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:3138066125@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=3138066125" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 3138066125" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+    
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>
