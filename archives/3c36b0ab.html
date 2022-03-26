@@ -4,8 +4,8 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="大端序与小端序, Eason_Shu">
-    <meta name="description" content="字节序，又称端序或尾序（英语中用单词：Endianness 表示），在计算机领域中，指[电脑内存]中或在数字通信链路中，占用多个字节的数据的字节排列顺序。">
+    <meta name="keywords" content="Netty源码分析 （三） UnpooledHeapByteBuf, Eason_Shu">
+    <meta name="description" content="Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>大端序与小端序 | Eason_Shu</title>
+    <title>Netty源码分析 （三） UnpooledHeapByteBuf | Eason_Shu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -433,12 +433,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">大端序与小端序</h1>
+                    <h1 class="description center-align post-title">Netty源码分析 （三） UnpooledHeapByteBuf</h1>
                 </div>
             </div>
         </div>
@@ -554,8 +554,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
-                                <span class="chip bg-color">计算机基础</span>
+                            <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                                <span class="chip bg-color">Netty权威指南</span>
+                            </a>
+                        
+                            <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                                <span class="chip bg-color">Netty源码分析</span>
                             </a>
                         
                     </div>
@@ -566,8 +570,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category">
-                                计算机基础
+                            <a href="/categories/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                Netty源码分析
                             </a>
                         
                     </div>
@@ -579,28 +583,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-11
+                    2022-03-26
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-11
+                    2022-03-26
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    4 分
                 </div>
                 
 
@@ -622,84 +626,154 @@
             <div id="articleContent">
                 <meta name="referrer" content="no-referrer">
 
-<h2 id="一-大端序与小端序"><a href="#一-大端序与小端序" class="headerlink" title="一 大端序与小端序"></a>一 大端序与小端序</h2><h3 id="1-1-什么是字节序？"><a href="#1-1-什么是字节序？" class="headerlink" title="1.1 什么是字节序？"></a>1.1 什么是字节序？</h3><ul>
-<li><strong>字节序</strong>，又称<strong>端序</strong>或<strong>尾序</strong>（英语中用单词：<strong>Endianness</strong> 表示），在计算机领域中，指<a href="https://link.juejin.cn/?target=https://zh.wikipedia.org/wiki/%E5%AD%98%E5%82%A8%E5%99%A8">电脑内存</a>中或在数字通信链路中，占用多个字节的数据的字节排列顺序。 </li>
-<li>在几乎所有的平台上，多字节对象都被存储为连续的字节序列。例如在 Go 语言中，一个类型为<code>int</code>的变量<code>x</code>地址为<code>0x100</code>，那么其指针<code>&amp;x</code>的值为<code>0x100</code>。且<code>x</code>的四个字节将被存储在内存的<code>0x100, 0x101, 0x102, 0x103</code>位置。 </li>
-<li>大端序（<code>Big-Endian</code>）将数据的<strong>低位字节存放在内存的高位地址</strong>，<strong>高位字节存放在低位地址</strong>。这种排列方式与数据用字节表示时的书写顺序一致，符合人类的阅读习惯。 </li>
-<li>小端序（<code>Little-Endian</code>），将一个多位数的<strong>低位放在较小的地址处，高位放在较大的地址处</strong>，则称<strong>小端序</strong>。小端序与人类的阅读习惯相反，但更符合计算机读取内存的方式，因为CPU读取内存中的数据时，是从低地址向高地址方向进行读取的。 </li>
-<li>高字节与低字节： 在编程语言中，字符一般是占16位，8位为一字节，所以有高位字节和低位字节。一个16进制数有两个字节组成，例如：A9。高字节就是指16进制数的前8位（权重高的8位），如上例中的A。低字节就是指16进制数的后8位（权重低的8位），如上例中的9。</li>
+<h3 id="4-3-UnpooledHeapByteBuf-源码分析"><a href="#4-3-UnpooledHeapByteBuf-源码分析" class="headerlink" title="4.3 UnpooledHeapByteBuf 源码分析"></a>4.3 UnpooledHeapByteBuf 源码分析</h3><ul>
+<li>UnpooledHeapByteBuf是基于堆内存进行内存分配的字节缓冲区，它没有基于对象池技术实现，这就意味着每次IO 的读写都会创建一个新的UnpooledHeapByteBuf，频繁进行大块内存的分配和回收对性能会造成一定影响，但是相比于堆外内存的申请和释放，它的成本还是会低一些。</li>
+<li>相比于PooledHeapByteBuf，UnpooledHeapByteBuf的实现原理更加简单，也不容易出现内存管理方面的问题，因此在满足性能的情况下，推荐使用UnpooledHeapByteBuf。</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1646987236993-95ce0d3f-6887-4e3e-8956-fd5f2f862a49.webp"></p>
-<ul>
-<li>很多人会问，为什么会有字节序，统一用大端序不行吗？答案是，计算机电路先处理低位字节，效率比较高，因为计算都是从低位开始的。所以，<strong>计算机的内部处理都是小端字节序。在计算机内部，小端序被广泛应用于现代 CPU 内部存储数据；而在其他场景，比如网络传输和文件存储则使用大端序</strong>。<h3 id="1-2-Java中高低位字节的运用"><a href="#1-2-Java中高低位字节的运用" class="headerlink" title="1.2 Java中高低位字节的运用"></a>1.2 Java中高低位字节的运用</h3>1、不同端模式的处理器进行数据传递时必须要考虑端模式的不同(<strong>因主机CPU不同，不同的机器会出现高、低两种字节序问题</strong>)。<br>2、在网络上传输数据时，由于数据传输的两端对应不同的硬件平台，采用的存储字节顺序可能不一致。所以在TCP&#x2F;IP协议规定了在网络上必须采用<strong>网络字节顺序</strong>，也就是<strong>大端模式</strong>。对于char型数据只占一个字节，无所谓大端和小端。而对于<strong>非char类型数据</strong>，必须在数据发送到网络上之前将其转换成大端模式。接收网络数据时按符合接受主机的环境接收。</li>
-</ul>
-<pre class=" language-java"><code class="language-java">          <span class="token keyword">int</span> value <span class="token operator">=</span> <span class="token number">515</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> big <span class="token operator">=</span> <span class="token punctuation">(</span>value <span class="token operator">&amp;</span> <span class="token number">0xFF00</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">8</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> little <span class="token operator">=</span> value <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">;</span>
+<h4 id="4-3-1-常用变量与构造器"><a href="#4-3-1-常用变量与构造器" class="headerlink" title="4.3.1 常用变量与构造器"></a>4.3.1 常用变量与构造器</h4><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 继承于引用计数器来管理内存的回收</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UnpooledHeapByteBuf</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractReferenceCountedByteBuf</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 字节缓冲区分配器</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> ByteBufAllocator alloc<span class="token punctuation">;</span> 
+    <span class="token comment" spellcheck="true">// 缓冲区</span>
+    <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//Netty ByteBuf 到JDK NIO ByteBuffer 的转换。</span>
+    <span class="token keyword">private</span> ByteBuffer tmpNioBuf<span class="token punctuation">;</span>
+    
+    <span class="token comment" spellcheck="true">// 使用新分配的字节数组创建一个新的堆缓冲区。</span>
+     <span class="token keyword">public</span> <span class="token function">UnpooledHeapByteBuf</span><span class="token punctuation">(</span>ByteBufAllocator alloc<span class="token punctuation">,</span> <span class="token keyword">int</span> initialCapacity<span class="token punctuation">,</span> <span class="token keyword">int</span> maxCapacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>maxCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>big<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>little<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>initialCapacity <span class="token operator">></span> maxCapacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>
+                    <span class="token string">"initialCapacity(%d) > maxCapacity(%d)"</span><span class="token punctuation">,</span> initialCapacity<span class="token punctuation">,</span> maxCapacity<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">this</span><span class="token punctuation">.</span>alloc <span class="token operator">=</span> <span class="token function">checkNotNull</span><span class="token punctuation">(</span>alloc<span class="token punctuation">,</span> <span class="token string">"alloc"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setArray</span><span class="token punctuation">(</span><span class="token function">allocateArray</span><span class="token punctuation">(</span>initialCapacity<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setIndex</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment" spellcheck="true">// 使用现有字节数组创建一个新的堆缓冲区。</span>
+    <span class="token keyword">protected</span> <span class="token function">UnpooledHeapByteBuf</span><span class="token punctuation">(</span>ByteBufAllocator alloc<span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> initialArray<span class="token punctuation">,</span> <span class="token keyword">int</span> maxCapacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>maxCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token function">checkNotNull</span><span class="token punctuation">(</span>alloc<span class="token punctuation">,</span> <span class="token string">"alloc"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">checkNotNull</span><span class="token punctuation">(</span>initialArray<span class="token punctuation">,</span> <span class="token string">"initialArray"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>initialArray<span class="token punctuation">.</span>length <span class="token operator">></span> maxCapacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>
+                    <span class="token string">"initialCapacity(%d) > maxCapacity(%d)"</span><span class="token punctuation">,</span> initialArray<span class="token punctuation">.</span>length<span class="token punctuation">,</span> maxCapacity<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">this</span><span class="token punctuation">.</span>alloc <span class="token operator">=</span> alloc<span class="token punctuation">;</span>
+        <span class="token function">setArray</span><span class="token punctuation">(</span>initialArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setIndex</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> initialArray<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="4-3-2-扩容机制"><a href="#4-3-2-扩容机制" class="headerlink" title="4.3.2 扩容机制"></a>4.3.2 扩容机制</h4><ul>
+<li>方法入口首先对新容量进行合法性校验，如果大于容量上限或者小于0，则抛出IllegalArgumentException异常。</li>
+<li>判断新的容量值是否大于当前的缓冲区容量，如果大于则需要进行动态扩展，通过byte[] newArray &#x3D; new byte[newCapacity]创建新的缓冲区字节数组，然后通过System.arraycopy进行内存复制，将旧的字节数组复制到新创建的字节数组中，最后调用setArray替换旧的字节数组。</li>
+<li>需要指出的是，当动态扩容完成后，需要将原来的视图 tmpNioBuf设置为空。</li>
+<li>如果新的容量小于当前的缓冲区容量不需要动态扩展，但是需要截取当前缓冲区创建一个新的子缓冲区，具体的算法如下:首先判断下读索引是否小于新的容量值，如果小于进一步判断写索引是否大于新的容量值，如果大于则将写索引设置为新的容量值（防止越界)。更新完写索引之后通过内存复制System.arraycopy将当前可读的字节数组复制到新创建的子缓冲区中。</li>
+<li>如果新的容量值小于读索引，说明没有可读的字节数组需要复制到新创建的缓冲区中，将读写索引设置为新的容量值即可。最后调用sctArray方法替换原来的字节数组。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> ByteBuf <span class="token function">capacity</span><span class="token punctuation">(</span><span class="token keyword">int</span> newCapacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 检查新容量的合法性</span>
+        <span class="token function">checkNewCapacity</span><span class="token punctuation">(</span>newCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 数组字段</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> oldArray <span class="token operator">=</span> array<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 旧缓存区长度</span>
+        <span class="token keyword">int</span> oldCapacity <span class="token operator">=</span> oldArray<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>newCapacity <span class="token operator">==</span> oldCapacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">int</span> bytesToCopy<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>newCapacity <span class="token operator">></span> oldCapacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            bytesToCopy <span class="token operator">=</span> oldCapacity<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token function">trimIndicesToCapacity</span><span class="token punctuation">(</span>newCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            bytesToCopy <span class="token operator">=</span> newCapacity<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// 分配新空间</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> newArray <span class="token operator">=</span> <span class="token function">allocateArray</span><span class="token punctuation">(</span>newCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 将当前可读的字节数组复制到新创建的子缓冲区</span>
+        System<span class="token punctuation">.</span><span class="token function">arraycopy</span><span class="token punctuation">(</span>oldArray<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> newArray<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> bytesToCopy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 替换旧字节数，并将tmpNioBuf为空</span>
+        <span class="token function">setArray</span><span class="token punctuation">(</span>newArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">freeArray</span><span class="token punctuation">(</span>oldArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<h4 id="4-3-3-字节数组复制"><a href="#4-3-3-字节数组复制" class="headerlink" title="4.3.3 字节数组复制"></a>4.3.3 字节数组复制</h4><pre class=" language-java"><code class="language-java"> <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> ByteBuf <span class="token function">setBytes</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> src<span class="token punctuation">,</span> <span class="token keyword">int</span> srcIndex<span class="token punctuation">,</span> <span class="token keyword">int</span> length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 合法校验</span>
+        <span class="token function">checkSrcIndex</span><span class="token punctuation">(</span>index<span class="token punctuation">,</span> length<span class="token punctuation">,</span> srcIndex<span class="token punctuation">,</span> src<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span><span class="token function">arraycopy</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> srcIndex<span class="token punctuation">,</span> array<span class="token punctuation">,</span> index<span class="token punctuation">,</span> length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/**
+校验index 和length的值，如果它们小于0，则抛出Il1egalArgumentException，然后对两者之和进行判断，如果大于缓冲区的容量，则抛出 IndexOutOfBoundsException。srcIndex和 srcCapacity的校验与index类似，不再赘述。校验通过之后，调用System.arraycopy(src,srcIndex, array,index, length)方法进行字节数组的复制。
+需要指出的是，ByteBuf 以 set和 get开头读写缓冲区的方法并不会修改读写索引。
+**/</span>
+ <span class="token keyword">protected</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">checkSrcIndex</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">,</span> <span class="token keyword">int</span> length<span class="token punctuation">,</span> <span class="token keyword">int</span> srcIndex<span class="token punctuation">,</span> <span class="token keyword">int</span> srcCapacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">checkIndex</span><span class="token punctuation">(</span>index<span class="token punctuation">,</span> length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>checkBounds<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">checkRangeBounds</span><span class="token punctuation">(</span><span class="token string">"srcIndex"</span><span class="token punctuation">,</span> srcIndex<span class="token punctuation">,</span> length<span class="token punctuation">,</span> srcCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<h4 id="4-3-4-转换成JDKByteBuffer"><a href="#4-3-4-转换成JDKByteBuffer" class="headerlink" title="4.3.4 转换成JDKByteBuffer"></a>4.3.4 转换成JDKByteBuffer</h4><ul>
+<li>JDK自带的Warp方法将Byte[]转换成ByteBuffer对象</li>
+</ul>
+<pre class=" language-java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">static</span> ByteBuffer <span class="token function">wrap</span><span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">,</span>
+                                    <span class="token keyword">int</span> offset<span class="token punctuation">,</span> <span class="token keyword">int</span> length<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">HeapByteBuffer</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> offset<span class="token punctuation">,</span> length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IllegalArgumentException</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IndexOutOfBoundsException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 </code></pre>
 <ul>
-<li><p>十六进制文字0xFF是一个相等的int（255）。</p>
-</li>
-<li><p>0xFF是<a href="https://so.csdn.net/so/search?q=16%E8%BF%9B%E5%88%B6&spm=1001.2101.3001.7020" target="_blank" rel="noopener">16进制</a>的表达方式，F是15；十进制为：255，二进制为：1111 1111</p>
-</li>
-<li><p>&amp;运算符：如果2个bit都是1，则得1，否则得0</p>
-<h4 id="1-2-1-原码"><a href="#1-2-1-原码" class="headerlink" title="1.2.1 原码"></a>1.2.1 原码</h4></li>
-<li><p><strong>原码</strong>：一个整数，按照绝对值大小转换成的二进制数，称为原码。</p>
-</li>
-<li><p>比如 00000000 00000000 00000000 00000101 是 5的 原码。</p>
-<h4 id="1-2-2-反码"><a href="#1-2-2-反码" class="headerlink" title="1.2.2 反码"></a>1.2.2 反码</h4></li>
-<li><p><strong>反码</strong>：将二进制数按位取反，所得的新二进制数称为原二进制数的<a href="https://so.csdn.net/so/search?q=%E5%8F%8D%E7%A0%81&spm=1001.2101.3001.7020" target="_blank" rel="noopener">反码</a>。</p>
-</li>
-<li><p>取反操作指：原为1，得0；原为0，得1。（1变0；0变1）</p>
-</li>
-<li><p>比如：将00000000 00000000 00000000 00000101每一位取反，得11111111 11111111 11111111 11111010。</p>
-</li>
-<li><p>反码是相互的，所以也可称：11111111 11111111 11111111 11111010 和 00000000 00000000 00000000 00000101 互为反码。</p>
-<h4 id="1-2-3-补码"><a href="#1-2-3-补码" class="headerlink" title="1.2.3 补码"></a>1.2.3 补码</h4></li>
-<li><p><strong>补码</strong>：反码加1称为补码。</p>
-</li>
-<li><p>也就是说，要得到一个数的补码，先得到反码，然后将反码加上1，所得数称为补码。</p>
-</li>
-<li><p>比如：00000000 00000000 00000000 00000101 的反码是：11111111 11111111 11111111 11111010。</p>
-</li>
-<li><p>那么，补码为：11111111 11111111 11111111 11111010 + 1 &#x3D; 11111111 11111111 11111111 11111011</p>
-<h4 id="1-2-4-解释"><a href="#1-2-4-解释" class="headerlink" title="1.2.4 解释"></a>1.2.4 解释</h4></li>
-<li><p><strong>首先我们要都知道, &amp;表示按位与,只有两个位同时为1,才能得到1, 0x代表16进制数,0xff表示的数二进制1111 1111 占一个字节.和其进行&amp;操作的数,最低8位,不会发生变化</strong></p>
-</li>
-<li><p>例如:java <a href="https://so.csdn.net/so/search?q=socket&spm=1001.2101.3001.7020" target="_blank" rel="noopener">socket</a>通信中基于长度的成帧方法中，如果发送的信息长度小于65535字节，长度信息的字节</p>
-</li>
+<li>UnpooledHeapByteBuf的装换方法</li>
 </ul>
-<p>定义为两个字节长度。这时候将两个字节长的长度信息，以Big-Endian的方式写到内存中</p>
-<pre class=" language-java"><code class="language-java">out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token punctuation">(</span>message<span class="token punctuation">.</span>length<span class="token operator">>></span><span class="token number">8</span><span class="token punctuation">)</span><span class="token operator">&amp;</span><span class="token number">0xff</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//取高八位写入地址</span>
-out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>message<span class="token punctuation">.</span>length<span class="token operator">&amp;</span><span class="token number">0xff</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//取低八位写入高地址中</span>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> ByteBuffer <span class="token function">nioBuffer</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">,</span> <span class="token keyword">int</span> length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 检查正确性</span>
+        <span class="token function">ensureAccessible</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 调用byteBuffer方法，介绍过了，由于每次调用nioBuffer都会创建一个新的ByteBuffer，因此此处的slice方法起不到重用缓冲区内容的效果，只能保证读写索引的独立性。</span>
+        <span class="token keyword">return</span> ByteBuffer<span class="token punctuation">.</span><span class="token function">wrap</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> index<span class="token punctuation">,</span> length<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<h4 id="4-3-5-其他方法"><a href="#4-3-5-其他方法" class="headerlink" title="4.3.5 其他方法"></a>4.3.5 其他方法</h4><ul>
+<li>isDirect方法:如果是基于堆内存实现的 ByteBuf，它返回false。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"> <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isDirect</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 </code></pre>
 <ul>
-<li>例如，有个数字 0x1234,如果只想将低8位写入到内存中 0x1234&amp;0xff，0x1234 表示为二进制 0001001000110100，0xff 表示为二进制 11111111，两个数做与操作，显然将0xff补充到16位，就是高位补0，此时0xff 为 0000000011111111，与操作 1&amp;0 &#x3D;0 1&amp;1 &#x3D;1 这样 0x1234只能保留低八位的数 0000000000110100 也就是 0x34。</li>
-<li><strong>我们只关心二进制的机器数而不关注十进制的值,那么byte &amp;0xff只是对其最低8位的复制,通常配合逻辑或 ‘’|’’使用,达到字节的拼接,但不保证其十进制真值不变</strong></li>
+<li>hasArray方法:由于UnpooledHeapByteBuf基于字节数组实现，所以它的返回值。</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">byte</span> b <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">127</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//10000001</span>
-        <span class="token keyword">int</span> a <span class="token operator">=</span>  b<span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        a <span class="token operator">=</span>  b<span class="token operator">&amp;</span><span class="token number">0xff</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token comment" spellcheck="true">//输出结果-127,129</span>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">hasArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 </code></pre>
 <ul>
-<li>乍一看，b是8位的二进制数，在与上0xff(也就是 11111111)，不就是其本身吗,输出在控制台结果为什么是129呢?</li>
-<li>首先计算机内的存储都是按照补码存储的，-127补码表示为 1000 0001，int a &#x3D; b;将byte 类型提升为int时候，b的补码提升为 32位，补码的高位补1，也就是1111 1111 1111 1111 1111 1111 1000 0001</li>
-<li>负数的补码转为原码，符号位不变，其他位取反，在加1，正数的补码，反码都是本身结果是 1000 0000 0000 0000 0000 0000 0111 1111表示为十进制 也是 -127</li>
-<li>也就是 当 byte -&gt; int 能保证十进制数不变，但是有些时候比如文件流转为byte数组时候，我们不是关心的是十进制数有没有变，而是补码有没有变，这时候需要&amp;上0xff</li>
-<li>本例子中，将byte转为int 高24位必将补1，此时补码显然发生变化，在与上0xff，将高24重新置0，这样能保证补码的一致性，当然由于符号位发生变化，表示的十进制数就会变了</li>
+<li>array方法:由于UnpoolcdHcapBytcBuf基于孛节数组实现，所以它的返回值是内部的字节数组成员变量。</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1000</span> <span class="token number">0001</span> 
-<span class="token operator">&amp;</span>
-<span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">1111</span> <span class="token number">1111</span>
-结果是
-<span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">1000</span> <span class="token number">0001</span>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">ensureAccessible</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> array<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 </code></pre>
 
                 
@@ -727,7 +801,7 @@ out<span class="token punctuation">.</span><span class="token function">write</s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://www.xiaolin.store/archives/1e78bba.html">http://www.xiaolin.store/archives/1e78bba.html</a>
+                    <a href="http://www.xiaolin.store/archives/3c36b0ab.html">http://www.xiaolin.store/archives/3c36b0ab.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -765,8 +839,12 @@ out<span class="token punctuation">.</span><span class="token function">write</s
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
-                                    <span class="chip bg-color">计算机基础</span>
+                                <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                                    <span class="chip bg-color">Netty权威指南</span>
+                                </a>
+                            
+                                <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                                    <span class="chip bg-color">Netty源码分析</span>
                                 </a>
                             
                         </div>
@@ -942,46 +1020,52 @@ out<span class="token punctuation">.</span><span class="token function">write</s
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/archives/4b0178e0.html">
+                <a href="/archives/3c36b0ab.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="数据结构与算法">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Netty源码分析 （三） UnpooledHeapByteBuf">
                         
-                        <span class="card-title">数据结构与算法</span>
+                        <span class="card-title">Netty源码分析 （三） UnpooledHeapByteBuf</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            算法＋数据结构=程序，就深刻揭示了算法和数据结构之间的关系。对实际问题选择了一种好的数据结构之后，还得有一个好的算法，才可更好地求解问题。
+                            Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
-                                    数据结构与算法
+                            <a href="/categories/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                    Netty源码分析
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">数据结构与算法</span>
+                    <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                        <span class="chip bg-color">Netty权威指南</span>
+                    </a>
+                    
+                    <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                        <span class="chip bg-color">Netty源码分析</span>
                     </a>
                     
                 </div>
@@ -995,31 +1079,31 @@ out<span class="token punctuation">.</span><span class="token function">write</s
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/archives/8a092a16.html">
+                <a href="/archives/c491d24b.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/30.jpg" class="responsive-img" alt="Protocol Buffer基本入门">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Netty源码分析 （二） AbstractReferenceCountedByteBuf">
                         
-                        <span class="card-title">Protocol Buffer基本入门</span>
+                        <span class="card-title">Netty源码分析 （二） AbstractReferenceCountedByteBuf</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一种 结构化[数据] 的数据存储格式（类似于 XML、Json ）rotocol Buffer 目前有两个版本：proto2 和 proto3
+                            Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-24
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Protocol-Buffer/" class="post-category">
-                                    Protocol Buffer
+                            <a href="/categories/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                    Netty源码分析
                                 </a>
                             
                             
@@ -1029,12 +1113,12 @@ out<span class="token punctuation">.</span><span class="token function">write</s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Protocol-Buffer/">
-                        <span class="chip bg-color">Protocol Buffer</span>
+                    <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                        <span class="chip bg-color">Netty权威指南</span>
                     </a>
                     
-                    <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96/">
-                        <span class="chip bg-color">序列化</span>
+                    <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                        <span class="chip bg-color">Netty源码分析</span>
                     </a>
                     
                 </div>
