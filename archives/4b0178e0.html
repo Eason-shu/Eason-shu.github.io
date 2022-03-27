@@ -579,28 +579,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-12
+                    2022-03-27
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-19
+                    2022-03-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.3k
+                    7.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    26 分
+                    33 分
                 </div>
                 
 
@@ -659,6 +659,10 @@
 <li><p>算法整个运行过程所占用的空间称算法的空间复杂度。空间复杂度是对一个算法在运行过程中临时占用存储空间大小的量度。算法在计算机存储器内占用的存储空间主要分为三部分：算法源代码本身占用的存储空间、算法输入输出数据所占用的存储空间、算法运行过程中临时占用的存储空间。空间复杂度记为：S(n)&#x3D;O( f(n))，其中n是问题的规模。S(n)&#x3D;O(f(n)) </p>
 </li>
 <li><p>在对一个算法进行时间复杂度和空间复杂度的分析时，往往二者不能兼顾，考虑好的时间复杂度，就得牺牲空间复杂度的性能，反之亦然。因此，当设计一个算法（特别是大型算法）时，要综合考虑算法的各项性能、算法的使用频率、算法处理的数据量的大小、算法描述语言的特性、算法运行的机器系统环境等各方面因素，才能够设计出比较好的算法。</p>
+<h4 id="1-3-2-3-线性表"><a href="#1-3-2-3-线性表" class="headerlink" title="1.3.2.3 线性表"></a>1.3.2.3 线性表</h4></li>
+<li><p>线性表是最简单且最常用的一种数据结构，它具备线性结构的特点，并且表中元素属于同一数据对象，元素之间存在一种序偶关系。</p>
+</li>
+<li><p>线性表是一种比较灵活的数据结构，可以根据不同的需要对线性表进行多种操作，常见的基本操作有：（1）初始化——构造一个空的线性表（2）插入——在线性表的第i个位置之前插入一个新元素（3）删除——删除线性表中的第i个数据元素（4）查找——找出线性表中满足特定条件的元素的位置（5）获取——取线性表中的第i个数据元素（6）更新——取线性表中的第i个数据元素，检查或更新其中某个数据项的内容（7）判空——判断当前线性表是否为空（8）求长度——求出线性表中数据元素的个数（9）正序遍历——依次访问线性表中每个元素并输出（10）销毁——销毁一个已存在的线性表</p>
 <h1 id="二-稀疏数组和队列"><a href="#二-稀疏数组和队列" class="headerlink" title="二 稀疏数组和队列"></a>二 稀疏数组和队列</h1><h2 id="2-1-稀疏数组"><a href="#2-1-稀疏数组" class="headerlink" title="2.1 稀疏数组"></a>2.1 稀疏数组</h2></li>
 <li><p>Sparse 翻译过来是稀疏、缺少的意思，SparseArray是稀疏的数组。它应用场景是相对稀少的数据，一般是几百以内的数据性能相对 HashMap 要好，大概提升 0-50% 的性能。SparseArray 是用 Integer 作为键映射对象。</p>
 </li>
@@ -776,7 +780,7 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646921153641-b1c02fbd-ad7d-4624-a885-ff7d2c3acd7d.png" alt="image.png"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1646921153641-b1c02fbd-ad7d-4624-a885-ff7d2c3acd7d.png#clientId=u3d1b89a0-2c47-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=223&id=u631fb61e&margin=%5Bobject%20Object%5D&name=image.png&originHeight=445&originWidth=1825&originalType=binary&ratio=1&rotation=0&showTitle=false&size=30982&status=done&style=none&taskId=uadfdfa01-3ed0-4b6c-a4a1-aee3eab0e12&title=&width=912.5" alt="image.png"></p>
 <h2 id="2-2-队列"><a href="#2-2-队列" class="headerlink" title="2.2 队列"></a>2.2 队列</h2><ul>
 <li>队列是一个<strong>有序列表</strong>，可以用<strong>数组</strong>或是<strong>链表</strong>来实现。</li>
 <li>遵循<strong>先入先出</strong>的原则。即：先存入队列的数据，要先取出。后存入的要后取出</li>
@@ -920,115 +924,106 @@
 <li>队列为空的判定条件：front &#x3D;&#x3D; rear</li>
 <li>队列为满的判定条件：(rear + 1) % maxSize &#x3D;&#x3D; front</li>
 <li>队列中有效元素的个数：(rear - front + maxSize) % maxSize</li>
-<li>入队和出队时，都需要让标记<strong>对maxSize取模</strong></li>
+<li>入队和出队时，都需要让标记<strong>对maxSize取模</strong><br>&#96;&#96;&#96;java<br>package Queue;</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> Queue<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @Project_Name DataStructures
- * @Author shu
- * @Version 1.0
- * @Date: 2022/03/12/ 14:49
- * @Description 环形队列
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ArrayAroundQueue</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">//队列的大小</span>
-    <span class="token keyword">int</span> maxSize<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">//用数组来实现队列</span>
-    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">//指向队列首元素的前一个位置</span>
-    <span class="token keyword">int</span> front<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">//指向队列的尾元素</span>
-    <span class="token keyword">int</span> rear<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token function">ArrayAroundQueue</span><span class="token punctuation">(</span><span class="token keyword">int</span> maxSize<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>maxSize <span class="token operator">=</span> maxSize<span class="token punctuation">;</span>
-        arr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span>maxSize<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//front指向队列首元素的前一个位置</span>
-        front <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        rear <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<p>&#x2F;**</p>
+<ul>
+<li>@Project_Name DataStructures</li>
+<li>@Author shu</li>
+<li>@Version 1.0</li>
+<li>@Date: 2022&#x2F;03&#x2F;12&#x2F; 14:49</li>
+<li>@Description 环形队列</li>
+</ul>
+<p> **&#x2F;<br>public class ArrayAroundQueue {<br>    &#x2F;&#x2F;队列的大小<br>    int maxSize;<br>    &#x2F;&#x2F;用数组来实现队列<br>    int[] arr;<br>    &#x2F;&#x2F;指向队列首元素的前一个位置<br>    int front;<br>    &#x2F;&#x2F;指向队列的尾元素<br>    int rear;</p>
+<pre><code>public ArrayAroundQueue(int maxSize) {
+    this.maxSize = maxSize;
+    arr = new int[this.maxSize];
+    //front指向队列首元素的前一个位置
+    front = 0;
+    rear = 0;
+}
 
 
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isFull</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span>rear<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>maxSize <span class="token operator">==</span> front<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+public boolean isFull() {
+    return (rear+1)%maxSize == front;
+}
 
 
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> front <span class="token operator">==</span> rear<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+public boolean isEmpty() {
+    return front == rear;
+}
 
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addNum</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"队列已满，无法在进行入队操作"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment" spellcheck="true">//先放入元素，在后移队尾标记</span>
-        arr<span class="token punctuation">[</span>rear<span class="token punctuation">]</span> <span class="token operator">=</span> num<span class="token punctuation">;</span>
-        rear <span class="token operator">=</span> <span class="token punctuation">(</span>rear<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>maxSize<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+public void addNum(int num) {
+    if(isFull()) {
+        System.out.println(&quot;队列已满，无法在进行入队操作&quot;);
+        return;
+    }
+    //先放入元素，在后移队尾标记
+    arr[rear] = num;
+    rear = (rear+1)%maxSize;
+}
 
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"队列为空，无法出队"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment" spellcheck="true">//队首标记后移，指向队首元素</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"出队元素是："</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> num <span class="token operator">=</span> arr<span class="token punctuation">[</span>front<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        front <span class="token operator">=</span> <span class="token punctuation">(</span>front<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>maxSize<span class="token punctuation">;</span>
-        <span class="token keyword">return</span> num<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+public int getNum() {
+    if(isEmpty()) {
+        throw new RuntimeException(&quot;队列为空，无法出队&quot;);
+    }
+    //队首标记后移，指向队首元素
+    System.out.print(&quot;出队元素是：&quot;);
+    int num = arr[front];
+    front = (front+1)%maxSize;
+    return num;
+}
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">showQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"队列为空，无法遍历"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"遍历队列"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//当front + 1 == rear时停止遍历</span>
-        <span class="token keyword">int</span> start <span class="token operator">=</span> front<span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span>start <span class="token operator">!=</span> rear<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>start<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">//移动到下一个元素</span>
-            start <span class="token operator">=</span> <span class="token punctuation">(</span>start<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>maxSize<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+public void showQueue() {
+    if(isEmpty()) {
+        throw new RuntimeException(&quot;队列为空，无法遍历&quot;);
+    }
+    System.out.println(&quot;遍历队列&quot;);
+    //当front + 1 == rear时停止遍历
+    int start = front;
+    while(start != rear) {
+        System.out.println(arr[start]);
+        //移动到下一个元素
+        start = (start+1)%maxSize;
+    }
+}
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getHead</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"队列为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+public void getHead() {
+    if(isEmpty()) {
+        throw new RuntimeException(&quot;队列为空&quot;);
+    }
 
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"队首元素为："</span><span class="token operator">+</span>arr<span class="token punctuation">[</span>front<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    System.out.println(&quot;队首元素为：&quot;+arr[front]);
+}
 </code></pre>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> Queue<span class="token punctuation">;</span>
+<p>}</p>
+<pre><code>```java
+package Queue;
 
-<span class="token comment" spellcheck="true">/**
+/**
  * @Project_Name DataStructures
  * @Author shu
  * @Version 1.0
  * @Date: 2022/03/12/ 14:49
  * @Description
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ArrayAroundQueueTwst</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        ArrayAroundQueue aroundQueue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayAroundQueue</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        aroundQueue<span class="token punctuation">.</span><span class="token function">showQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>aroundQueue<span class="token punctuation">.</span><span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>aroundQueue<span class="token punctuation">.</span><span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        aroundQueue<span class="token punctuation">.</span><span class="token function">addNum</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        aroundQueue<span class="token punctuation">.</span><span class="token function">showQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        aroundQueue<span class="token punctuation">.</span><span class="token function">getHead</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+ **/
+public class ArrayAroundQueueTwst {
+    public static void main(String[] args) {
+        ArrayAroundQueue aroundQueue = new ArrayAroundQueue(5);
+        aroundQueue.addNum(1);
+        aroundQueue.addNum(2);
+        aroundQueue.addNum(3);
+        aroundQueue.addNum(4);
+        aroundQueue.showQueue();
+        System.out.println(aroundQueue.getNum());
+        System.out.println(aroundQueue.getNum());
+        aroundQueue.addNum(5);
+        aroundQueue.addNum(6);
+        aroundQueue.showQueue();
+        aroundQueue.getHead();
+    }
+}
 </code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1647069649803-9be37586-8b3a-4e60-bf01-8d0e0425e3ee.png#clientId=u2558f904-5de7-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=315&id=u8aa50cb6&margin=%5Bobject%20Object%5D&name=image.png&originHeight=630&originWidth=1415&originalType=binary&ratio=1&rotation=0&showTitle=false&size=51872&status=done&style=none&taskId=u2976c11b-7c47-4241-8d9b-1c949296338&title=&width=707.5" alt="image.png"></p>
 <h1 id="三-链表"><a href="#三-链表" class="headerlink" title="三 链表"></a>三 链表</h1><ul>
@@ -1261,142 +1256,137 @@
 </code></pre>
 <h2 id="3-2-双向链表"><a href="#3-2-双向链表" class="headerlink" title="3.2 双向链表"></a>3.2 双向链表</h2><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1647256160568-cf59044f-aefa-433d-b787-804f480778c7.png#clientId=u22edd837-df4f-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=u4b3cf401&margin=%5Bobject%20Object%5D&name=image.png&originHeight=300&originWidth=806&originalType=url&ratio=1&rotation=0&showTitle=false&size=103759&status=done&style=none&taskId=u0213b549-2ee9-41a9-853b-c52562d96a5&title=" alt="image.png"></p>
 <ul>
-<li>双向链表有头指针，与尾指针，头指针指向撒航一个元素，尾指针指向下一个元素</li>
+<li>双向链表有头指针，与尾指针，头指针指向撒航一个元素，尾指针指向下一个元素<br>&#96;&#96;&#96;java<br>package DoubleLink;</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> DoubleLink<span class="token punctuation">;</span>
+<p>&#x2F;**</p>
+<ul>
+<li>@Project_Name DataStructures</li>
+<li>@Author shu</li>
+<li>@Version 1.0</li>
+<li>@Date: 2022&#x2F;03&#x2F;14&#x2F; 11:24</li>
+<li>@Description 双向链表</li>
+</ul>
+<p> **&#x2F;<br>public class DoubleLinkNode {<br>     int id;<br>     DoubleLinkNode preNode; &#x2F;&#x2F; 上一个节点<br>     DoubleLinkNode nextNode; &#x2F;&#x2F; 下一个节点<br>     String info; &#x2F;&#x2F; 信息</p>
+<pre><code>public DoubleLinkNode(int id, String info) {
+    this.id = id;
+    this.info = info;
+}
 
-<span class="token comment" spellcheck="true">/**
- * @Project_Name DataStructures
- * @Author shu
- * @Version 1.0
- * @Date: 2022/03/14/ 11:24
- * @Description 双向链表
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DoubleLinkNode</span> <span class="token punctuation">{</span>
-     <span class="token keyword">int</span> id<span class="token punctuation">;</span>
-     DoubleLinkNode preNode<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 上一个节点</span>
-     DoubleLinkNode nextNode<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 下一个节点</span>
-     String info<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 信息</span>
-
-    <span class="token keyword">public</span> <span class="token function">DoubleLinkNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> id<span class="token punctuation">,</span> String info<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>info <span class="token operator">=</span> info<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token string">"DoubleLinkNode{"</span> <span class="token operator">+</span>
-                <span class="token string">"id="</span> <span class="token operator">+</span> id <span class="token operator">+</span>
-                <span class="token string">", info='"</span> <span class="token operator">+</span> info <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
-                <span class="token string">'}'</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+@Override
+public String toString() {
+    return &quot;DoubleLinkNode{&quot; +
+            &quot;id=&quot; + id +
+            &quot;, info=&#39;&quot; + info + &#39;\&#39;&#39; +
+            &#39;}&#39;;
+}
 </code></pre>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> DoubleLink<span class="token punctuation">;</span>
+<p>}</p>
+<pre><code>```java
+package DoubleLink;
 
 
 
-<span class="token comment" spellcheck="true">/**
+/**
  * @Project_Name DataStructures
  * @Author shu
  * @Version 1.0
  * @Date: 2022/03/14/ 11:27
  * @Description 双向链表模拟
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DoubleLinkNodeList</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 头节点</span>
-    <span class="token keyword">private</span> DoubleLinkNode head<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">DoubleLinkNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ **/
+public class DoubleLinkNodeList {
+    // 头节点
+    private DoubleLinkNode head=new DoubleLinkNode(-1,&quot;&quot;);
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * 是否为空
      * @return
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">return</span> head<span class="token punctuation">.</span>nextNode<span class="token operator">==</span>null<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+     */
+    public boolean isEmpty(){
+        return head.nextNode==null;
+    }
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * 增加一个节点
      * @param linkNode
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addNode</span><span class="token punctuation">(</span>DoubleLinkNode linkNode<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        DoubleLinkNode temp <span class="token operator">=</span> head<span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>temp<span class="token punctuation">.</span>nextNode <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            temp <span class="token operator">=</span> temp<span class="token punctuation">.</span>nextNode<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment" spellcheck="true">//当前的尾元素指向传入值</span>
-        temp<span class="token punctuation">.</span>nextNode <span class="token operator">=</span> linkNode<span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 指向头节点</span>
-        linkNode<span class="token punctuation">.</span>preNode <span class="token operator">=</span> temp<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+     */
+    public void addNode(DoubleLinkNode linkNode){
+        DoubleLinkNode temp = head;
+        if(temp.nextNode != null) {
+            temp = temp.nextNode;
+        }
+        //当前的尾元素指向传入值
+        temp.nextNode = linkNode;
+        // 指向头节点
+        linkNode.preNode = temp;
+    }
 
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">traverseNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"遍历链表"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"链表为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        DoubleLinkNode temp <span class="token operator">=</span> head<span class="token punctuation">.</span>nextNode<span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span>temp <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            temp <span class="token operator">=</span> temp<span class="token punctuation">.</span>nextNode<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+    public void traverseNode() {
+        System.out.println(&quot;遍历链表&quot;);
+        if (isEmpty()) {
+            System.out.println(&quot;链表为空&quot;);
+            return;
+        }
+        DoubleLinkNode temp = head.nextNode;
+        while(temp != null) {
+            System.out.println(temp);
+            temp = temp.nextNode;
+        }
+    }
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * 修改节点信息
      * @param node 要修改的节点
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">changeNode</span><span class="token punctuation">(</span>DoubleLinkNode node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"链表为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        DoubleLinkNode temp <span class="token operator">=</span> head<span class="token punctuation">.</span>nextNode<span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//用于判定是否做了修改</span>
-        <span class="token keyword">boolean</span> flag <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>temp <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>temp<span class="token punctuation">.</span>id <span class="token operator">==</span> node<span class="token punctuation">.</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token comment" spellcheck="true">//匹配到节点，替换节点</span>
-                temp<span class="token punctuation">.</span>preNode<span class="token punctuation">.</span>nextNode <span class="token operator">=</span> node<span class="token punctuation">;</span>
-                node<span class="token punctuation">.</span>nextNode <span class="token operator">=</span> temp<span class="token punctuation">.</span>nextNode<span class="token punctuation">;</span>
-                flag <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            temp <span class="token operator">=</span> temp<span class="token punctuation">.</span>nextNode<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>flag<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"未匹配到信息"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+     */
+    public void changeNode(DoubleLinkNode node) {
+        if(isEmpty()) {
+            System.out.println(&quot;链表为空&quot;);
+            return;
+        }
+        DoubleLinkNode temp = head.nextNode;
+        //用于判定是否做了修改
+        boolean flag = false;
+        while (temp != null) {
+            if(temp.id == node.id) {
+                //匹配到节点，替换节点
+                temp.preNode.nextNode = node;
+                node.nextNode = temp.nextNode;
+                flag = true;
+            }
+            temp = temp.nextNode;
+        }
+        if(!flag) {
+            System.out.println(&quot;未匹配到信息&quot;);
+        }
 
-    <span class="token punctuation">}</span>
+    }
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * 删除节点
      * @param node 要删除的节点
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteNode</span><span class="token punctuation">(</span>DoubleLinkNode node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"链表为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        DoubleLinkNode temp <span class="token operator">=</span> head<span class="token punctuation">.</span>nextNode<span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//查看是否删除成功</span>
-        <span class="token keyword">boolean</span> flag <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span>temp <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>temp<span class="token punctuation">.</span>id <span class="token operator">==</span> node<span class="token punctuation">.</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                temp<span class="token punctuation">.</span>preNode<span class="token punctuation">.</span>nextNode <span class="token operator">=</span> temp<span class="token punctuation">.</span>nextNode<span class="token punctuation">;</span>
-                temp<span class="token punctuation">.</span>nextNode <span class="token operator">=</span> null<span class="token punctuation">;</span>
-                flag <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            temp <span class="token operator">=</span> temp<span class="token punctuation">.</span>nextNode<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>flag<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"未找到该节点"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+     */
+    public void deleteNode(DoubleLinkNode node) {
+        if(isEmpty()){
+            System.out.println(&quot;链表为空&quot;);
+            return;
+        }
+        DoubleLinkNode temp = head.nextNode;
+        //查看是否删除成功
+        boolean flag = false;
+        while(temp != null) {
+            if(temp.id == node.id) {
+                temp.preNode.nextNode = temp.nextNode;
+                temp.nextNode = null;
+                flag = true;
+            }
+            temp = temp.nextNode;
+        }
+        if(!flag) {
+            System.out.println(&quot;未找到该节点&quot;);
+        }
+    }
 
-<span class="token punctuation">}</span>
+}
 </code></pre>
 <h2 id="3-3-单向环形链表"><a href="#3-3-单向环形链表" class="headerlink" title="3.3 单向环形链表"></a>3.3 单向环形链表</h2><ul>
 <li><p>问题描述：编号为 1-N 的 N 个士兵围坐在一起形成一个圆圈，从编号为 1 的士兵开始依次报数（1，2，3…这样依次报），数到 m 的 士兵会被杀死出列，之后的士兵再从 1 开始报数。直到最后剩下一士兵，求这个士兵的编号。（注意，编号不是从0开始的哈）。</p>
@@ -1405,193 +1395,158 @@
 </li>
 <li><p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1647655282064-ad046e58-33c3-467d-837f-fb34390a4f5f.webp#clientId=u6461df0b-2453-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=u05402622&margin=%5Bobject%20Object%5D&originHeight=191&originWidth=638&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u9b8ce243-5bd1-4783-b183-58131fed748&title="><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1647655300970-2190b067-14d9-4c78-b7de-7569688d0c98.webp#clientId=u6461df0b-2453-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=ue3995bc4&margin=%5Bobject%20Object%5D&originHeight=412&originWidth=701&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u605e1fd9-8f67-4adf-9ba7-fae77bb92fa&title="></p>
 </li>
-<li><p>首先我们创建一个节点类</p>
+<li><p>首先我们创建一个节点类<br>&#96;&#96;&#96;java<br>package CircularLinked;</p>
 </li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> CircularLinked<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @Author shu
- * @Version 1.0
- * @Date: 2022/03/18/ 22:00
- * @Description 节点
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CircularLinkedNode</span> <span class="token punctuation">{</span>
-
-     <span class="token keyword">int</span> id<span class="token punctuation">;</span>
-     CircularLinkedNode next<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token function">CircularLinkedNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token string">"CircularLinkedNode{"</span> <span class="token operator">+</span>
-                <span class="token string">"id="</span> <span class="token operator">+</span> id <span class="token operator">+</span>
-                <span class="token string">'}'</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>添加节点</p>
+<p>&#x2F;**</p>
 <ul>
-<li>添加节点，形成一个环状首尾相连</li>
-<li>首先添加一个头节点，执行添加节点</li>
-<li>判断添加节点是否是初始化节点</li>
-<li>将最后添加的节点指向初始化节点形成一个环状</li>
+<li>@Author shu</li>
+<li>@Version 1.0</li>
+<li>@Date: 2022&#x2F;03&#x2F;18&#x2F; 22:00</li>
+<li>@Description 节点</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CircularLinkedList</span> <span class="token punctuation">{</span>
+<p> **&#x2F;<br>public class CircularLinkedNode {</p>
+<pre><code> int id;
+ CircularLinkedNode next;
 
-    <span class="token comment" spellcheck="true">// 头结点</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> CircularLinkedNode head<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">CircularLinkedNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 辅助节点</span>
-     CircularLinkedNode temp<span class="token punctuation">;</span>
+public CircularLinkedNode(int id) {
+    this.id = id;
+}
 
-    <span class="token comment" spellcheck="true">/**
+@Override
+public String toString() {
+    return &quot;CircularLinkedNode{&quot; +
+            &quot;id=&quot; + id +
+            &#39;}&#39;;
+}
+</code></pre>
+<p>}</p>
+<pre><code>添加节点
+
+- 添加节点，形成一个环状首尾相连
+- 首先添加一个头节点，执行添加节点
+- 判断添加节点是否是初始化节点
+- 将最后添加的节点指向初始化节点形成一个环状
+```java
+public class CircularLinkedList {
+
+    // 头结点
+    private final CircularLinkedNode head=new CircularLinkedNode(-1);
+    // 辅助节点
+     CircularLinkedNode temp;
+
+    /**
      * 添加方法：目的：添加节点指向头节点形成一个环
      * @param node
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addNode</span><span class="token punctuation">(</span>CircularLinkedNode node<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 添加第一个节点</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>head<span class="token punctuation">.</span>next<span class="token operator">==</span>null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            head<span class="token punctuation">.</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment" spellcheck="true">// 辅助变量</span>
-        temp<span class="token operator">=</span>head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 已经添加第一个节点，为了添加的前一个节点不为空</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>temp<span class="token punctuation">.</span>next<span class="token operator">==</span>null<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">// 当前节点指向下一个节点</span>
-            temp<span class="token punctuation">.</span>next<span class="token operator">=</span>node<span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 添加节点指向头节点</span>
-            node<span class="token punctuation">.</span>next<span class="token operator">=</span>head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment" spellcheck="true">// 找到尾节点</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>temp<span class="token punctuation">.</span>next <span class="token operator">!=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            temp <span class="token operator">=</span> temp<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment" spellcheck="true">//temp现在为尾节点</span>
-        temp<span class="token punctuation">.</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//node现在为尾节点，将其next指向首节点</span>
-        node<span class="token punctuation">.</span>next <span class="token operator">=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+     */
+    public void addNode(CircularLinkedNode node){
+        // 添加第一个节点
+        if(head.next==null) {
+            head.next = node;
+            return;
+        }
+        // 辅助变量
+        temp=head.next;
+        // 已经添加第一个节点，为了添加的前一个节点不为空
+        if(temp.next==null){
+            // 当前节点指向下一个节点
+            temp.next=node;
+            // 添加节点指向头节点
+            node.next=head.next;
+            return;
+        }
+        // 找到尾节点
+        while (temp.next != head.next) {
+            temp = temp.next;
+        }
+        //temp现在为尾节点
+        temp.next = node;
+        //node现在为尾节点，将其next指向首节点
+        node.next = head.next;
 
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    }
+}
 </code></pre>
 <p>获取长度</p>
 <ul>
-<li>找到尾结点，进行累加</li>
+<li>找到尾结点，进行累加<br>&#96;&#96;&#96;java<br>public int getListSize(){<br>  if(head.next &#x3D;&#x3D; null) {<br>      return 0;<br>  }<br>  &#x2F;&#x2F;判断是否只有一个节点<br>  if(head.next.next &#x3D;&#x3D; null) {<br>      return 1;<br>  }<br>  &#x2F;&#x2F;节点个数初始为2<br>  int length &#x3D; 2;<br>  CircularLinkedNode first &#x3D; head.next;<br>  CircularLinkedNode temp &#x3D; first.next;<br>  while(true) {<br>      &#x2F;&#x2F; 尾结点<br>      if(temp.next.id &#x3D;&#x3D; first.id) {<br>          return length;<br>      }<br>      temp &#x3D; temp.next;<br>      length++;<br>  }<br>  }</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getListSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>head<span class="token punctuation">.</span>next <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment" spellcheck="true">//判断是否只有一个节点</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment" spellcheck="true">//节点个数初始为2</span>
-        <span class="token keyword">int</span> length <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-        CircularLinkedNode first <span class="token operator">=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        CircularLinkedNode temp <span class="token operator">=</span> first<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">// 尾结点</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>temp<span class="token punctuation">.</span>next<span class="token punctuation">.</span>id <span class="token operator">==</span> first<span class="token punctuation">.</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token keyword">return</span> length<span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            temp <span class="token operator">=</span> temp<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-            length<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-</code></pre>
-<p>遍历</p>
-<pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
+<pre><code>遍历
+```java
+
+    /**
      * 遍历
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span>  <span class="token function">showData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>head<span class="token punctuation">.</span>next<span class="token operator">==</span>null<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"链表为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        temp<span class="token operator">=</span>head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token keyword">int</span> size <span class="token operator">=</span> <span class="token function">getListSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            temp<span class="token operator">=</span>temp<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+     */
+    public void  showData(){
+        if(head.next==null){
+            System.out.println(&quot;链表为空&quot;);
+            return;
+        }
+        temp=head.next;
+        int size = getListSize();
+        for (int i = 0; i &lt; size; i++) {
+            System.out.println(temp);
+            temp=temp.next;
+        }
+    }
 </code></pre>
 <p>删除某个节点</p>
 <ul>
-<li>将要删除节点的上一个元素指向要删除元素节点的下一个元素</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
-     * 删除某个节点
-     * @param start 索引位置
-     * @return
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteLinkNode</span><span class="token punctuation">(</span> <span class="token keyword">int</span> start<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 没有节点</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>head<span class="token punctuation">.</span>next <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"链表为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment" spellcheck="true">// 第一个节点</span>
-        temp <span class="token operator">=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 获取长度</span>
-        <span class="token keyword">int</span> length <span class="token operator">=</span> <span class="token function">getListSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//从start开始计数</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>start <span class="token operator">></span> length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"超出链表范围"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        
-        CircularLinkedNode startNode <span class="token operator">=</span> temp<span class="token punctuation">;</span>
-
-        <span class="token keyword">int</span> count<span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">//如果只有一个节点</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>temp<span class="token punctuation">.</span>next <span class="token operator">==</span> null<span class="token punctuation">)</span> 
-            temp<span class="token punctuation">.</span>next<span class="token operator">=</span>head<span class="token punctuation">;</span>
-        
-        <span class="token comment" spellcheck="true">//找到开始节点位置,找到要删除的节点</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span>count <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> count<span class="token operator">&lt;</span>start<span class="token punctuation">;</span> count<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            startNode <span class="token operator">=</span> startNode<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        <span class="token comment" spellcheck="true">//找到start的前一个节点，方便删除操作</span>
-        CircularLinkedNode front <span class="token operator">=</span> startNode<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span>front<span class="token punctuation">.</span>next <span class="token operator">!=</span> startNode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            front <span class="token operator">=</span> front<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前节点"</span><span class="token operator">+</span>startNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前节点前一个节点"</span><span class="token operator">+</span>front<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">// 如果当前节点时尾元素，</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>startNode<span class="token punctuation">.</span>next<span class="token operator">==</span>head<span class="token punctuation">.</span>next<span class="token punctuation">)</span>
-            front<span class="token punctuation">.</span>next<span class="token operator">=</span>head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        
-        <span class="token comment" spellcheck="true">// 如果不是尾结点</span>
-        <span class="token keyword">else</span> 
-           front<span class="token punctuation">.</span>next<span class="token operator">=</span>startNode<span class="token punctuation">.</span>next<span class="token punctuation">;</span> 
-        
-    <span class="token punctuation">}</span>
-</code></pre>
-<p>约瑟夫环问题</p>
+<li><p>将要删除节点的上一个元素指向要删除元素节点的下一个元素<br>&#96;&#96;&#96;java<br>&#x2F;**</p>
 <ul>
-<li>我们定义递归函数 f(n，m) 的返回结果是存活士兵的编号，显然当 n &#x3D; 1 时，f(n, m) &#x3D; 1。</li>
-<li>假如我们能够找出 f(n，m) 和 f(n-1，m) 之间的关系的话，我们就可以用递归的方式来解决了。我们假设人员数为 n, 报数到 m 的人就自杀。</li>
+<li>删除某个节点</li>
+<li>@param start 索引位置</li>
+<li>@return</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1647669090344-fbd72608-bd05-4ad5-a9f5-d4fc7ac875c1.webp#clientId=u6461df0b-2453-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=u27439419&margin=%5Bobject%20Object%5D&originHeight=699&originWidth=685&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u536c5624-e650-4503-a0c5-0e9c5baa515&title="></p>
-<pre class=" language-java"><code class="language-java">理解：假设 n<span class="token operator">=</span><span class="token number">6</span> <span class="token punctuation">,</span>m <span class="token operator">=</span><span class="token number">3</span> ，记住这是一个环形<span class="token number">6</span>指向<span class="token number">1</span>
-            <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span>
-    第一次：<span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span> 杀死<span class="token number">3</span> n<span class="token operator">=</span><span class="token number">5</span> 
-    第二次：<span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span>， 杀死<span class="token number">6</span> n<span class="token operator">=</span><span class="token number">4</span>  
-    第三次：<span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span>， 杀死 <span class="token number">4</span>  n<span class="token operator">=</span><span class="token number">3</span>
-    第四次：<span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span> 杀死<span class="token number">2</span> n<span class="token operator">=</span><span class="token number">2</span>
-    第五次：<span class="token number">1</span> 杀死<span class="token number">5</span> n<span class="token operator">=</span><span class="token number">1</span> 存活编号
+<p>   *&#x2F;<br>  public void deleteLinkNode( int start){<br>      &#x2F;&#x2F; 没有节点<br>      if(head.next &#x3D;&#x3D; null) {<br>          System.out.println(“链表为空”);<br>          return;<br>      }<br>      &#x2F;&#x2F; 第一个节点<br>      temp &#x3D; head.next;<br>      &#x2F;&#x2F; 获取长度<br>      int length &#x3D; getListSize();<br>      &#x2F;&#x2F;从start开始计数<br>      if(start &gt; length) {<br>          System.out.println(“超出链表范围”);<br>          return;<br>      }</p>
+<pre><code>  CircularLinkedNode startNode = temp;
+
+  int count;
+
+  //如果只有一个节点
+  if(temp.next == null) 
+      temp.next=head;
+  
+  //找到开始节点位置,找到要删除的节点
+  for(count = 1; count&lt;start; count++) {
+      startNode = startNode.next;
+  }
+
+  //找到start的前一个节点，方便删除操作
+  CircularLinkedNode front = startNode.next;
+  while(front.next != startNode) {
+      front = front.next;
+  }
+
+  System.out.println(&quot;当前节点&quot;+startNode);
+  System.out.println(&quot;当前节点前一个节点&quot;+front);
+
+  // 如果当前节点时尾元素，
+  if(startNode.next==head.next)
+      front.next=head.next;
+  
+  // 如果不是尾结点
+  else 
+     front.next=startNode.next; 
+  
+</code></pre>
+<p>  }</p>
+</li>
+</ul>
+<pre><code>约瑟夫环问题
+
+- 我们定义递归函数 f(n，m) 的返回结果是存活士兵的编号，显然当 n = 1 时，f(n, m) = 1。
+- 假如我们能够找出 f(n，m) 和 f(n-1，m) 之间的关系的话，我们就可以用递归的方式来解决了。我们假设人员数为 n, 报数到 m 的人就自杀。
+
+![](https://cdn.nlark.com/yuque/0/2022/webp/12426173/1647669090344-fbd72608-bd05-4ad5-a9f5-d4fc7ac875c1.webp#clientId=u6461df0b-2453-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;id=u27439419&amp;margin=%5Bobject%20Object%5D&amp;originHeight=699&amp;originWidth=685&amp;originalType=url&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;taskId=u536c5624-e650-4503-a0c5-0e9c5baa515&amp;title=)
+```java
+理解：假设 n=6 ,m =3 ，记住这是一个环形6指向1
+            1,2,3,4,5,6
+    第一次：1,2,4,5,6, 杀死3 n=5 
+    第二次：1,2,4,5， 杀死6 n=4  
+    第三次：1,2,5， 杀死 4  n=3
+    第四次：1,5 杀死2 n=2
+    第五次：1 杀死5 n=1 存活编号
 </code></pre>
 <pre class=" language-java"><code class="language-java"> <span class="token comment" spellcheck="true">/**
      * 返回删除后的编号
@@ -1645,6 +1600,195 @@
     <span class="token punctuation">}</span>
 </code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1647678508823-6dc56d75-e6b0-4980-a3ca-f8691ec5e5fb.png#clientId=u6461df0b-2453-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=180&id=u74dc3bdf&margin=%5Bobject%20Object%5D&name=image.png&originHeight=360&originWidth=1790&originalType=binary&ratio=1&rotation=0&showTitle=false&size=53293&status=done&style=none&taskId=u1b0f0bcb-ed15-4906-b965-f1a02e31022&title=&width=895" alt="image.png"></p>
+<h1 id="四-栈"><a href="#四-栈" class="headerlink" title="四 栈"></a>四 栈</h1><ul>
+<li>栈是限定仅在表尾进行插入和删除操作的线性表。允许插入、删除的一端称为栈顶（top），另一端称为栈底（bottom），不含任何数据元素的栈称为空栈。假设栈S &#x3D;（a1，a2，…，an），则称a1为栈底元素，an为栈顶元素。栈中元素按a1，a2，…，an的顺序进栈，退栈从栈顶元素开始出栈。所以，栈的修改是按后进先出的原则进行的。因此，栈又称为后进先出（LIFO，last in first out）的线性表。</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/jpeg/12426173/1648371105922-910d7f6d-c351-47b6-b655-843ac8c32123.jpeg#clientId=u1efa62f4-d461-4&crop=0&crop=0&crop=1&crop=1&from=drop&id=u6016924a&margin=%5Bobject%20Object%5D&name=epub_31151900_43.jpg&originHeight=665&originWidth=687&originalType=binary&ratio=1&rotation=0&showTitle=false&size=34461&status=done&style=none&taskId=u789d9c72-5577-4686-8338-9337ba0b2b1&title=" alt="epub_31151900_43.jpg"></p>
+<ul>
+<li>入栈和出栈是栈的两个主要操作，每一次进栈的元素总是成为当前的栈顶元素，而每一次出栈的元素总是当前的栈顶元素。所以栈顶的位置随元素的插入和删除而变化，为此需要一个称为栈顶指针的位置指示器来表示栈顶的当前位置。</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/jpeg/12426173/1648371148126-939397fb-c3a0-4668-a9c6-0071b0895f5e.jpeg#clientId=u1efa62f4-d461-4&crop=0&crop=0&crop=1&crop=1&from=drop&id=uef65f05d&margin=%5Bobject%20Object%5D&name=epub_31151900_44.jpg&originHeight=461&originWidth=362&originalType=binary&ratio=1&rotation=0&showTitle=false&size=12707&status=done&style=none&taskId=ub87e8823-c0d5-454f-9a74-6736b0b63ab&title=" alt="epub_31151900_44.jpg"></p>
+<ul>
+<li>操作：（1）初始化——构造一个空的栈（2）入栈——在栈顶位置插入一个新元素（3）出栈——删除栈顶元素（4）获取——取栈顶数据元素（5）判空——判断当前栈是否为空（6）求长度——求出栈中数据元素的个数（7）正序遍历——依次访问栈中每个元素并输出（8）销毁——销毁一个已存在的栈。<h2 id="4-1-顺序栈"><a href="#4-1-顺序栈" class="headerlink" title="4.1 顺序栈"></a>4.1 顺序栈</h2>顺序栈：利用一组地址连续的存储单元依次存放自栈底到栈顶的数据元素，把数组中下标为0的一端作为栈底，为了指示栈中元素的位置，我们定义变量top来指示栈顶元素在顺序栈中的位置，top为整型。<img src="https://cdn.nlark.com/yuque/0/2022/jpeg/12426173/1648371259344-b99d7e97-6f18-4e4e-8222-5e58b6597911.jpeg#clientId=u1efa62f4-d461-4&crop=0&crop=0&crop=1&crop=1&from=drop&id=u25b9fbcf&margin=%5Bobject%20Object%5D&name=epub_31151900_45.jpg&originHeight=343&originWidth=1092&originalType=binary&ratio=1&rotation=0&showTitle=false&size=29034&status=done&style=none&taskId=u152ddaf7-baa8-401f-be47-e6664b9f000&title=" alt="epub_31151900_45.jpg"><br>&#96;&#96;&#96;java<br>package Stack;</li>
+</ul>
+<p>&#x2F;**</p>
+<ul>
+<li>@Author shu</li>
+<li>@Version 1.0</li>
+<li>@Date: 2022&#x2F;03&#x2F;20&#x2F; 12:09</li>
+<li>@Description 栈</li>
+</ul>
+<p> **&#x2F;<br>public class ArrayStack {<br>    private int maxSize;<br>    private int[] stack;<br>    private int top&#x3D;-1;</p>
+<pre><code>public ArrayStack(int maxSize) {
+    this.maxSize = maxSize;
+    stack=new int[this.maxSize];
+}
+
+/**
+ * 是否满
+ * @return
+ */
+public boolean isFull(){
+    return top==maxSize-1;
+}
+
+/**
+ * 是否为空
+ * @return
+ */
+public boolean isEmpty(){
+    return top==-1;
+}
+
+
+/**
+ * 入栈
+ * @param num
+ */
+public void push(int num){
+    if(isFull()){
+        System.out.println(&quot;栈满了&quot;);
+        return;
+    }
+    top++;
+    stack[top]=num;
+}
+
+
+/**
+ * 出栈
+ * @return
+ */
+public int pop(){
+    if(isEmpty()){
+        System.out.println(&quot;栈为空&quot;);
+        throw new RuntimeException(&quot;栈为空&quot;);
+    }
+    int values=stack[top];
+    top--;
+    return values;
+}
+
+
+/**
+ * 遍历
+ */
+public void show(){
+    if(isEmpty()){
+        System.out.println(&quot;栈为空&quot;);
+        throw new RuntimeException(&quot;栈为空&quot;);
+    }
+    for (int i=top;i&gt;=0;i--){
+        System.out.printf(&quot;%d&quot;,stack[i]);
+    }
+}
+</code></pre>
+<p>}</p>
+<pre><code>## 4.2 链表栈
+栈的链接存储结构称为链栈。利用链表实现，链表中的每个数据元素由两部分信息组成，一部分是存储其本身的信息，一部分是存储一个指示其直接后继的信息，即直接后继的存储位置。我们称它有两个域，其中存储数据元素信息的域为数据域，存储直接后继存储位置的域为指针域。
+![epub_31151900_46.jpg](https://cdn.nlark.com/yuque/0/2022/jpeg/12426173/1648371392015-45858ae3-a4a4-49cf-ad71-40c8a3088c95.jpeg#clientId=u1efa62f4-d461-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=drop&amp;id=u41628b79&amp;margin=%5Bobject%20Object%5D&amp;name=epub_31151900_46.jpg&amp;originHeight=347&amp;originWidth=430&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;size=12615&amp;status=done&amp;style=none&amp;taskId=u20c0033e-f5e6-4469-aa9c-f40710596d8&amp;title=)
+```java
+package Stack;
+
+
+/**
+ * @Author shu
+ * @Version 1.0
+ * @Date: 2022/03/27/ 16:56
+ * @Description 链表栈
+ **/
+public class LinkedStack&lt;T&gt; {
+    private Node&lt;T&gt; top;
+    private int length;
+
+    // 构造空栈
+    public LinkedStack() {
+        this.top = null;
+        this.length = 0;
+    }
+
+    /**
+     * 入栈
+     * @param obj
+     */
+    public void push(T obj){
+        top=new Node&lt;T&gt;(obj,top);
+        length++;
+    }
+
+    /**
+     * 出栈
+     * @return
+     */
+    public T pop(){
+        if(top==null){
+            System.out.println(&quot;栈为空！！！&quot;);
+            return null;
+        }
+        T X=top.data;
+        top=top.next;
+        length--;
+        return X;
+    }
+
+    /**
+     * 返回栈顶元素
+     * @return
+     */
+    public T getHead(){
+        if(top==null){
+            System.out.println(&quot;栈为空！！！&quot;);
+            return null;
+        }
+        return top.data;
+    }
+
+    /**
+     * 返回大小
+     * @return
+     */
+    public int size(){
+        return length;
+    }
+
+    /**
+     * 是否为空
+     * @return
+     */
+    public boolean isEmpty(){
+        return top==null;
+    }
+
+    /**
+     * 遍历
+     */
+    public void nextOrder(){
+        Node&lt;T&gt; P=top;
+        while (P!=null){
+            System.out.println(P);
+            P=P.next;
+        }
+    }
+
+    /**
+     * 清空栈
+     */
+    public void Clear(){
+        top=null;
+    }
+    
+}
+
+class Node&lt;T&gt;{
+    T data;
+    Node&lt;T&gt; next;
+
+    public Node(T data, Node&lt;T&gt; next) {
+        this.data = data;
+        this.next = next;
+    }
+}
+</code></pre>
 
                 
             </div>
@@ -1886,46 +2030,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/archives/82130294.html">
+                <a href="/archives/4b0178e0.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="安卓开发（一）Android 开发环境安装">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="数据结构与算法">
                         
-                        <span class="card-title">安卓开发（一）Android 开发环境安装</span>
+                        <span class="card-title">数据结构与算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Android 提供各种尖端工具和功能，可帮助您针对数十亿用户日常使用的手机、平板电脑、电视和汽车来构建应用。
+                            算法＋数据结构=程序，就深刻揭示了算法和数据结构之间的关系。对实际问题选择了一种好的数据结构之后，还得有一个好的算法，才可更好地求解问题。
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" class="post-category">
-                                    安卓开发
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
+                                    数据结构与算法
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/">
-                        <span class="chip bg-color">安卓开发</span>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">数据结构与算法</span>
                     </a>
                     
                 </div>
@@ -1939,31 +2085,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/archives/1e78bba.html">
+                <a href="/archives/5ab59b3e.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="大端序与小端序">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Netty源码分析 （四）  PooledByteBuf">
                         
-                        <span class="card-title">大端序与小端序</span>
+                        <span class="card-title">Netty源码分析 （四）  PooledByteBuf</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            字节序，又称端序或尾序（英语中用单词：Endianness 表示），在计算机领域中，指[电脑内存]中或在数字通信链路中，占用多个字节的数据的字节排列顺序。
+                            Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-27
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    计算机基础
+                            <a href="/categories/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                    Netty源码分析
                                 </a>
                             
                             
@@ -1973,8 +2119,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">计算机基础</span>
+                    <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                        <span class="chip bg-color">Netty权威指南</span>
+                    </a>
+                    
+                    <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                        <span class="chip bg-color">Netty源码分析</span>
                     </a>
                     
                 </div>
@@ -2185,7 +2335,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">105.4k</span>
+                        class="white-color">106.9k</span>
             
             
             
