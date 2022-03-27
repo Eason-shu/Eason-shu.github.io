@@ -4,8 +4,8 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="安卓开发（二）基本知识介绍, Eason_Shu">
-    <meta name="description" content="Android 提供各种尖端工具和功能，可帮助您针对数十亿用户日常使用的手机、平板电脑、电视和汽车来构建应用。">
+    <meta name="keywords" content="Netty源码分析 （四）  PooledByteBuf, Eason_Shu">
+    <meta name="description" content="Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>安卓开发（二）基本知识介绍 | Eason_Shu</title>
+    <title>Netty源码分析 （四）  PooledByteBuf | Eason_Shu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -438,7 +438,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">安卓开发（二）基本知识介绍</h1>
+                    <h1 class="description center-align post-title">Netty源码分析 （四）  PooledByteBuf</h1>
                 </div>
             </div>
         </div>
@@ -554,8 +554,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/">
-                                <span class="chip bg-color">安卓开发</span>
+                            <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                                <span class="chip bg-color">Netty权威指南</span>
+                            </a>
+                        
+                            <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                                <span class="chip bg-color">Netty源码分析</span>
                             </a>
                         
                     </div>
@@ -566,8 +570,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" class="post-category">
-                                安卓开发
+                            <a href="/categories/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                Netty源码分析
                             </a>
                         
                     </div>
@@ -579,28 +583,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-14
+                    2022-03-27
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-14
+                    2022-03-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    703
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    4 分
                 </div>
                 
 
@@ -622,94 +626,69 @@
             <div id="articleContent">
                 <meta name="referrer" content="no-referrer">
 
-<h2 id="二-基本知识介绍"><a href="#二-基本知识介绍" class="headerlink" title="二 基本知识介绍"></a>二 基本知识介绍</h2><p>安卓官网：<a href="https://developer.android.google.cn/" target="_blank" rel="noopener">https://developer.android.google.cn/</a></p>
-<h3 id="2-1-安卓版本介绍"><a href="#2-1-安卓版本介绍" class="headerlink" title="2.1 安卓版本介绍"></a>2.1 安卓版本介绍</h3><p><img src="https://img-blog.csdnimg.cn/a7315ce09aa04f50aebc7bcaa8dbe984.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDQ1MTAyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="2-2-技术架构"><a href="#2-2-技术架构" class="headerlink" title="2.2 技术架构"></a>2.2 技术架构</h3><p><img src="https://img-blog.csdnimg.cn/b25ac7a7b3094fd1b452e1172034bd88.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDQ1MTAyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="2-3-应用程序框架（9部分）"><a href="#2-3-应用程序框架（9部分）" class="headerlink" title="2.3 应用程序框架（9部分）"></a>2.3 应用程序框架（9部分）</h3><ul>
-<li><code>Activity Manager</code>：管理程序的生命周期 </li>
-<li><code>Window Manager</code>：管理应用程序窗口 </li>
-<li><code>Content providers</code>：提供应用程序之间的数据共享 </li>
-<li><code>View System</code>：构建程序的可视化组件 </li>
-<li><code>Package Manager</code>：管理项目程序 </li>
-<li><code>Telephone Manager</code>：移动设备的基本功能同游由电话管理器管理 </li>
-<li><code>Resource Manager</code>：为程序提供文字、声音、图片、视频或布局文件等资源 </li>
-<li><code>Location Manager</code>：定位服务 </li>
-<li><code>Notification manager</code>：顶部消息提示服务</li>
+<h3 id="4-4-PooledByteBuf内存池原理分析"><a href="#4-4-PooledByteBuf内存池原理分析" class="headerlink" title="4.4 PooledByteBuf内存池原理分析"></a>4.4 PooledByteBuf内存池原理分析</h3><h4 id="4-4-1-PoolArena"><a href="#4-4-1-PoolArena" class="headerlink" title="4.4.1 PoolArena"></a>4.4.1 PoolArena</h4><ul>
+<li>Arena本身是指一块区域，在内存管理中，Memory Arena是指内存中的一大块连续的区域，PoolArena就是Netty的内存池实现类。</li>
+<li>为了集中管理内存的分配和释放，同时提高分配和释放内存时候的性能，很多框架和应用都会通过预先申请一大块内存，然后通过提供相应的分配和释放接口来使用内存。这样一来，对内存的管理就被集中到几个类或者函数中，由于不再频繁使用系统调用来申请和释放内存，应用或者系统的性能也会大大提高。在这种设计思路下，预先申请的那一大块内存就被称为Memory Arena。</li>
+<li>不同的框架，Memory Arena的实现不同，Netty 的 PoolArena是由多个Chunk组成的大块内存区域，而每个 Chunk 则由一个或者多个Page组成，因此，对内存的组织和管理也就主要集中在如何管理和组织Chunk 和 Page了。</li>
 </ul>
-<h3 id="2-4-目录结构了解"><a href="#2-4-目录结构了解" class="headerlink" title="2.4 目录结构了解"></a>2.4 目录结构了解</h3><ul>
-<li><p>Res<br><img src="https://img-blog.csdnimg.cn/6e736f8f67604ff69a6b5201546cf5fc.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDQ1MTAyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-</li>
-<li><p>AndroidManifest.xml项目配置文件</p>
-</li>
-</ul>
-<p><img src="https://img-blog.csdnimg.cn/77503b8a826443839c802497697ef39e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDQ1MTAyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
-<h3 id="2-5-日志工具的使用"><a href="#2-5-日志工具的使用" class="headerlink" title="2.5 日志工具的使用"></a>2.5 日志工具的使用</h3><ul>
-<li><code>Android</code>中的日志工具类是<code>Log（android.util.Log）</code>，这个类中提供了如下5个方法来供我们打印日志。</li>
-<li><code>Log.v()</code>：用于打印那些最为琐碎的、意义最小的日志信息。对应级别<code>verbose</code>，是<code>Android</code>日志里面级别最低的一种。</li>
-<li><code>Log.d()</code>：用于打印一些调试信息，这些信息对你调试程序和分析问题应该是有帮助的。对应级别<code>debug</code>，比<code>verbose</code>高一级。</li>
-<li><code>Log.i()</code>：用于打印一些比较重要的数据，这些数据应该是你非常想看到的、可以帮你分析用户行为数据。对应级别<code>info</code>，比<code>debug</code>高一级。</li>
-<li><code>Log.w()</code>：用于打印一些警告信息，提示程序在这个地方可能会有潜在的风险，最好去修复一下这些出现警告的地方。对应级别<code>warn</code>，比<code>info</code>高一级。</li>
-<li><code> Log.e()</code>：用于打印程序中的错误信息，比如程序进入到了<code>catch</code>语句当中。当有错误信息打印出来的时候，一般都代表你的程序出现严重问题了，必须尽快修复。对应级别<code>error</code>，比<code>warn</code>高一级。</li>
-</ul>
-<blockquote>
-<p>定制日志工具</p>
-</blockquote>
-<p>在真实大型开发项目中，不可不免的会出现日志的打印，但是日志的打印在线上环境会消耗性能也不美观，因此我们需要控制日志的打印。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>application11<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>LogUtils<span class="token punctuation">;</span>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">PoolArena</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">SizeClasses</span> <span class="token keyword">implements</span> <span class="token class-name">PoolArenaMetric</span> <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> HAS_UNSAFE <span class="token operator">=</span> PlatformDependent<span class="token punctuation">.</span><span class="token function">hasUnsafe</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token keyword">import</span> android<span class="token punctuation">.</span>os<span class="token punctuation">.</span>Build<span class="token punctuation">;</span>
-<span class="token keyword">import</span> android<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Log<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @author shu
- * @date 2021/7/25
- * @description 日志控制工具
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LogUtils</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> VERBOSE<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> DEBUG<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> INFO<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> WARE<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> ERROR<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> NOTHING<span class="token operator">=</span><span class="token number">6</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">//项目上线时将Level改成NOTHING</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> Level<span class="token operator">=</span> VERBOSE<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">v</span><span class="token punctuation">(</span>String tag<span class="token punctuation">,</span>String msg<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>Level<span class="token operator">&lt;=</span> VERBOSE<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            Log<span class="token punctuation">.</span><span class="token function">v</span><span class="token punctuation">(</span>tag<span class="token punctuation">,</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+    <span class="token keyword">enum</span> SizeClass <span class="token punctuation">{</span>
+        Small<span class="token punctuation">,</span>
+        Normal
     <span class="token punctuation">}</span>
 
+    <span class="token keyword">final</span> PooledByteBufAllocator parent<span class="token punctuation">;</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">d</span><span class="token punctuation">(</span>String tag<span class="token punctuation">,</span>String msg<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>Level<span class="token operator">&lt;=</span> DEBUG<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            Log<span class="token punctuation">.</span><span class="token function">d</span><span class="token punctuation">(</span>tag<span class="token punctuation">,</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+    <span class="token keyword">final</span> <span class="token keyword">int</span> numSmallSubpagePools<span class="token punctuation">;</span>
+    <span class="token keyword">final</span> <span class="token keyword">int</span> directMemoryCacheAlignment<span class="token punctuation">;</span>
+    <span class="token keyword">final</span> <span class="token keyword">int</span> directMemoryCacheAlignmentMask<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> PoolSubpage<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> smallSubpagePools<span class="token punctuation">;</span>
 
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">i</span><span class="token punctuation">(</span>String tag<span class="token punctuation">,</span>String msg<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>Level<span class="token operator">&lt;=</span> INFO<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            Log<span class="token punctuation">.</span><span class="token function">i</span><span class="token punctuation">(</span>tag<span class="token punctuation">,</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">w</span><span class="token punctuation">(</span>String tag<span class="token punctuation">,</span>String msg<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>Level<span class="token operator">&lt;=</span> WARE<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            Log<span class="token punctuation">.</span><span class="token function">w</span><span class="token punctuation">(</span>tag<span class="token punctuation">,</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">e</span><span class="token punctuation">(</span>String tag<span class="token punctuation">,</span>String msg<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>Level<span class="token operator">&lt;=</span> ERROR<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            Log<span class="token punctuation">.</span><span class="token function">e</span><span class="token punctuation">(</span>tag<span class="token punctuation">,</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-
+    <span class="token keyword">private</span> <span class="token keyword">final</span> PoolChunkList<span class="token operator">&lt;</span>T<span class="token operator">></span> q050<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> PoolChunkList<span class="token operator">&lt;</span>T<span class="token operator">></span> q025<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> PoolChunkList<span class="token operator">&lt;</span>T<span class="token operator">></span> q000<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> PoolChunkList<span class="token operator">&lt;</span>T<span class="token operator">></span> qInit<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> PoolChunkList<span class="token operator">&lt;</span>T<span class="token operator">></span> q075<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> PoolChunkList<span class="token operator">&lt;</span>T<span class="token operator">></span> q100<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
+<h4 id="4-4-2-PoolChunk"><a href="#4-4-2-PoolChunk" class="headerlink" title="4.4.2 PoolChunk"></a>4.4.2 PoolChunk</h4><ul>
+<li>Chunk 主要用来组织和管理多个Page 的内存分配和释放，在 Netty中，Chunk 中的Page被构建成一棵二叉树。假设一个Chunk 由16个 Page组成，那么这些Page将会被按照图所示的形式组织起来。</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1648357902354-11f23303-bb55-4b89-b303-81689d517825.png#clientId=u15068f9c-0237-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=315&id=ucfa10c3f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=394&originWidth=873&originalType=binary&ratio=1&rotation=0&showTitle=false&size=73696&status=done&style=none&taskId=u9a331242-9ca0-420b-9ac9-f93bc1149e8&title=&width=698.4" alt="image.png"></p>
+<ul>
+<li>Page的大小是4个字节，Chunk 的大小是64个字节(4×16)。整棵树有5层，第1层(也就是叶子节点所在的层）用来分配所有Page 的内存，第4层用来分配2个 Page 的内存，依次类推。</li>
+<li>每个节点都记录了自己在整个Memory Arena中的偏移地址，当一个节点代表的内存区域被分配出去之后，这个节点就会被标记为已分配，自这个节点以下的所有节点在后面的内存分配请求中都会被忽略。举例来说，当我们请求一个16字节的存储区域时，上面这个树中的第3层中的4个节点中的一个就会被标记为已分配，这就表示整个Memroy Arena中有16个字节被分配出去了，新的分配请求只能从剩下的3个节点及其子树中寻找合适的节点。</li>
+<li>对树的遍历采用深度优先的算法，但是在选择哪个子节点继续遍历时则是随机的，并不像通常的深度优先算法中那样总是访问左边的子节点。</li>
+</ul>
+<h4 id="4-4-3-PoolSubpage"><a href="#4-4-3-PoolSubpage" class="headerlink" title="4.4.3 PoolSubpage"></a>4.4.3 PoolSubpage</h4><ul>
+<li>对于小于一个Page的内存，Netty在 Page中完成分配。每个Page 会被切分成大小相等的多个存储块，存储块的大小由第一次申请的内存块大小决定。假如一个Page是8个字节，如果第一次申请的块大小是4个字节，那么这个Page就包含2个存储块;如果第一次申请的是8个字节，那么这个Page就被分成1个存储块。</li>
+<li>一个Page只能用于分配与第一次申请时大小相同的内存，比如，一个4字节的 Page，如果第一次分配了1字节的内存，那么后面这个Page 只能继续分配1字节的内存，如果有一个申请2字节内存的请求，就需要在一个新的Page中进行分配。</li>
+<li>Page中存储区域的使用状态通过一个long 数组来维护，数组中每个long的每一位表示一个块存储区域的占用情况:0表示未占用，1表示以占用。对于一个4字节的Page来说，如果这个Page用来分配1个字节的存储区域，那么long 数组中就只有一个long类型的元素，这个数值的低4位用来指示各个存储区域的占用情况。对于一个128字节的 Page来说，如果这个Page也是用来分配1个字节的存储区域，那么long 数组中就会包含2个元素，总共128位，每一位代表一个区域的占用情况。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">PoolSubpage</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token keyword">implements</span> <span class="token class-name">PoolSubpageMetric</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">final</span> PoolChunk<span class="token operator">&lt;</span>T<span class="token operator">></span> chunk<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> pageShifts<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> runOffset<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> runSize<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">long</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bitmap<span class="token punctuation">;</span>
+
+    PoolSubpage<span class="token operator">&lt;</span>T<span class="token operator">></span> prev<span class="token punctuation">;</span>
+    PoolSubpage<span class="token operator">&lt;</span>T<span class="token operator">></span> next<span class="token punctuation">;</span>
+
+    <span class="token keyword">boolean</span> doNotDestroy<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> elemSize<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> maxNumElems<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> bitmapLength<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> nextAvail<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> numAvail<span class="token punctuation">;</span>
+    
+<span class="token punctuation">}</span>
+</code></pre>
+<p>无论是Chunk还是 Page，都通过状态位来标识内存是否可用，不同之处是Chunk 通过在二叉树上对节点进行标识实现，Page是通过维护块的使用状态标识来实现。</p>
 
                 
             </div>
@@ -736,7 +715,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://www.xiaolin.store/archives/5cb30c88.html">http://www.xiaolin.store/archives/5cb30c88.html</a>
+                    <a href="http://www.xiaolin.store/archives/5ab59b3e.html">http://www.xiaolin.store/archives/5ab59b3e.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -774,8 +753,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/">
-                                    <span class="chip bg-color">安卓开发</span>
+                                <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                                    <span class="chip bg-color">Netty权威指南</span>
+                                </a>
+                            
+                                <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                                    <span class="chip bg-color">Netty源码分析</span>
                                 </a>
                             
                         </div>
@@ -951,46 +934,52 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/archives/44c5ab88.html">
+                <a href="/archives/5ab59b3e.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="安卓开发（三）布局知识">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Netty源码分析 （四）  PooledByteBuf">
                         
-                        <span class="card-title">安卓开发（三）布局知识</span>
+                        <span class="card-title">Netty源码分析 （四）  PooledByteBuf</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Android 提供各种尖端工具和功能，可帮助您针对数十亿用户日常使用的手机、平板电脑、电视和汽车来构建应用。
+                            Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" class="post-category">
-                                    安卓开发
+                            <a href="/categories/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                    Netty源码分析
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/">
-                        <span class="chip bg-color">安卓开发</span>
+                    <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                        <span class="chip bg-color">Netty权威指南</span>
+                    </a>
+                    
+                    <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                        <span class="chip bg-color">Netty源码分析</span>
                     </a>
                     
                 </div>
@@ -1004,31 +993,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/archives/82130294.html">
+                <a href="/archives/3c36b0ab.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="安卓开发（一）Android 开发环境安装">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Netty源码分析 （三） UnpooledHeapByteBuf">
                         
-                        <span class="card-title">安卓开发（一）Android 开发环境安装</span>
+                        <span class="card-title">Netty源码分析 （三） UnpooledHeapByteBuf</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Android 提供各种尖端工具和功能，可帮助您针对数十亿用户日常使用的手机、平板电脑、电视和汽车来构建应用。
+                            Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-14
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-26
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" class="post-category">
-                                    安卓开发
+                            <a href="/categories/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                    Netty源码分析
                                 </a>
                             
                             
@@ -1038,8 +1027,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/">
-                        <span class="chip bg-color">安卓开发</span>
+                    <a href="/tags/Netty%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/">
+                        <span class="chip bg-color">Netty权威指南</span>
+                    </a>
+                    
+                    <a href="/tags/Netty%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+                        <span class="chip bg-color">Netty源码分析</span>
                     </a>
                     
                 </div>
