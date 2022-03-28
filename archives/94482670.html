@@ -586,21 +586,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-14
+                    2022-03-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.5k
+                    4.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    12 分
+                    21 分
                 </div>
                 
 
@@ -622,11 +622,31 @@
             <div id="articleContent">
                 <meta name="referrer" content="no-referrer">
 
-<p>@<a href="%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95">TOC</a></p>
-<h2 id="六-持久化存储技术"><a href="#六-持久化存储技术" class="headerlink" title="六 持久化存储技术"></a>六 持久化存储技术</h2><p><strong>持久化技术则提供了一种机制可以让数据在瞬时状态和持久状态之间进行转换。我们常见的有三种，文件存储，即文件存储、SharedPreferences存储以及数据库存储</strong></p>
+<h2 id="六-持久化存储技术"><a href="#六-持久化存储技术" class="headerlink" title="六 持久化存储技术"></a>六 持久化存储技术</h2><ul>
+<li><p>那么什么是瞬时数据呢？就是指那些存储在内存当中，有可能会因为程序关闭或其他原因导致内存被回收而丢失的数据。这对于一些关键性的数据信息来说是绝对不能容忍的，谁都不希望自己刚发出去的一条微博，刷新一下就没了吧。那么怎样才能保证一些关键性的数据不会丢失呢？这就需要用到数据持久化技术了。</p>
+</li>
+<li><p>保存在内存中的数据是处于瞬时状态的，而保存在存储设备中的数据是处于持久状态的，持久化技术则提供了一种机制可以让数据在瞬时状态和持久状态之间进行转换。</p>
+</li>
+</ul>
 <h3 id="6-1-文件存储"><a href="#6-1-文件存储" class="headerlink" title="6.1 文件存储"></a>6.1 文件存储</h3><p>文件存储是Android中最基本的一种数据存储方式，它不对存储的内容进行任何的格式化处理，所有数据都是原封不动地保存到文件当中的，因而它比较适合用于存储一些简单的<strong>文本数据</strong>或<strong>二进制数据</strong>。</p>
+<blockquote>
+<p>写入主要过程</p>
+</blockquote>
 <ul>
-<li>存储数据</li>
+<li>Context类中提供了一个<code>openFileOutput()</code>方法，可以用于将数据存储到指定的文件中。</li>
+<li>这个方法接收两个参数，第一个参数是文件名，在文件创建的时候使用的就是这个名称，注意这里指定的文件名不可以包含路径，因为所有的文件都是默认存储到<code>/data/data/&lt;package name&gt;/files/</code>目录下的。第二个参数是文件的操作模式，主要有两种模式可选，<code>MODE_PRIVATE</code>和<code>MODE_APPEND</code>。</li>
+<li><code>MODE_PRIVATE</code>是默认的操作模式，表示当指定同样文件名的时候，所写入的内容将会覆盖原文件中的内容，而<code>MODE_APPEND</code>则表示如果该文件已存在，就往文件里面追加内容，不存在就创建新文件。</li>
+</ul>
+<blockquote>
+<p>读取主要过程</p>
+</blockquote>
+<ul>
+<li><p>类似于将数据存储到文件中，<code>Context类</code>中还提供了一个<code>openFileInput()</code>方法，用于从文件中读取数据。</p>
+</li>
+<li><p>这个方法要比<code>openFileOutput()</code>简单一些，它只接收一个参数，即要读取的文件名，然后系统会自动到<code>/data/data/&lt;packagename&gt;/files/</code>目录下去加载这个文件，并返回一个&#96;FileInputStream&#96;&#96;对象，得到了这个对象之后再通过Java流的方式就可以将数据读取出来了。</p>
+</li>
+<li><p>存储数据</p>
+</li>
 </ul>
 <pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
      * 文件存储
@@ -690,7 +710,49 @@
     <span class="token punctuation">}</span>
 </code></pre>
 <p><strong>Context类中提供的openFileInput()和openFileOutput()方法，之后就是利用Java的各种流来进行读写操作</strong></p>
-<h3 id="6-2-SharedPreferences存储"><a href="#6-2-SharedPreferences存储" class="headerlink" title="6.2 SharedPreferences存储"></a>6.2 SharedPreferences存储</h3><p>这个其实可以把他理解为<strong>键值对存储</strong></p>
+<h3 id="6-2-SharedPreferences存储"><a href="#6-2-SharedPreferences存储" class="headerlink" title="6.2 SharedPreferences存储"></a>6.2 SharedPreferences存储</h3><blockquote>
+<p>基本知识</p>
+</blockquote>
+<ul>
+<li>不同于文件的存储方式，<code>SharedPreferences</code>是使用键值对的方式来存储数据的。</li>
+<li>也就是说，当保存一条数据的时候，需要给这条数据提供一个对应的键，这样在读取数据的时候就可以通过这个键把相应的值取出来。</li>
+<li>而且<code>SharedPreferences</code>还支持多种不同的数据类型存储，如果存储的数据类型是整型，那么读取出来的数据也是整型的；如果存储的数据是一个字符串，那么读取出来的数据仍然是字符串。</li>
+<li>要想使用<code>SharedPreferences</code>来存储数据，首先需要获取到<code>SharedPreferences</code>对象。Android中主要提供了3种方法用于得到<code>SharedPreferences</code>对象。</li>
+</ul>
+<blockquote>
+<p><code>getSharedPreferences()</code>方法</p>
+</blockquote>
+<ul>
+<li>此方法接收两个参数，第一个参数用于指定<code>SharedPreferences</code>文件的名称，如果指定的文件不存在则会创建一个，<code>SharedPreferences</code>文件都是存放在<code>/data/data/&lt;package name&gt;/shared_prefs/</code>目录下的。</li>
+<li>第二个参数用于指定操作模式，目前只有<code>MODE_PRIVATE</code>这一种模式可选，它是默认的操作模式，和直接传入0效果是相同的，表示只有当前的应用程序才可以对这个<code>SharedPreferences</code>文件进行读写。</li>
+</ul>
+<pre class=" language-java"><code class="language-java">SharedPreferences preferences <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getSharedPreferences</span><span class="token punctuation">(</span> <span class="token string">"data"</span><span class="token punctuation">,</span> Context<span class="token punctuation">.</span>MODE_PRIVATE <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p><code>getPreferences()</code>方法</p>
+</blockquote>
+<ul>
+<li>这个方法和Context中的<code>    getSharedPreferences()</code>方法很相似，不过它只接收一个操作模式参数，因为使用这个方法时会自动将当前活动的类名作为<code>SharedPreferences</code>的文件名。</li>
+</ul>
+<pre class=" language-java"><code class="language-java"> SharedPreferences preferences1 <span class="token operator">=</span> <span class="token function">getPreferences</span><span class="token punctuation">(</span> Context<span class="token punctuation">.</span>MODE_PRIVATE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p><code>getDefaultSharedPreferences()</code>方法</p>
+</blockquote>
+<ul>
+<li>这是一个静态方法，它接收一个<code>Context</code>参数，并自动使用当前应用程序的包名作为前缀来命名<code>SharedPreferences</code>文件。</li>
+<li>得到了<code>SharedPreferences</code>对象之后，就可以开始向<code>Shared-Preferences</code>文件中存储数据了，主要可以分为3步实现。</li>
+<li>调用<code>SharedPreferences</code>对象的<code>edit()</code>方法来获取一个<code>SharedPreferences.Editor</code>对象。</li>
+<li>向<code>SharedPreferences.Editor</code>对象中添加数据，比如添加一个布尔型数据就使用<code>putBoolean()</code>方法，添加一个字符串则使用<code>putString()</code>方法，以此类推。</li>
+<li>调用<code>apply()</code>方法将添加的数据提交，从而完成数据存储操作。</li>
+</ul>
+<pre class=" language-java"><code class="language-java">         SharedPreferences<span class="token punctuation">.</span>Editor editor<span class="token operator">=</span><span class="token function">getSharedPreferences</span><span class="token punctuation">(</span><span class="token string">"data"</span><span class="token punctuation">,</span>MODE_PRIVATE<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">edit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        editor<span class="token punctuation">.</span><span class="token function">putString</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">,</span>username<span class="token punctuation">.</span><span class="token function">getText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        editor<span class="token punctuation">.</span><span class="token function">putString</span><span class="token punctuation">(</span><span class="token string">"password"</span><span class="token punctuation">,</span>password<span class="token punctuation">.</span><span class="token function">getText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        editor<span class="token punctuation">.</span><span class="token function">putBoolean</span><span class="token punctuation">(</span><span class="token string">"remeber"</span><span class="token punctuation">,</span>checkBox<span class="token punctuation">.</span><span class="token function">isChecked</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        editor<span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>这个其实可以把他理解为<strong>键值对存储</strong></p>
 <p>我们来一个简单登录与记住密码案例</p>
 <ul>
 <li>布局文件</li>
@@ -840,6 +902,89 @@
 <p><img src="https://img-blog.csdnimg.cn/5e8b72f6349a43a38edc3fd6b903d040.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDQ1MTAyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
 <p><img src="https://img-blog.csdnimg.cn/8b7df20fc4d640019bdc49be5db205ee.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDQ1MTAyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
 <p><img src="https://img-blog.csdnimg.cn/aed56f066e7945db832e9f1cd1cd18d2.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDQ1MTAyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>总结工具类</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>shortcut<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>content<span class="token punctuation">.</span>Context<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>content<span class="token punctuation">.</span>SharedPreferences<span class="token punctuation">;</span>
+ 
+<span class="token comment" spellcheck="true">/**
+ * SharedPreferences的一个工具类，调用setParam就能保存String, Integer, Boolean, Float, Long类型的参数
+ * 同样调用getParam就能获取到保存在手机里面的数据
+ * @author 
+ *
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SharedPreferencesUtils</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/**
+     * 保存在手机里面的文件名
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String FILE_NAME <span class="token operator">=</span> <span class="token string">"share_date"</span><span class="token punctuation">;</span>
+    
+    
+    <span class="token comment" spellcheck="true">/**
+     * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
+     * @param context
+     * @param key
+     * @param object 
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">setParam</span><span class="token punctuation">(</span>Context context <span class="token punctuation">,</span> String key<span class="token punctuation">,</span> Object object<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        
+        String type <span class="token operator">=</span> object<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getSimpleName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        SharedPreferences sp <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getSharedPreferences</span><span class="token punctuation">(</span>FILE_NAME<span class="token punctuation">,</span> Context<span class="token punctuation">.</span>MODE_PRIVATE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        SharedPreferences<span class="token punctuation">.</span>Editor editor <span class="token operator">=</span> sp<span class="token punctuation">.</span><span class="token function">edit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"String"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            editor<span class="token punctuation">.</span><span class="token function">putString</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"Integer"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            editor<span class="token punctuation">.</span><span class="token function">putInt</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token punctuation">(</span>Integer<span class="token punctuation">)</span>object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"Boolean"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            editor<span class="token punctuation">.</span><span class="token function">putBoolean</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token punctuation">(</span>Boolean<span class="token punctuation">)</span>object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"Float"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            editor<span class="token punctuation">.</span><span class="token function">putFloat</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span> <span class="token punctuation">(</span>Float<span class="token punctuation">)</span>object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"Long"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            editor<span class="token punctuation">.</span><span class="token function">putLong</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span> <span class="token punctuation">(</span>Long<span class="token punctuation">)</span>object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        editor<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    
+    <span class="token comment" spellcheck="true">/**
+     * 得到保存数据的方法，我们根据默认值得到保存的数据的具体类型，然后调用相对于的方法获取值
+     * @param context
+     * @param key
+     * @param defaultObject
+     * @return
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> Object <span class="token function">getParam</span><span class="token punctuation">(</span>Context context <span class="token punctuation">,</span> String key<span class="token punctuation">,</span> Object defaultObject<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        String type <span class="token operator">=</span> defaultObject<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getSimpleName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        SharedPreferences sp <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getSharedPreferences</span><span class="token punctuation">(</span>FILE_NAME<span class="token punctuation">,</span> Context<span class="token punctuation">.</span>MODE_PRIVATE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"String"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> sp<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>defaultObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"Integer"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> sp<span class="token punctuation">.</span><span class="token function">getInt</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token punctuation">(</span>Integer<span class="token punctuation">)</span>defaultObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"Boolean"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> sp<span class="token punctuation">.</span><span class="token function">getBoolean</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token punctuation">(</span>Boolean<span class="token punctuation">)</span>defaultObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"Float"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> sp<span class="token punctuation">.</span><span class="token function">getFloat</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span> <span class="token punctuation">(</span>Float<span class="token punctuation">)</span>defaultObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"Long"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> sp<span class="token punctuation">.</span><span class="token function">getLong</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span> <span class="token punctuation">(</span>Long<span class="token punctuation">)</span>defaultObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
 <h3 id="6-3-数据库存储"><a href="#6-3-数据库存储" class="headerlink" title="6.3 数据库存储"></a>6.3 数据库存储</h3><p><strong>SQLite是一款轻量级的关系型数据库，它的运算速度非常快，占用资源很少，通常只需要几百KB的内存就足够了，因而特别适合在移动设备上使用。SQLite不仅支持标准的SQL语法，还遵循了数据库的ACID事务，所以只要你以前使用过其他的关系型数据库，就可以很快地上手SQLite。</strong></p>
 <blockquote>
 <p>语法</p>
@@ -879,31 +1024,31 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>openOrCreateDatabase(String path,SQLiteDatabase.CursorFactory factory)</td>
+<td><code>openOrCreateDatabase(String path,SQLiteDatabase.CursorFactory factory)</code></td>
 <td>打开或创建数据库</td>
 </tr>
 <tr>
-<td>insert(String table,String nullColumnHack,ContentValues values)</td>
+<td><code>insert(String table,String nullColumnHack,ContentValues values)</code></td>
 <td>插入一条记录</td>
 </tr>
 <tr>
-<td>delete(String table,String whereClause,String[] whereArgs)</td>
+<td><code>delete(String table,String whereClause,String[] whereArgs)</code></td>
 <td>删除一条记录</td>
 </tr>
 <tr>
-<td>query(String table,String[] columns,String selection,String[] selectionArgs,String groupBy,String having,String orderBy)</td>
+<td><code>query(String table,String[] columns,String selection,String[] selectionArgs,String groupBy,String having,String orderBy)</code></td>
 <td>查询一条记录</td>
 </tr>
 <tr>
-<td>update(String table,ContentValues values,String whereClause,String[] whereArgs)</td>
+<td><code>update(String table,ContentValues values,String whereClause,String[] whereArgs)</code></td>
 <td>修改记录</td>
 </tr>
 <tr>
-<td>execSQL(String sql)</td>
+<td><code>execSQL(String sql)</code></td>
 <td>执行一条SQL语句</td>
 </tr>
 <tr>
-<td>close()</td>
+<td><code>close()</code></td>
 <td>关闭数据库</td>
 </tr>
 </tbody></table>
@@ -1144,6 +1289,234 @@ db<span class="token punctuation">.</span><span class="token function">execSQL</
 sqlite3 数据库名 //进入数据库
 .table //查看所有表
 <span class="token keyword">select</span> * from 表名 //查看具体表
+</code></pre>
+<blockquote>
+<p>工具类</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>content<span class="token punctuation">.</span>ContentValues<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>content<span class="token punctuation">.</span>Context<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>database<span class="token punctuation">.</span>Cursor<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>database<span class="token punctuation">.</span>sqlite<span class="token punctuation">.</span>SQLiteDatabase<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>database<span class="token punctuation">.</span>sqlite<span class="token punctuation">.</span>SQLiteOpenHelper<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @author shu
+ * @date 2022/3/28
+ * @description 数据库操作工具
+ */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DBManager</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 默认数据库</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String DB_NAME <span class="token operator">=</span> <span class="token string">"asc.db"</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 数据库版本</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> DB_VERSION <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 执行open()打开数据库时，保存返回的数据库对象</span>
+    <span class="token keyword">private</span> SQLiteDatabase mSQLiteDatabase <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 由SQLiteOpenHelper继承过来</span>
+    <span class="token keyword">private</span> DatabaseHelper mDatabaseHelper <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 本地Context对象</span>
+    <span class="token keyword">private</span> Context mContext <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> DBManager dbConn<span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 查询游标对象</span>
+    <span class="token keyword">private</span> Cursor cursor<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * SQLiteOpenHelper内部类
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">DatabaseHelper</span> <span class="token keyword">extends</span> <span class="token class-name">SQLiteOpenHelper</span> <span class="token punctuation">{</span>
+        <span class="token function">DatabaseHelper</span><span class="token punctuation">(</span>Context context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 当调用getWritableDatabase()或 getReadableDatabase()方法时,创建一个数据库</span>
+            <span class="token keyword">super</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> DB_NAME<span class="token punctuation">,</span> null<span class="token punctuation">,</span> DB_VERSION<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>SQLiteDatabase db<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            db<span class="token punctuation">.</span><span class="token function">execSQL</span><span class="token punctuation">(</span><span class="token string">"CREATE TABLE ad_record(id PRIMARY KEY NOT NULL, adUrl TEXT, apMac TEXT, createDate DATETIME);"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onUpgrade</span><span class="token punctuation">(</span>SQLiteDatabase db<span class="token punctuation">,</span> <span class="token keyword">int</span> oldVersion<span class="token punctuation">,</span> <span class="token keyword">int</span> newVersion<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            db<span class="token punctuation">.</span><span class="token function">execSQL</span><span class="token punctuation">(</span><span class="token string">"DROP TABLE IF EXISTS ad_record"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">onCreate</span><span class="token punctuation">(</span>db<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 构造函数
+     *
+     * @param mContext
+     */</span>
+    <span class="token keyword">private</span> <span class="token function">DBManager</span><span class="token punctuation">(</span>Context mContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>mContext <span class="token operator">=</span> mContext<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> DBManager <span class="token function">getInstance</span><span class="token punctuation">(</span>Context mContext<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">==</span> dbConn<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            dbConn <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DBManager</span><span class="token punctuation">(</span>mContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> dbConn<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 打开数据库
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mDatabaseHelper <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DatabaseHelper</span><span class="token punctuation">(</span>mContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mSQLiteDatabase <span class="token operator">=</span> mDatabaseHelper<span class="token punctuation">.</span><span class="token function">getWritableDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 关闭数据库
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">!=</span> mDatabaseHelper<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            mDatabaseHelper<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">!=</span> cursor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cursor<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 插入数据
+     * @param tableName 表名
+     * @param nullColumn null
+     * @param contentValues 名值对
+     * @return 新插入数据的ID，错误返回-1
+     * @throws Exception
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">insert</span><span class="token punctuation">(</span>String tableName<span class="token punctuation">,</span> String nullColumn<span class="token punctuation">,</span>
+                       ContentValues contentValues<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> mSQLiteDatabase<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>tableName<span class="token punctuation">,</span> nullColumn<span class="token punctuation">,</span> contentValues<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> e<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 通过主键ID删除数据
+     * @param tableName 表名
+     * @param key 主键名
+     * @param id 主键值
+     * @return 受影响的记录数
+     * @throws Exception
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">delete</span><span class="token punctuation">(</span>String tableName<span class="token punctuation">,</span> String key<span class="token punctuation">,</span> <span class="token keyword">int</span> id<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> mSQLiteDatabase<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>tableName<span class="token punctuation">,</span> key <span class="token operator">+</span> <span class="token string">" = "</span> <span class="token operator">+</span> id<span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> e<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 查找表的所有数据
+     * @param tableName 表名
+     * @param columns 如果返回所有列，则填null
+     * @return
+     * @throws Exception
+     */</span>
+    <span class="token keyword">public</span> Cursor <span class="token function">findAll</span><span class="token punctuation">(</span>String tableName<span class="token punctuation">,</span> String <span class="token punctuation">[</span><span class="token punctuation">]</span> columns<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            cursor <span class="token operator">=</span> mSQLiteDatabase<span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span>tableName<span class="token punctuation">,</span> columns<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cursor<span class="token punctuation">.</span><span class="token function">moveToFirst</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> cursor<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> e<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 根据主键查找数据
+     * @param tableName 表名
+     * @param key 主键名
+     * @param id  主键值
+     * @param columns 如果返回所有列，则填null
+     * @return Cursor游标
+     * @throws Exception
+     */</span>
+    <span class="token keyword">public</span> Cursor <span class="token function">findById</span><span class="token punctuation">(</span>String tableName<span class="token punctuation">,</span> String key<span class="token punctuation">,</span> <span class="token keyword">int</span> id<span class="token punctuation">,</span> String <span class="token punctuation">[</span><span class="token punctuation">]</span> columns<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> mSQLiteDatabase<span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span>tableName<span class="token punctuation">,</span> columns<span class="token punctuation">,</span> key <span class="token operator">+</span> <span class="token string">" = "</span> <span class="token operator">+</span> id<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> e<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 根据条件查询数据
+     * @param tableName 表名
+     * @param names 查询条件
+     * @param values 查询条件值
+     * @param columns 如果返回所有列，则填null
+     * @param orderColumn 排序的列
+     * @param limit 限制返回数
+     * @return Cursor游标
+     * @throws Exception
+     */</span>
+    <span class="token keyword">public</span> Cursor <span class="token function">find</span><span class="token punctuation">(</span>String tableName<span class="token punctuation">,</span> String <span class="token punctuation">[</span><span class="token punctuation">]</span> names<span class="token punctuation">,</span> String <span class="token punctuation">[</span><span class="token punctuation">]</span> values<span class="token punctuation">,</span> String <span class="token punctuation">[</span><span class="token punctuation">]</span> columns<span class="token punctuation">,</span> String orderColumn<span class="token punctuation">,</span> String limit<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            StringBuffer selection <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> names<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                selection<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>names<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                selection<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">" = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">!=</span> names<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    selection<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            cursor <span class="token operator">=</span> mSQLiteDatabase<span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">,</span> tableName<span class="token punctuation">,</span> columns<span class="token punctuation">,</span> selection<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> values<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> orderColumn<span class="token punctuation">,</span> limit<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cursor<span class="token punctuation">.</span><span class="token function">moveToFirst</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> cursor<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> e<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     *
+     * @param tableName 表名
+     * @param names 查询条件
+     * @param values 查询条件值
+     * @param args 更新列-值对
+     * @return true或false
+     * @throws Exception
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">udpate</span><span class="token punctuation">(</span>String tableName<span class="token punctuation">,</span> String <span class="token punctuation">[</span><span class="token punctuation">]</span> names<span class="token punctuation">,</span> String <span class="token punctuation">[</span><span class="token punctuation">]</span> values<span class="token punctuation">,</span> ContentValues args<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            StringBuffer selection <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> names<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                selection<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>names<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                selection<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">" = ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">!=</span> names<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    selection<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> mSQLiteDatabase<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>tableName<span class="token punctuation">,</span> args<span class="token punctuation">,</span> selection<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> values<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> e<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 执行sql语句，包括创建表、删除、插入
+     *
+     * @param sql
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">executeSql</span><span class="token punctuation">(</span>String sql<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mSQLiteDatabase<span class="token punctuation">.</span><span class="token function">execSQL</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="6-4-开源框架"><a href="#6-4-开源框架" class="headerlink" title="6.4 开源框架"></a>6.4 开源框架</h3><p>官网：<a href="https://github.com/guolindev/LitePal" target="_blank" rel="noopener">https://github.com/guolindev/LitePal</a></p>
 <p><strong>LitePal是一款开源的Android数据库框架，它采用了对象关系映射（ORM）的模式，并将我们平时开发最常用到的一些数据库功能进行了封装，使得不用编写一行SQL语句就可以完成各种建表和増删改查的操作。</strong></p>
@@ -1828,7 +2201,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">108.2k</span>
+                        class="white-color">110.3k</span>
             
             
             
