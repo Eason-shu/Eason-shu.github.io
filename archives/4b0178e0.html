@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="数据结构与算法, Eason_Shu">
+    <meta name="keywords" content="Java中基本数据结构, Eason_Shu">
     <meta name="description" content="算法＋数据结构=程序，就深刻揭示了算法和数据结构之间的关系。对实际问题选择了一种好的数据结构之后，还得有一个好的算法，才可更好地求解问题。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>数据结构与算法 | Eason_Shu</title>
+    <title>Java中基本数据结构 | Eason_Shu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -433,12 +433,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/25.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数据结构与算法</h1>
+                    <h1 class="description center-align post-title">Java中基本数据结构</h1>
                 </div>
             </div>
         </div>
@@ -586,14 +586,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-27
+                    2022-03-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.5k
+                    7.4k
                 </div>
                 
 
@@ -1525,72 +1525,78 @@
 </code></pre>
 <p>删除某个节点</p>
 <ul>
-<li><p>将要删除节点的上一个元素指向要删除元素节点的下一个元素<br>&#96;&#96;&#96;java<br>&#x2F;**</p>
+<li>将要删除节点的上一个元素指向要删除元素节点的下一个元素</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+     * 删除某个节点
+     * @param start 索引位置
+     * @return
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteLinkNode</span><span class="token punctuation">(</span> <span class="token keyword">int</span> start<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 没有节点</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>head<span class="token punctuation">.</span>next <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"链表为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// 第一个节点</span>
+        temp <span class="token operator">=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 获取长度</span>
+        <span class="token keyword">int</span> length <span class="token operator">=</span> <span class="token function">getListSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//从start开始计数</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>start <span class="token operator">></span> length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"超出链表范围"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        CircularLinkedNode startNode <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+
+        <span class="token keyword">int</span> count<span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">//如果只有一个节点</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>temp<span class="token punctuation">.</span>next <span class="token operator">==</span> null<span class="token punctuation">)</span> 
+            temp<span class="token punctuation">.</span>next<span class="token operator">=</span>head<span class="token punctuation">;</span>
+        
+        <span class="token comment" spellcheck="true">//找到开始节点位置,找到要删除的节点</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>count <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> count<span class="token operator">&lt;</span>start<span class="token punctuation">;</span> count<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            startNode <span class="token operator">=</span> startNode<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">//找到start的前一个节点，方便删除操作</span>
+        CircularLinkedNode front <span class="token operator">=</span> startNode<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>front<span class="token punctuation">.</span>next <span class="token operator">!=</span> startNode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            front <span class="token operator">=</span> front<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前节点"</span><span class="token operator">+</span>startNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前节点前一个节点"</span><span class="token operator">+</span>front<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 如果当前节点时尾元素，</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>startNode<span class="token punctuation">.</span>next<span class="token operator">==</span>head<span class="token punctuation">.</span>next<span class="token punctuation">)</span>
+            front<span class="token punctuation">.</span>next<span class="token operator">=</span>head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        
+        <span class="token comment" spellcheck="true">// 如果不是尾结点</span>
+        <span class="token keyword">else</span> 
+           front<span class="token punctuation">.</span>next<span class="token operator">=</span>startNode<span class="token punctuation">.</span>next<span class="token punctuation">;</span> 
+        
+    <span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>约瑟夫环问题</p>
+</blockquote>
 <ul>
-<li>删除某个节点</li>
-<li>@param start 索引位置</li>
-<li>@return</li>
+<li>我们定义递归函数 f(n，m) 的返回结果是存活士兵的编号，显然当 n &#x3D; 1 时，f(n, m) &#x3D; 1。</li>
+<li>假如我们能够找出 f(n，m) 和 f(n-1，m) 之间的关系的话，我们就可以用递归的方式来解决了。我们假设人员数为 n, 报数到 m 的人就自杀。</li>
 </ul>
-<p>   *&#x2F;<br>  public void deleteLinkNode( int start){<br>      &#x2F;&#x2F; 没有节点<br>      if(head.next &#x3D;&#x3D; null) {<br>          System.out.println(“链表为空”);<br>          return;<br>      }<br>      &#x2F;&#x2F; 第一个节点<br>      temp &#x3D; head.next;<br>      &#x2F;&#x2F; 获取长度<br>      int length &#x3D; getListSize();<br>      &#x2F;&#x2F;从start开始计数<br>      if(start &gt; length) {<br>          System.out.println(“超出链表范围”);<br>          return;<br>      }</p>
-<pre><code>  CircularLinkedNode startNode = temp;
-
-  int count;
-
-  //如果只有一个节点
-  if(temp.next == null) 
-      temp.next=head;
-  
-  //找到开始节点位置,找到要删除的节点
-  for(count = 1; count&lt;start; count++) {
-      startNode = startNode.next;
-  }
-
-  //找到start的前一个节点，方便删除操作
-  CircularLinkedNode front = startNode.next;
-  while(front.next != startNode) {
-      front = front.next;
-  }
-
-  System.out.println(&quot;当前节点&quot;+startNode);
-  System.out.println(&quot;当前节点前一个节点&quot;+front);
-
-  // 如果当前节点时尾元素，
-  if(startNode.next==head.next)
-      front.next=head.next;
-  
-  // 如果不是尾结点
-  else 
-     front.next=startNode.next; 
-  
-</code></pre>
-<p>  }</p>
-</li>
-</ul>
-<pre><code>&gt; 约瑟夫环问题
-
-- 我们定义递归函数 f(n，m) 的返回结果是存活士兵的编号，显然当 n = 1 时，f(n, m) = 1。
-- 假如我们能够找出 f(n，m) 和 f(n-1，m) 之间的关系的话，我们就可以用递归的方式来解决了。我们假设人员数为 n, 报数到 m 的人就自杀。
-
-
-
-
-
-![](https://cdn.nlark.com/yuque/0/2022/webp/12426173/1647669090344-fbd72608-bd05-4ad5-a9f5-d4fc7ac875c1.webp#clientId=u6461df0b-2453-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;id=u27439419&amp;margin=%5Bobject%20Object%5D&amp;originHeight=699&amp;originWidth=685&amp;originalType=url&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;taskId=u536c5624-e650-4503-a0c5-0e9c5baa515&amp;title=)
-
-
-
-
-
-```tex
-理解：假设 n=6 ,m =3 ，记住这是一个环形6指向1
-            1,2,3,4,5,6
-    第一次：1,2,4,5,6, 杀死3 n=5 
-    第二次：1,2,4,5， 杀死6 n=4  
-    第三次：1,2,5， 杀死 4  n=3
-    第四次：1,5 杀死2 n=2
-    第五次：1 杀死5 n=1 存活编号
-</code></pre>
-<pre class=" language-java"><code class="language-java"> <span class="token comment" spellcheck="true">/**
+<p><img src="https://cdn.nlark.com/yuque/0/2022/webp/12426173/1647669090344-fbd72608-bd05-4ad5-a9f5-d4fc7ac875c1.webp#clientId=u6461df0b-2453-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=u27439419&margin=%5Bobject%20Object%5D&originHeight=699&originWidth=685&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u536c5624-e650-4503-a0c5-0e9c5baa515&title="></p>
+<pre class=" language-java"><code class="language-java"> 
+<span class="token comment" spellcheck="true">/**
+    *理解：假设 n=6 ,m =3 ，记住这是一个环形6指向1
+    *        1,2,3,4,5,6
+    *第一次：1,2,4,5,6, 杀死3 n=5 
+    *第二次：1,2,4,5， 杀死6 n=4  
+    *第三次：1,2,5， 杀死 4  n=3
+    *第四次：1,5 杀死2 n=2
+    *第五次：1 杀死5 n=1 存活编号
      * 返回删除后的编号
      * @param n 总数
      * @param m 开始位置
@@ -2086,9 +2092,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="数据结构与算法">
+                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="Java中基本数据结构">
                         
-                        <span class="card-title">数据结构与算法</span>
+                        <span class="card-title">Java中基本数据结构</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -2382,7 +2388,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">106.7k</span>
+                        class="white-color">106.6k</span>
             
             
             
