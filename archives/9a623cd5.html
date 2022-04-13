@@ -4,8 +4,8 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Apache Thrift 官网学习（一）, Eason_Shu">
-    <meta name="description" content="Thrift是一个轻量级、跨语言的远程服务调用框架，最初由Facebook开发，后面进入Apache开源项目。它通过自身的IDL中间语言, 并借助代码生成引擎生成各种主流语言的RPC服务端/客户端模板代码。 套接字服务器等网络编程。">
+    <meta name="keywords" content="安卓开发（九）安卓中的服务, Eason_Shu">
+    <meta name="description" content="Android 提供各种尖端工具和功能，可帮助您针对数十亿用户日常使用的手机、平板电脑、电视和汽车来构建应用。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Apache Thrift 官网学习（一） | Eason_Shu</title>
+    <title>安卓开发（九）安卓中的服务 | Eason_Shu</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -433,12 +433,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Apache Thrift 官网学习（一）</h1>
+                    <h1 class="description center-align post-title">安卓开发（九）安卓中的服务</h1>
                 </div>
             </div>
         </div>
@@ -554,12 +554,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Thrift/">
-                                <span class="chip bg-color">Thrift</span>
-                            </a>
-                        
-                            <a href="/tags/RPC/">
-                                <span class="chip bg-color">RPC</span>
+                            <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/">
+                                <span class="chip bg-color">安卓开发</span>
                             </a>
                         
                     </div>
@@ -570,8 +566,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Thrift/" class="post-category">
-                                Thrift
+                            <a href="/categories/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" class="post-category">
+                                安卓开发
                             </a>
                         
                     </div>
@@ -583,28 +579,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-10
+                    2022-04-13
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-10
+                    2022-04-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    12 分
                 </div>
                 
 
@@ -626,231 +622,268 @@
             <div id="articleContent">
                 <meta name="referrer" content="no-referrer">
 
-<p>学习视频：<a href="https://www.bilibili.com/video/BV1HP4y177St?p=13" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1HP4y177St</a><br>学习视频：<a href="https://www.bilibili.com/video/BV1j44y1q7fy?from=search&seid=9897528802909219793&spm_id_from=333.337.0.0" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1j44y1q7fy</a><br>参考博客：<a href="https://juejin.cn/post/6844903622384287751#heading-28" target="_blank" rel="noopener">https://juejin.cn/post/6844903622384287751#heading-28</a><br>参考博客：<a href="https://www.cnblogs.com/cyfonly/p/6059374.html" target="_blank" rel="noopener">https://www.cnblogs.com/cyfonly/p/6059374.html</a>        </p>
-<h2 id="一-基本概述与入门"><a href="#一-基本概述与入门" class="headerlink" title="一 基本概述与入门"></a>一 基本概述与入门</h2><h3 id="1-1-官网知识"><a href="#1-1-官网知识" class="headerlink" title="1.1 官网知识"></a>1.1 官网知识</h3><ul>
-<li>Thrift是一个轻量级、跨语言的远程服务调用框架，最初由Facebook开发，后面进入Apache开源项目。它通过自身的IDL中间语言, 并借助代码生成引擎生成各种主流语言的RPC服务端&#x2F;客户端模板代码。</li>
-<li>Thrift支持多种不同的编程语言，包括C++、Java、Python、PHP、Ruby等，本系列主要讲述基于Java语言的Thrift的配置方式和具体使用。</li>
-<li>官网：<a href="https://thrift.apache.org/" target="_blank" rel="noopener">https://thrift.apache.org/</a></li>
+
+
+<p>服务（Service）是Android中实现程序后台运行的解决方案，它非常适合去执行那些不需要和用户交互而且还要求长期运行的任务。服务的运行不依赖于任何用户界面，即使程序被切换到后台，或者用户打开了另外一个应用程序，服务仍然能够保持正常运行。</p>
+<h2 id="一-Android多线程编程"><a href="#一-Android多线程编程" class="headerlink" title="一 Android多线程编程"></a>一 Android多线程编程</h2><h3 id="1-1-多线程基本知识"><a href="#1-1-多线程基本知识" class="headerlink" title="1.1 多线程基本知识"></a>1.1 多线程基本知识</h3><p>请参考：<a href="https://www.yuque.com/eason_shu/wkihqd/sxlr6p" target="_blank" rel="noopener">https://www.yuque.com/eason_shu&#x2F;wkihqd&#x2F;sxlr6p</a></p>
+<h3 id="1-2-在子线程中更新UI"><a href="#1-2-在子线程中更新UI" class="headerlink" title="1.2 在子线程中更新UI"></a>1.2 在子线程中更新UI</h3><p>和许多其他的GUI库一样，Android的UI也是线程不安全的。也就是说，如果想要更新应用程序里的UI元素，则必须在主线程中进行，否则就会出现异常。</p>
+<h4 id="1-2-1-AsyncTask"><a href="#1-2-1-AsyncTask" class="headerlink" title="1.2.1 AsyncTask"></a>1.2.1 AsyncTask</h4><ul>
+<li>AsyncTask的基本用法，由于AsyncTask是一个抽象类，所以如果我们想使用它，就必须要创建一个子类去继承它。<br>&#96;&#96;&#96;java<br>package com.shu.asynctask;</li>
 </ul>
-<h3 id="1-2-下载安装"><a href="#1-2-下载安装" class="headerlink" title="1.2 下载安装"></a>1.2 下载安装</h3><ul>
-<li>下载地址：<a href="http://www.apache.org/dyn/closer.cgi?path=/thrift/0.15.0/thrift-0.15.0.exe" target="_blank" rel="noopener">http://www.apache.org/dyn/closer.cgi?path=/thrift/0.15.0/thrift-0.15.0.exe</a></li>
-<li>配置环境变量到path路径中</li>
-</ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287189845-43688353-b45d-4d90-8a61-23961b4e6ebd.png" alt="image-20220206201005007.png"></p>
+<p>import android.os.AsyncTask;</p>
+<p>&#x2F;**</p>
 <ul>
-<li>验证：<code>thrift -version</code></li>
+<li>@author shu</li>
+<li>@date 2021&#x2F;7&#x2F;30</li>
+<li>@description 测试</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287203428-105b43d4-0960-4720-9d9d-7997016fc1b4.png" alt="image-20220206201047114.png"></p>
+<p> <em>&#x2F;<br>&#x2F;</em>*</p>
 <ul>
-<li>idea中安装<code>thrift</code>插件，可以实现<code>thrift</code>语法自动提示</li>
+<li>&#x2F;&#x2F; 具体说明：</li>
+<li><pre><code>// a. Params：开始异步任务执行时传入的参数类型，对应excute（）中传递的参数
+</code></pre>
+</li>
+<li><pre><code>// b. Progress：异步任务执行过程中，返回下载进度值的类型
+</code></pre>
+</li>
+<li><pre><code>// c. Result：异步任务执行完成后，返回的结果类型，与doInBackground()的返回值类型保持一致
+</code></pre>
+</li>
+<li>&#x2F;&#x2F; 注：</li>
+<li><pre><code>// a. 使用时并不是所有类型都被使用
+</code></pre>
+</li>
+<li><pre><code>// b. 若无被使用，可用java.lang.Void类型代替
+</code></pre>
+</li>
+<li><pre><code>// c. 若有不同业务，需额外再写1个AsyncTask的子类
+</code></pre>
+</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287211276-e7d40f19-8dbc-4102-85ce-6cd6fd0fa459.png" alt="image-20220206201402547.png"></p>
+<p> *&#x2F;<br>public class RegisterAsyncTask extends AsyncTask{</p>
+<pre><code>/**
+ * 作用：接收输入参数、执行任务中的耗时操作、返回 线程任务执行的结果
+ * @param objects
+ * @return
+ */
+@Override
+protected Object doInBackground(Object[] objects) {
+    return null;
+}
+
+/**
+ *作用：执行 线程任务前的操作
+ */
+@Override
+protected void onPreExecute() {
+    super.onPreExecute();
+}
+
+/**
+ * 作用：接收线程任务执行结果、将执行结果显示到UI组件
+ * @param o
+ */
+@Override
+protected void onPostExecute(Object o) {
+    super.onPostExecute(o);
+}
+</code></pre>
+<p>}</p>
+<pre><code>
+- ❑ Params：在执行AsyncTask时需要传入的参数，可用于在后台任务中使用。
+- ❑ Progress：后台任务执行时，如果需要在界面上显示当前的进度，则使用这里指定的泛型作为进度单位。❑ Result：当任务执行完毕后，如果需要对结果进行返回，则使用这里指定的泛型作为返回值类型。
+- onPreExecute()：这个方法会在后台任务开始执行之前调用，用于进行一些界面上的初始化操作，比如显示一个进度条对话框等。
+- doInBackground(Params...)：这个方法中的所有代码都会在子线程中运行，我们应该在这里去处理所有的耗时任务。任务一旦完成就可以通过return语句来将任务的执行结果返回，如果AsyncTask的第三个泛型参数指定的是Void，就可以不返回任务执行结果。注意，在这个方法中是不可以进行UI操作的，如果需要更新UI元素，比如说反馈当前任务的执行进度，可以调用publishProgress (Progress...)方法来完成。
+- onProgressUpdate(Progress...)：当在后台任务中调用了publishProgress(Progress...)方法后，onProgressUpdate (Progress...)方法就会很快被调用，该方法中携带的参数就是在后台任务中传递过来的。在这个方法中可以对UI进行操作，利用参数中的数值就可以对界面元素进行相应的更新。
+- onPostExecute(Result)：当后台任务执行完毕并通过return语句进行返回时，这个方法就很快会被调用。返回的数据会作为参数传递到此方法中，可以利用返回的数据来进行一些UI操作，比如说提醒任务执行的结果，以及关闭掉进度条对话框等。
+- 使用：execute()方法
+#### 1.2.2 异步消息模式
+
+- Android中的异步消息处理主要由4个部分组成：Message、Handler、MessageQueue和Looper。
+- MessageMessage是在线程之间传递的消息，它可以在内部携带少量的信息，用于在不同线程之间交换数据。上一小节中我们使用到了Message的what字段，除此之外还可以使用arg1和arg2字段来携带一些整型数据，使用obj字段携带一个Object对象。
+- HandlerHandler顾名思义也就是处理者的意思，它主要是用于发送和处理消息的。发送消息一般是使用Handler的sendMessage()方法，而发出的消息经过一系列地辗转处理后，最终会传递到Handler的handleMessage()方法中。
+- MessageQueueMessageQueue是消息队列的意思，它主要用于存放所有通过Handler发送的消息。这部分消息会一直存在于消息队列中，等待被处理。每个线程中只会有一个MessageQueue对象。
+- LooperLooper是每个线程中的MessageQueue的管家，调用Looper的loop()方法后，就会进入到一个无限循环当中，然后每当发现MessageQueue中存在一条消息，就会将它取出，并传递到Handler的handleMessage()方法中。每个线程中也只会有一个Looper对象。
+
+基本步骤
+
+- 首先需要在主线程当中创建一个Handler对象，并重写handleMessage()方法。
+```java
+ private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch(msg.what){
+            case MSG_DOWN_FAIL:
+                mTipTv.setText(&quot;download fial&quot;);
+                break;
+            case MSG_DOWN_SUCCESS:
+                mTipTv.setText(&quot;download success&quot;);
+                break;
+            case MSG_DOWN_START:
+                mTipTv.setText(&quot;download start&quot;);
+                break;
+            }
+        };
+    };
+</code></pre>
 <ul>
-<li>由官网可知这是一门新的语言，当然有他的基本语法，下面我们来认识下</li>
+<li>然后当子线程中需要进行UI操作时，就创建一个Message对象，并通过Handler将这条消息发送出去。<br>&#96;&#96;&#96;java<br>class MyThread extends Thread {<br>  @Override<br>  public void run() {<br>      isDownloading &#x3D; true;<br>      Log.d(TAG,”MyThread start run”);<br>      &#x2F;&#x2F;发送消息给mHander<br>      mHandler.sendEmptyMessage(MSG_DOWN_START);<br>      try { &#x2F;&#x2F;让线程睡眠3s。<br>          Thread.sleep(3000);<br>      } catch (InterruptedException e) {<br>          e.printStackTrace();<br>      }<br>      Message msg &#x3D; new Message();<br>      msg.what &#x3D; MSG_DOWN_SUCCESS;<br>      &#x2F;&#x2F;msg.arg1 &#x3D; 111;  可以设置arg1、arg2、obj等参数，传递这些数据<br>      &#x2F;&#x2F;msg.arg2 &#x3D; 222; msg.obj &#x3D; obj;<br>      mHandler.sendMessage(msg);<br>      isDownloading &#x3D; false;<br>      Log.d(TAG,”MyThread stop run”);<br>  }<br>  }</li>
 </ul>
-<h3 id="1-3-基本数据结构"><a href="#1-3-基本数据结构" class="headerlink" title="1.3 基本数据结构"></a>1.3 基本数据结构</h3><ul>
-<li>基本类型：<br><code>bool</code>: 布尔值；<code>byte</code>: 8位有符号整数；  <code>i16</code>: 16位有符号整数<br>　　<code>i32</code>: 32位有符号整数；<code>i64</code>: 64位有符号整数；<code>double</code>: 64位浮点数<br>　　<code>string</code>: UTF-8编码的字符串；<code>binary</code>: 二进制串</li>
-<li>结构体类型：<br><code>struct</code>: 定义的结构体对象</li>
-<li>容器类型：<br><code>list</code>: 有序元素列表；<code>set</code>: 无序无重复元素集合；<code>map</code>: 有序的key&#x2F;value集合</li>
-<li>异常类型：<br><code>exception</code>: 异常类型</li>
-<li>服务类型：<br><code>service</code>: 具体对应服务的类</li>
+<pre><code>
+- 之后这条消息会被添加到MessageQueue的队列中等待被处理，而Looper则会一直尝试从MessageQueue中取出待处理消息，最后分发回Handler的handleMessage()方法中。
+## 二 服务的基本用法
+服务是一个后台运行的组件，执行长时间运行且不需要用户交互的任务。即使应用被销毁也依然可以工作。服务基本上包含两种状态。
+
+| 状态 | 描述 |
+| --- | --- |
+| Started | Android的应用程序组件，如活动，通过startService()启动了服务，则服务是Started状态。一旦启动，服务可以在后台无限期运行，即使启动它的组件已经被销毁。 |
+| Bound | 当Android的应用程序组件通过bindService()绑定了服务，则服务是Bound状态。Bound状态的服务提供了一个客户服务器接口来允许组件与服务进行交互，如发送请求，获取结果，甚至通过IPC来进行跨进程通信。 |
+
+服务拥有生命周期方法，可以实现监控服务状态的变化，可以在合适的阶段执行工作。下面的左图展示了当服务通过startService()被创建时的生命周期，右图则显示了当服务通过bindService()被创建时的生命周期：
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/12426173/1649813777530-42c2b11d-6044-4e06-9f0d-f386cd7e2ce7.png#clientId=u779bf689-68fa-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;id=u26a4cce6&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=536&amp;originWidth=534&amp;originalType=url&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;size=181108&amp;status=done&amp;style=none&amp;taskId=ua18e0438-ded2-497b-b0bb-2be90ab8efa&amp;title=)
+要创建服务，你需要创建一个继承自Service基类或者它的已知子类的Java类。Service基类定义了不同的回调方法和多数重要方法。你不需要实现所有的回调方法。虽然如此，理解所有的方法还是非常重要的。实现这些回调能确保你的应用以用户期望的方式实现。
+
+| 回调 | 描述 |
+| --- | --- |
+| onStartCommand() | 其他组件(如活动)通过调用startService()来请求启动服务时，系统调用该方法。如果你实现该方法，你有责任在工作完成时通过stopSelf()或者stopService()方法来停止服务。 |
+| onBind | 当其他组件想要通过bindService()来绑定服务时，系统调用该方法。如果你实现该方法，你需要返回IBinder对象来提供一个接口，以便客户来与服务通信。你必须实现该方法，如果你不允许绑定，则直接返回null。 |
+| onUnbind() | 当客户中断所有服务发布的特殊接口时，系统调用该方法。 |
+| onRebind() | 当新的客户端与服务连接，且此前它已经通过onUnbind(Intent)通知断开连接时，系统调用该方法。 |
+| onCreate() | 当服务通过onStartCommand()和onBind()被第一次创建的时候，系统调用该方法。该调用要求执行一次性安装。 |
+| onDestroy() | 当服务不再有用或者被销毁时，系统调用该方法。你的服务需要实现该方法来清理任何资源，如线程，已注册的监听器，接收器等。 |
+
+### 2.1 基本案例
+| 步骤 | 描述 |
+| --- | --- |
+| 1 | 使用Android Studio IDE来创建Android应用程序并在com.runoob.androidservices包下命名为androidservices。类似Hello World实例章节。 |
+| 2 | 修改主活动文件MainActivity.java来添加startService()和stopService()方法。 |
+| 3 | 在包com.runoob.androidservices下创建新的Java文件MyService.java。这个文件将实现Android服务相关的方法。 |
+| 4 | 在AndroidManifest.xml文件中使用&lt;service.../&gt;标签来定义服务。应用程序可以有一个或多个服务，没有任何限制。 |
+| 5 | 修改res/layout/activity_main.xml文件中的默认布局，在线性布局中包含两个按钮。 |
+| 6 | 不要对res/values/strings.xml文件中的任何常量进行修改。Android Studio会注意字符串值。 |
+| 7 | 启动Android模拟器来运行应用程序，并验证应用程序所做改变的结果。 |
+
+- 布局文件
+```xml
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+                xmlns:tools=&quot;http://schemas.android.com/tools&quot; android:layout_width=&quot;match_parent&quot;
+                android:layout_height=&quot;match_parent&quot; android:paddingLeft=&quot;@dimen/activity_horizontal_margin&quot;
+                android:paddingRight=&quot;@dimen/activity_horizontal_margin&quot;
+                android:paddingTop=&quot;@dimen/activity_vertical_margin&quot;
+                android:paddingBottom=&quot;@dimen/activity_vertical_margin&quot; tools:context=&quot;.MainActivity&quot;&gt;
+  
+  &lt;TextView
+            android:id=&quot;@+id/textView1&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&quot;Android 服务实例&quot;
+            android:layout_alignParentTop=&quot;true&quot;
+            android:layout_centerHorizontal=&quot;true&quot;
+            android:textSize=&quot;30dp&quot; /&gt;
+  
+  &lt;TextView
+            android:id=&quot;@+id/textView2&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&quot;www.runoob.com&quot;
+            android:textColor=&quot;#ff87ff09&quot;
+            android:textSize=&quot;30dp&quot;
+            android:layout_above=&quot;@+id/imageButton&quot;
+            android:layout_centerHorizontal=&quot;true&quot;
+            android:layout_marginBottom=&quot;40dp&quot; /&gt;
+  
+  &lt;ImageButton
+               android:layout_width=&quot;wrap_content&quot;
+               android:layout_height=&quot;wrap_content&quot;
+               android:id=&quot;@+id/imageButton&quot;
+               android:src=&quot;@drawable/ic_launcher&quot;
+               android:layout_centerVertical=&quot;true&quot;
+               android:layout_centerHorizontal=&quot;true&quot; /&gt;
+  
+  &lt;Button
+          android:layout_width=&quot;wrap_content&quot;
+          android:layout_height=&quot;wrap_content&quot;
+          android:id=&quot;@+id/button2&quot;
+          android:text=&quot;启动服务&quot;
+          android:onClick=&quot;startService&quot;
+          android:layout_below=&quot;@+id/imageButton&quot;
+          android:layout_centerHorizontal=&quot;true&quot; /&gt;
+  
+  &lt;Button
+          android:layout_width=&quot;wrap_content&quot;
+          android:layout_height=&quot;wrap_content&quot;
+          android:text=&quot;停止服务&quot;
+          android:id=&quot;@+id/button&quot;
+          android:onClick=&quot;stopService&quot;
+          android:layout_below=&quot;@+id/button2&quot;
+          android:layout_alignLeft=&quot;@+id/button2&quot;
+          android:layout_alignStart=&quot;@+id/button2&quot;
+          android:layout_alignRight=&quot;@+id/button2&quot;
+          android:layout_alignEnd=&quot;@+id/button2&quot; /&gt;
+  
+&lt;/RelativeLayout&gt;
+</code></pre>
+<ul>
+<li>定义服务<br>&#96;&#96;&#96;java<br>package com.runoob.androidservices;</li>
 </ul>
-<h3 id="1-4-基本案例入门"><a href="#1-4-基本案例入门" class="headerlink" title="1.4 基本案例入门"></a>1.4 基本案例入门</h3><h5 id="1-4-1-编写thrift文件"><a href="#1-4-1-编写thrift文件" class="headerlink" title="1.4.1 编写thrift文件"></a>1.4.1 编写thrift文件</h5><p><strong>idea中编写一个Person.thrift文件</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 定义包名</span>
-namespace java com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>thrift
+<p>import android.app.Service;<br>import android.content.Intent;<br>import android.os.IBinder;<br>import android.widget.Toast;</p>
+<p>public class MyService extends Service {</p>
+<pre><code>@Override
+public IBinder onBind(Intent arg0) {
+    return null;
+}
 
-<span class="token comment" spellcheck="true">/**
-* 基本类型：
-  　　bool: 布尔值
-  　　byte: 8位有符号整数
-  　　i16: 16位有符号整数
-  　　i32: 32位有符号整数
-  　　i64: 64位有符号整数
-  　　double: 64位浮点数
-  　　string: UTF-8编码的字符串
-  　　binary: 二进制串
-  结构体类型：
-  　　struct: 定义的结构体对象
-  容器类型：
-  　　list: 有序元素列表
-  　　set: 无序无重复元素集合
-  　　map: 有序的key/value集合
-  异常类型：
-  　　exception: 异常类型
-  服务类型：
-  　　service: 具体对应服务的类
-**/</span>
+@Override
+public int onStartCommand(Intent intent, int flags, int startId) {
+    // Let it continue running until it is stopped.
+    Toast.makeText(this, &quot;服务已经启动&quot;, Toast.LENGTH_LONG).show();
+    return START_STICKY;
+}
 
-
-<span class="token comment" spellcheck="true">// 定义别名:将thrift基本数据类型别名为Java数据类型，方便使用</span>
-typedef i16 <span class="token keyword">short</span>
-typedef i32 <span class="token keyword">int</span>
-typedef i64 <span class="token keyword">long</span>
-typedef string String
-typedef bool  Boolean
-typedef <span class="token keyword">double</span> Double
-
-
-
-<span class="token comment" spellcheck="true">// 定义一个struct:相当于Java中的类</span>
-struct person<span class="token punctuation">{</span>
-<span class="token number">1</span><span class="token operator">:</span>optional String id<span class="token punctuation">;</span>
-<span class="token number">2</span><span class="token operator">:</span>optional String userName<span class="token punctuation">;</span>
-<span class="token number">3</span><span class="token operator">:</span>optional String passWord<span class="token punctuation">;</span>
-<span class="token number">4</span><span class="token operator">:</span>optional Boolean isCheck<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// 定义一个异常</span>
-exception personexception<span class="token punctuation">{</span>
-<span class="token number">1</span><span class="token operator">:</span>optional <span class="token keyword">int</span> code<span class="token punctuation">;</span>
-<span class="token number">2</span><span class="token operator">:</span>optional String message<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// 定义一个服务集合</span>
-service personservice<span class="token punctuation">{</span>
-
- <span class="token comment" spellcheck="true">// 通过用户名获取信息,并扔出异常</span>
- person <span class="token function">getPersonInfoByUserNmae</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span>required String username<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span> personexception exce <span class="token punctuation">)</span>
-
- <span class="token comment" spellcheck="true">// 通过用户名检查是否可用</span>
- Boolean <span class="token function">IsCheck</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span>required String username<span class="token punctuation">)</span>
-
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// 生成命令:thrift -gen java Person.thrift</span>
+@Override
+public void onDestroy() {
+    super.onDestroy();
+    Toast.makeText(this, &quot;服务已经停止&quot;, Toast.LENGTH_LONG).show();
+}
 </code></pre>
-<h5 id="1-4-2-新建springBoot项目"><a href="#1-4-2-新建springBoot项目" class="headerlink" title="1.4.2 新建springBoot项目"></a>1.4.2 新建springBoot项目</h5><pre class=" language-xml"><code class="language-xml"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.thrift<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>libthrift<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>0.15.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<p>}</p>
+<pre><code>
+- 启动与停止服务
+```java
+package com.runoob.androidservices;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+
+
+import android.content.Intent;
+import android.view.View;
+
+public class MainActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    // Method to start the service
+    public void startService(View view) {
+        startService(new Intent(getBaseContext(), MyService.class));
+    }
+
+    // Method to stop the service
+    public void stopService(View view) {
+        stopService(new Intent(getBaseContext(), MyService.class));
+    }
+}
 </code></pre>
-<h5 id="1-4-3-生成文件"><a href="#1-4-3-生成文件" class="headerlink" title="1.4.3 生成文件"></a>1.4.3 生成文件</h5><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 格式</span>
-thrift -gen <span class="token operator">&lt;</span>language<span class="token operator">></span> <span class="token operator">&lt;</span>Thrift filename<span class="token operator">></span>
-<span class="token comment" spellcheck="true"># 命令，进入该文件目录，cmd中执行</span>
-thrift -gen java Person.thrift
-<span class="token comment" spellcheck="true"># 把生成的文件拷到SpringBoot项目中</span>
-</code></pre>
-<h5 id="1-4-4-文件解析"><a href="#1-4-4-文件解析" class="headerlink" title="1.4.4 文件解析"></a>1.4.4 文件解析</h5><ul>
-<li><code>Iface</code>：服务端通过实现HelloWorldService.Iface接口，向客户端的提供具体的同步业务逻辑。</li>
-<li><code>AsyncIface</code>：服务端通过实现HelloWorldService.Iface接口，向客户端的提供具体的异步业务逻辑。</li>
-<li><code>Client</code>：客户端通过HelloWorldService.Client的实例对象，以同步的方式访问服务端提供的服务方法。</li>
-<li><code>AsyncClient</code>：客户端通过HelloWorldService.AsyncClient的实例对象，以异步的方式访问服务端提供的服务方法。</li>
-</ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287227922-28dfd03d-3225-4ada-99de-70cc08e6d164.png" alt="image-20220206203622757.png"></p>
-<h5 id="1-4-5-定义实现类"><a href="#1-4-5-定义实现类" class="headerlink" title="1.4.5 定义实现类"></a>1.4.5 定义实现类</h5><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>person<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>personexception<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>personservice<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException<span class="token punctuation">;</span>
-
-
-<span class="token comment" spellcheck="true">/**
- * @Author shu
- * @Description 实现接口，自定义方法逻辑
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PersonServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">personservice<span class="token punctuation">.</span>Iface</span><span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> person <span class="token function">getPersonInfoByUserNmae</span><span class="token punctuation">(</span>String username<span class="token punctuation">)</span> <span class="token keyword">throws</span> personexception<span class="token punctuation">,</span> TException <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"客服端数据："</span><span class="token operator">+</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        person person<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        person<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        person<span class="token punctuation">.</span><span class="token function">setUserName</span><span class="token punctuation">(</span><span class="token string">"admin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        person<span class="token punctuation">.</span><span class="token function">setPassWord</span><span class="token punctuation">(</span><span class="token string">"123456"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        person<span class="token punctuation">.</span><span class="token function">setIsCheck</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> person<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">IsCheck</span><span class="token punctuation">(</span>String username<span class="token punctuation">)</span> <span class="token keyword">throws</span> TException <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"客服端数据："</span><span class="token operator">+</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<h5 id="1-4-6-服务端"><a href="#1-4-6-服务端" class="headerlink" title="1.4.6 服务端"></a>1.4.6 服务端</h5><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>server<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>PersonServiceImpl<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>personservice<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TProcessorFactory<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TCompactProtocol<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>server<span class="token punctuation">.</span>THsHaServer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>server<span class="token punctuation">.</span>TServer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TNonblockingServerSocket<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TTransportException<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>layered<span class="token punctuation">.</span>TFastFramedTransport<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @Author shu
- * @Description 服务端
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThriftServer</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> TTransportException <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 建立连接</span>
-        TNonblockingServerSocket serverSocket <span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">TNonblockingServerSocket</span><span class="token punctuation">(</span><span class="token number">8803</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 建立高可用server</span>
-        THsHaServer<span class="token punctuation">.</span>Args arg<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">THsHaServer<span class="token punctuation">.</span>Args</span><span class="token punctuation">(</span>serverSocket<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">maxWorkerThreads</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">minWorkerThreads</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 处理器</span>
-        personservice<span class="token punctuation">.</span>Processor<span class="token operator">&lt;</span>PersonServiceImpl<span class="token operator">></span> processor <span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">personservice<span class="token punctuation">.</span>Processor</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PersonServiceImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 设置协议处理器</span>
-        arg<span class="token punctuation">.</span><span class="token function">protocolFactory</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TCompactProtocol<span class="token punctuation">.</span>Factory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 设置传输处理器</span>
-        arg<span class="token punctuation">.</span><span class="token function">transportFactory</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TFastFramedTransport<span class="token punctuation">.</span>Factory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 处理器工厂</span>
-        arg<span class="token punctuation">.</span><span class="token function">processorFactory</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TProcessorFactory</span><span class="token punctuation">(</span>processor<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 开始执行</span>
-        TServer tServer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">THsHaServer</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Running Simple Server"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        tServer<span class="token punctuation">.</span><span class="token function">serve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<h5 id="1-4-7-客服端"><a href="#1-4-7-客服端" class="headerlink" title="1.4.7 客服端"></a>1.4.7 客服端</h5><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>client<span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>person<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>personservice<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>TException<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TCompactProtocol<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>protocol<span class="token punctuation">.</span>TProtocol<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TSocket<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>TTransport<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>thrift<span class="token punctuation">.</span>transport<span class="token punctuation">.</span>layered<span class="token punctuation">.</span>TFramedTransport<span class="token punctuation">;</span>
-
-
-<span class="token comment" spellcheck="true">/**
- * @Author shu
- * @Description 客服端
- **/</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThriftClient</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        TTransport transport <span class="token operator">=</span>null<span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">// 连接</span>
-            transport <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TFramedTransport</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TSocket</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span><span class="token number">8803</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">600</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 协议,注意服务端保持一致</span>
-            TProtocol protocol <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TCompactProtocol</span><span class="token punctuation">(</span>transport<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 调用方法</span>
-            personservice<span class="token punctuation">.</span>Client client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">personservice<span class="token punctuation">.</span>Client</span><span class="token punctuation">(</span>protocol<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 打开连接</span>
-            transport<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 调用方法</span>
-            person result <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">getPersonInfoByUserNmae</span><span class="token punctuation">(</span><span class="token string">"Leo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Result =: "</span> <span class="token operator">+</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">TException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">!=</span> transport<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                transport<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<h5 id="1-4-8-测试"><a href="#1-4-8-测试" class="headerlink" title="1.4.8 测试"></a>1.4.8 测试</h5><p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287274626-014900ff-59ec-4ab0-8394-2dd4eebdc938.png" alt="image-20220206203940270.png"></p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1644287282148-32aefe87-24da-42d9-a18a-3f27469bc86b.png" alt="image-20220206203954257.png"></p>
-<blockquote>
-<p>到此一个简单的入门就完成了</p>
-</blockquote>
 
                 
             </div>
@@ -877,7 +910,7 @@ thrift -gen java Person.thrift
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://www.xiaolin.store/archives/398f4216.html">http://www.xiaolin.store/archives/398f4216.html</a>
+                    <a href="http://www.xiaolin.store/archives/9a623cd5.html">http://www.xiaolin.store/archives/9a623cd5.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -915,12 +948,8 @@ thrift -gen java Person.thrift
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Thrift/">
-                                    <span class="chip bg-color">Thrift</span>
-                                </a>
-                            
-                                <a href="/tags/RPC/">
-                                    <span class="chip bg-color">RPC</span>
+                                <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/">
+                                    <span class="chip bg-color">安卓开发</span>
                                 </a>
                             
                         </div>
@@ -1096,50 +1125,48 @@ thrift -gen java Person.thrift
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/archives/999aece.html">
+                <a href="/archives/9a623cd5.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Apache Thrift 官网学习（二）">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="安卓开发（九）安卓中的服务">
                         
-                        <span class="card-title">Apache Thrift 官网学习（二）</span>
+                        <span class="card-title">安卓开发（九）安卓中的服务</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Thrift是一个轻量级、跨语言的远程服务调用框架，最初由Facebook开发，后面进入Apache开源项目。它通过自身的IDL中间语言, 并借助代码生成引擎生成各种主流语言的RPC服务端/客户端模板代码。 套接字服务器等网络编程。
+                            Android 提供各种尖端工具和功能，可帮助您针对数十亿用户日常使用的手机、平板电脑、电视和汽车来构建应用。
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Thrift/" class="post-category">
-                                    Thrift
+                            <a href="/categories/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" class="post-category">
+                                    安卓开发
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Thrift/">
-                        <span class="chip bg-color">Thrift</span>
-                    </a>
-                    
-                    <a href="/tags/RPC/">
-                        <span class="chip bg-color">RPC</span>
+                    <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">安卓开发</span>
                     </a>
                     
                 </div>
@@ -1153,31 +1180,31 @@ thrift -gen java Person.thrift
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/archives/195e3ef3.html">
+                <a href="/archives/adc1fde9.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Netty基础入门（一）基本知识介绍">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="安卓开发（八）多媒体技术与网络技术">
                         
-                        <span class="card-title">Netty基础入门（一）基本知识介绍</span>
+                        <span class="card-title">安卓开发（八）多媒体技术与网络技术</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Netty 是一个 NIO 客户端服务器框架，它可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了 TCP 和 UDP 套接字服务器等网络编程。
+                            Android 提供各种尖端工具和功能，可帮助您针对数十亿用户日常使用的手机、平板电脑、电视和汽车来构建应用。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Netty/" class="post-category">
-                                    Netty
+                            <a href="/categories/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" class="post-category">
+                                    安卓开发
                                 </a>
                             
                             
@@ -1187,8 +1214,8 @@ thrift -gen java Person.thrift
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Netty/">
-                        <span class="chip bg-color">Netty</span>
+                    <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">安卓开发</span>
                     </a>
                     
                 </div>
