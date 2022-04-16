@@ -586,21 +586,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-04-13
+                    2022-04-16
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2k
+                    1.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    9 分
                 </div>
                 
 
@@ -634,362 +634,457 @@
 </code></pre>
 </li>
 <li><p>接下来需要使用一个Builder构造器来创建Notification对象。</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//设置跳转意图</span>
-              Notification notification <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NotificationCompat<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token string">"chat"</span><span class="token punctuation">)</span>
-                      <span class="token punctuation">.</span><span class="token function">setAutoCancel</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
-                      <span class="token punctuation">.</span><span class="token function">setContentTitle</span><span class="token punctuation">(</span><span class="token string">"收到聊天消息"</span><span class="token punctuation">)</span>
-                      <span class="token punctuation">.</span><span class="token function">setContentText</span><span class="token punctuation">(</span><span class="token string">"今天晚上吃什么"</span><span class="token punctuation">)</span>
-                      <span class="token punctuation">.</span><span class="token function">setWhen</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                      <span class="token punctuation">.</span><span class="token function">setSmallIcon</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>mipmap<span class="token punctuation">.</span>ic_launcher<span class="token punctuation">)</span>
-                      <span class="token comment" spellcheck="true">//设置红色</span>
-                      <span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span>Color<span class="token punctuation">.</span><span class="token function">parseColor</span><span class="token punctuation">(</span><span class="token string">"#F00606"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                      <span class="token punctuation">.</span><span class="token function">setLargeIcon</span><span class="token punctuation">(</span>BitmapFactory<span class="token punctuation">.</span><span class="token function">decodeResource</span><span class="token punctuation">(</span><span class="token function">getResources</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> R<span class="token punctuation">.</span>mipmap<span class="token punctuation">.</span>ic_launcher<span class="token punctuation">)</span><span class="token punctuation">)</span>
-                      <span class="token punctuation">.</span><span class="token function">setContentIntent</span><span class="token punctuation">(</span>pendingIntent<span class="token punctuation">)</span>
-                      <span class="token punctuation">.</span><span class="token function">setAutoCancel</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
-                      <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
 </li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//设置跳转意图</span>
+                Notification notification <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NotificationCompat<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token string">"chat"</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setAutoCancel</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setContentTitle</span><span class="token punctuation">(</span><span class="token string">"收到聊天消息"</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setContentText</span><span class="token punctuation">(</span><span class="token string">"今天晚上吃什么"</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setWhen</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setSmallIcon</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>mipmap<span class="token punctuation">.</span>ic_launcher<span class="token punctuation">)</span>
+                        <span class="token comment" spellcheck="true">//设置红色</span>
+                        <span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span>Color<span class="token punctuation">.</span><span class="token function">parseColor</span><span class="token punctuation">(</span><span class="token string">"#F00606"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setLargeIcon</span><span class="token punctuation">(</span>BitmapFactory<span class="token punctuation">.</span><span class="token function">decodeResource</span><span class="token punctuation">(</span><span class="token function">getResources</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> R<span class="token punctuation">.</span>mipmap<span class="token punctuation">.</span>ic_launcher<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setContentIntent</span><span class="token punctuation">(</span>pendingIntent<span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setAutoCancel</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
 <li><p>以上工作都完成之后，只需要调用NotificationManager的notify()方法就可以让通知显示出来了。</p>
 <pre class=" language-java"><code class="language-java"> manager<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> notification<span class="token punctuation">)</span>；
 </code></pre>
 <h3 id="1-2-入门案例"><a href="#1-2-入门案例" class="headerlink" title="1.2 入门案例"></a>1.2 入门案例</h3></li>
-<li><p>布局文件<br>&#96;&#96;&#96;java</p>
-<?xml version="1.0" encoding="utf-8"?>
-<p><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".notification.MainActivity" android:orientation="vertical"></LinearLayout></p>
-<p>  <Button android:id="@+id/chat" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="发送聊天通知"><br>  <Button android:id="@+id/get" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="订阅"></Button></Button></p>
+<li><p>布局文件</p>
 </li>
 </ul>
+<pre class=" language-java"><code class="language-java"><span class="token operator">&lt;</span><span class="token operator">?</span>xml version<span class="token operator">=</span><span class="token string">"1.0"</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token operator">?</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>LinearLayout xmlns<span class="token operator">:</span>android<span class="token operator">=</span><span class="token string">"http://schemas.android.com/apk/res/android"</span>
+    xmlns<span class="token operator">:</span>app<span class="token operator">=</span><span class="token string">"http://schemas.android.com/apk/res-auto"</span>
+    xmlns<span class="token operator">:</span>tools<span class="token operator">=</span><span class="token string">"http://schemas.android.com/tools"</span>
+    android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"match_parent"</span>
+    android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"match_parent"</span>
+    tools<span class="token operator">:</span>context<span class="token operator">=</span><span class="token string">".notification.MainActivity"</span>
+    android<span class="token operator">:</span>orientation<span class="token operator">=</span><span class="token string">"vertical"</span><span class="token operator">></span>
 
-```
+    <span class="token operator">&lt;</span>Button
+        android<span class="token operator">:</span>id<span class="token operator">=</span><span class="token string">"@+id/chat"</span>
+        android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>text<span class="token operator">=</span><span class="token string">"发送聊天通知"</span><span class="token operator">/</span><span class="token operator">></span>
 
-<ul>
-<li>代码文件<br>&#96;&#96;&#96;java<br>package com.shu.notification;</li>
-</ul>
-<p>import android.annotation.TargetApi;<br>import android.app.Notification;<br>import android.app.NotificationChannel;<br>import android.app.NotificationManager;<br>import android.app.PendingIntent;<br>import android.content.Context;<br>import android.content.Intent;<br>import android.graphics.BitmapFactory;<br>import android.graphics.Color;<br>import android.os.Build;<br>import android.os.Bundle;<br>import android.view.View;<br>import android.widget.Button;</p>
-<p>import androidx.appcompat.app.AppCompatActivity;<br>import androidx.core.app.NotificationCompat;</p>
-<p>import com.shu.R;</p>
-<p>public class MainActivity extends AppCompatActivity implements View.OnClickListener{</p>
-<pre><code>private NotificationManager manager;
 
-/**
- * 初始化
- * @param savedInstanceState
- */
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
-        //通知渠道id
-        String channelId = &quot;chat&quot;;
-        //通知渠道名
-        String channelName = &quot;聊天消息&quot;;
-        //通知渠道权重
-        int importance = NotificationManager.IMPORTANCE_HIGH;
-        //创建通知渠道
-        createNotificationChannel(channelId, channelName, importance);
-
-        channelId = &quot;subscribe&quot;;
-        channelName = &quot;订阅消息&quot;;
-        importance = NotificationManager.IMPORTANCE_DEFAULT;
-        createNotificationChannel(channelId, channelName, importance);
-    }
-
-    Button chat = findViewById(R.id.chat);
-    chat.setOnClickListener(this);
-    Button get = findViewById(R.id.get);
-    get.setOnClickListener(this);
-}
-
-/**
- * 创建通知渠道
- * @param channelId
- * @param channelName
- * @param importance
- */
-@TargetApi(Build.VERSION_CODES.O)
-private void createNotificationChannel(String channelId, String channelName, int importance) {
-    NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
-    NotificationManager notificationManager = (NotificationManager) getSystemService(
-            NOTIFICATION_SERVICE);
-    notificationManager.createNotificationChannel(channel);
-}
-
-/**
- * 点击事件
- * @param view
- */
-@Override
-public void onClick(View view) {
-    Intent intent = new Intent(this, NotificationActivity.class);
-    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-    switch (view.getId()){
-        case R.id.chat:    //聊天消息
-            //设置跳转意图
-            Notification notification = new NotificationCompat.Builder(this, &quot;chat&quot;)
-                    .setAutoCancel(true)
-                    .setContentTitle(&quot;收到聊天消息&quot;)
-                    .setContentText(&quot;今天晚上吃什么&quot;)
-                    .setWhen(System.currentTimeMillis())
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    //设置红色
-                    .setColor(Color.parseColor(&quot;#F00606&quot;))
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
-            manager.notify(1, notification);
-            break;
-        case R.id.get:   //订阅消息
-            Notification notificationGet = new NotificationCompat.Builder(this, &quot;subscribe&quot;)
-
-                    .setAutoCancel(true)
-                    .setContentTitle(&quot;收到订阅消息&quot;)
-                    .setContentText(&quot;新闻消息&quot;)
-                    .setWhen(System.currentTimeMillis())
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
-                    .setContentIntent(pendingIntent)
-                    .build();
-            manager.notify(2, notificationGet);
-            break;
-    }
-}
-</code></pre>
-<p>}</p>
-<pre><code>![image.png](https://cdn.nlark.com/yuque/0/2022/png/12426173/1649742043758-09d60f53-6b29-474a-9f37-abb889847b61.png#clientId=u71edc886-bdee-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=749&amp;id=u046bafef&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=936&amp;originWidth=1642&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;size=81397&amp;status=done&amp;style=none&amp;taskId=u83d2186b-20a0-4b33-9338-054db6f4e92&amp;title=&amp;width=1313.6)
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/12426173/1649742061148-95fcbef7-123e-4886-9665-d6322be96581.png#clientId=u71edc886-bdee-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=749&amp;id=u408a18f8&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=936&amp;originWidth=1642&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;size=92651&amp;status=done&amp;style=none&amp;taskId=uf1ca85d9-c027-45a2-972a-ff2bac1527f&amp;title=&amp;width=1313.6)
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/12426173/1649742080863-b4b71743-dfea-46b1-9472-786e6e3dd8e9.png#clientId=u71edc886-bdee-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=paste&amp;height=749&amp;id=ue1854de6&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=936&amp;originWidth=1642&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;size=51746&amp;status=done&amp;style=none&amp;taskId=uf46646eb-fc36-43fe-9ac8-bce91e9f283&amp;title=&amp;width=1313.6)
-##   二 拍照技术
-
-- 声明权限
-```java
-
-    &lt;uses-permission android:name=&quot;android.permission.CAMERA&quot;/&gt;
-    &lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;
-        tools:ignore=&quot;ScopedStorage&quot; /&gt;
-    &lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot;/&gt;
+    <span class="token operator">&lt;</span>Button
+        android<span class="token operator">:</span>id<span class="token operator">=</span><span class="token string">"@+id/get"</span>
+        android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>text<span class="token operator">=</span><span class="token string">"订阅"</span><span class="token operator">/</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>LinearLayout<span class="token operator">></span>
 </code></pre>
 <ul>
-<li><p>布局文件<br>&#96;&#96;&#96;java</p>
-<?xml version="1.0" encoding="utf-8"?>
-<p><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent"></LinearLayout></p>
-<p>  <Button android:id="@+id/take_photo" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="take photo"><br>  <Button android:id="@+id/choose_from_album" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="choose photo"><br>  <ImageView android:id="@+id/picture" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal"></ImageView></Button></Button></p>
-</li>
+<li>代码文件</li>
 </ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>notification<span class="token punctuation">;</span>
 
-```
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>TargetApi<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>app<span class="token punctuation">.</span>Notification<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>app<span class="token punctuation">.</span>NotificationChannel<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>app<span class="token punctuation">.</span>NotificationManager<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>app<span class="token punctuation">.</span>PendingIntent<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>content<span class="token punctuation">.</span>Context<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>content<span class="token punctuation">.</span>Intent<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span>BitmapFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span>Color<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>os<span class="token punctuation">.</span>Build<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>os<span class="token punctuation">.</span>Bundle<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>view<span class="token punctuation">.</span>View<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>Button<span class="token punctuation">;</span>
 
-<ul>
-<li>代码文件<br>&#96;&#96;&#96;java<br>package com.shu.Photo;</li>
-</ul>
-<p>import android.Manifest;<br>import android.annotation.TargetApi;<br>import android.content.ContentUris;<br>import android.content.Intent;<br>import android.content.pm.PackageManager;<br>import android.database.Cursor;<br>import android.graphics.Bitmap;<br>import android.graphics.BitmapFactory;<br>import android.net.Uri;<br>import android.os.Build;<br>import android.os.Bundle;<br>import android.provider.DocumentsContract;<br>import android.provider.MediaStore;<br>import android.view.View;<br>import android.widget.Button;<br>import android.widget.ImageView;<br>import android.widget.Toast;</p>
-<p>import androidx.appcompat.app.AppCompatActivity;<br>import androidx.core.app.ActivityCompat;<br>import androidx.core.content.ContextCompat;<br>import androidx.core.content.FileProvider;</p>
-<p>import com.shu.R;</p>
-<p>import java.io.File;<br>import java.io.FileNotFoundException;<br>import java.io.IOException;</p>
-<p>&#x2F;**</p>
-<ul>
-<li>调用拍照</li>
-</ul>
-<p> *&#x2F;<br>public class PhotoActivity extends AppCompatActivity implements View.OnClickListener {<br>    public static final int CHOOSE_PHOTO&#x3D;1;<br>    public static final int TAKE_PHOTO &#x3D; 2;<br>    private Button takePhoto;<br>    private ImageView picture;<br>    private Uri imageUri;</p>
-<pre><code>@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_photo);
-    //设置点击事件
-    takePhoto= (Button) findViewById(R.id.take_photo);
-    takePhoto.setOnClickListener(this);
-    picture=(ImageView)findViewById(R.id.picture);
-    // 选择相册按钮
-    Button chooseFromAlbum=findViewById(R.id.choose_from_album);
-    chooseFromAlbum.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if(ContextCompat.checkSelfPermission(PhotoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(PhotoActivity.this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-            }else{
-                openAlbum();
-            }
-        }
-    });
+<span class="token keyword">import</span> androidx<span class="token punctuation">.</span>appcompat<span class="token punctuation">.</span>app<span class="token punctuation">.</span>AppCompatActivity<span class="token punctuation">;</span>
+<span class="token keyword">import</span> androidx<span class="token punctuation">.</span>core<span class="token punctuation">.</span>app<span class="token punctuation">.</span>NotificationCompat<span class="token punctuation">;</span>
 
-}
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>R<span class="token punctuation">;</span>
 
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainActivity</span> <span class="token keyword">extends</span> <span class="token class-name">AppCompatActivity</span> <span class="token keyword">implements</span> <span class="token class-name">View<span class="token punctuation">.</span>OnClickListener</span><span class="token punctuation">{</span>
 
-@Override
-public void onClick(View v) {
-    File outputImage = new File(getExternalCacheDir(), &quot;output_image.jpg&quot;);
-    try {
-        if (outputImage.exists()) {
-            outputImage.delete();
-        }
-        outputImage.createNewFile();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+    <span class="token keyword">private</span> NotificationManager manager<span class="token punctuation">;</span>
 
+    <span class="token comment" spellcheck="true">/**
+     * 初始化
+     * @param savedInstanceState
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>Bundle savedInstanceState<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setContentView</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>layout<span class="token punctuation">.</span>activity_main<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        manager <span class="token operator">=</span> <span class="token punctuation">(</span>NotificationManager<span class="token punctuation">)</span> <span class="token function">getSystemService</span><span class="token punctuation">(</span>Context<span class="token punctuation">.</span>NOTIFICATION_SERVICE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Build<span class="token punctuation">.</span>VERSION<span class="token punctuation">.</span>SDK_INT <span class="token operator">>=</span> Build<span class="token punctuation">.</span>VERSION_CODES<span class="token punctuation">.</span>O<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//通知渠道id</span>
+            String channelId <span class="token operator">=</span> <span class="token string">"chat"</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//通知渠道名</span>
+            String channelName <span class="token operator">=</span> <span class="token string">"聊天消息"</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//通知渠道权重</span>
+            <span class="token keyword">int</span> importance <span class="token operator">=</span> NotificationManager<span class="token punctuation">.</span>IMPORTANCE_HIGH<span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//创建通知渠道</span>
+            <span class="token function">createNotificationChannel</span><span class="token punctuation">(</span>channelId<span class="token punctuation">,</span> channelName<span class="token punctuation">,</span> importance<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    //安卓版本大于7
-    if(Build.VERSION.SDK_INT&gt;=24){
-        imageUri= FileProvider.getUriForFile(this,&quot;com.shu.fileprovider&quot;,outputImage);
-    }else {
-        imageUri = Uri.fromFile(outputImage);
-    }
+            channelId <span class="token operator">=</span> <span class="token string">"subscribe"</span><span class="token punctuation">;</span>
+            channelName <span class="token operator">=</span> <span class="token string">"订阅消息"</span><span class="token punctuation">;</span>
+            importance <span class="token operator">=</span> NotificationManager<span class="token punctuation">.</span>IMPORTANCE_DEFAULT<span class="token punctuation">;</span>
+            <span class="token function">createNotificationChannel</span><span class="token punctuation">(</span>channelId<span class="token punctuation">,</span> channelName<span class="token punctuation">,</span> importance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-    //动态授权
-    if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},1);
-    }else{
-        go();
-    }
-}
+        Button chat <span class="token operator">=</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>chat<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        chat<span class="token punctuation">.</span><span class="token function">setOnClickListener</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Button get <span class="token operator">=</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>get<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        get<span class="token punctuation">.</span><span class="token function">setOnClickListener</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
+    <span class="token comment" spellcheck="true">/**
+     * 创建通知渠道
+     * @param channelId
+     * @param channelName
+     * @param importance
+     */</span>
+    <span class="token annotation punctuation">@TargetApi</span><span class="token punctuation">(</span>Build<span class="token punctuation">.</span>VERSION_CODES<span class="token punctuation">.</span>O<span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">createNotificationChannel</span><span class="token punctuation">(</span>String channelId<span class="token punctuation">,</span> String channelName<span class="token punctuation">,</span> <span class="token keyword">int</span> importance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        NotificationChannel channel <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NotificationChannel</span><span class="token punctuation">(</span>channelId<span class="token punctuation">,</span> channelName<span class="token punctuation">,</span> importance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        NotificationManager notificationManager <span class="token operator">=</span> <span class="token punctuation">(</span>NotificationManager<span class="token punctuation">)</span> <span class="token function">getSystemService</span><span class="token punctuation">(</span>
+                NOTIFICATION_SERVICE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        notificationManager<span class="token punctuation">.</span><span class="token function">createNotificationChannel</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-/**
- * 跳转
- */
-private void go(){
-    Intent intent = new Intent(&quot;android.media.action.IMAGE_CAPTURE&quot;);
-    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-    startActivityForResult(intent, TAKE_PHOTO);
-}
+    <span class="token comment" spellcheck="true">/**
+     * 点击事件
+     * @param view
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onClick</span><span class="token punctuation">(</span>View view<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Intent intent <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Intent</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> NotificationActivity<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        PendingIntent pendingIntent <span class="token operator">=</span> PendingIntent<span class="token punctuation">.</span><span class="token function">getActivity</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> intent<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span>view<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">case</span> R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>chat<span class="token operator">:</span>    <span class="token comment" spellcheck="true">//聊天消息</span>
+                <span class="token comment" spellcheck="true">//设置跳转意图</span>
+                Notification notification <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NotificationCompat<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token string">"chat"</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setAutoCancel</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setContentTitle</span><span class="token punctuation">(</span><span class="token string">"收到聊天消息"</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setContentText</span><span class="token punctuation">(</span><span class="token string">"今天晚上吃什么"</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setWhen</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setSmallIcon</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>mipmap<span class="token punctuation">.</span>ic_launcher<span class="token punctuation">)</span>
+                        <span class="token comment" spellcheck="true">//设置红色</span>
+                        <span class="token punctuation">.</span><span class="token function">setColor</span><span class="token punctuation">(</span>Color<span class="token punctuation">.</span><span class="token function">parseColor</span><span class="token punctuation">(</span><span class="token string">"#F00606"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setLargeIcon</span><span class="token punctuation">(</span>BitmapFactory<span class="token punctuation">.</span><span class="token function">decodeResource</span><span class="token punctuation">(</span><span class="token function">getResources</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> R<span class="token punctuation">.</span>mipmap<span class="token punctuation">.</span>ic_launcher<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setContentIntent</span><span class="token punctuation">(</span>pendingIntent<span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setAutoCancel</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                manager<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> notification<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>get<span class="token operator">:</span>   <span class="token comment" spellcheck="true">//订阅消息</span>
+                Notification notificationGet <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NotificationCompat<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token string">"subscribe"</span><span class="token punctuation">)</span>
 
-
-@Override
-protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    switch (requestCode){
-        case TAKE_PHOTO:
-            if (resultCode==RESULT_OK){
-                try {
-                    Bitmap bitmap= BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                    picture.setImageBitmap(bitmap);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        case CHOOSE_PHOTO:
-            if(resultCode==RESULT_OK){
-                //判断手机系统版本号
-                if(Build.VERSION.SDK_INT&gt;=19){
-                    //4.4及以上系统
-                    handleImageOnKitKat(data);
-                }else{
-                    //4.4以下系统
-                    handleImageBeforeKitKat(data);
-                }
-            }
-        break;
-    }
-}
-
-/**
- * 请求获取权限
- * @param requestCode
- * @param permissions
- * @param grantResults
- */
-@Override
-public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    switch (requestCode){
-        case 1:
-            if (grantResults.length &gt; 0 &amp;&amp; grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 启动相机程序
-                go();
-            } else {
-                Toast.makeText(this, &quot;没有权限&quot;, Toast.LENGTH_SHORT).show();
-            }
-            break;
-        default:
-    }
-}
-
-
-private void openAlbum(){
-    Intent intent=new Intent(&quot;android.intent.action.GET_CONTENT&quot;);
-    intent.setType(&quot;image/*&quot;);
-    startActivityForResult(intent,CHOOSE_PHOTO);
-}
-
-
-@TargetApi(19)
-private void handleImageOnKitKat(Intent data){
-    String imagePath=null;
-    Uri uri=data.getData();
-    System.out.println(&quot;xxx&quot;+uri);
-    if(DocumentsContract.isDocumentUri(this,uri)){
-        //document类型的Uri处理方式
-        String docId=DocumentsContract.getDocumentId(uri);
-        if(&quot;com.android.providers.media.documents&quot;.equals(uri.getAuthority())){
-            String id=docId.split(&quot;:&quot;)[1];
-            String seletion=MediaStore.Images.Media._ID+&quot;=&quot;+id;
-            imagePath=getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,seletion);
-        }else if(&quot;com.android.providers.downloads.documents&quot;.equals(uri.getAuthority())){
-            Uri contentUri= ContentUris.withAppendedId(Uri.parse(&quot;content://downloads/public_downloads&quot;),Long.valueOf(docId));
-            imagePath=getImagePath(contentUri,null);
-        }
-    }else if(&quot;content&quot;.equalsIgnoreCase(uri.getScheme())){
-        //content类型的Uri处理方式
-        imagePath=getImagePath(uri,null);
-    }else if(&quot;file&quot;.equalsIgnoreCase(uri.getScheme())){
-        //file类型的Uri，直接获取路径即可
-        imagePath=uri.getPath();
-    }
-    displayImage(imagePath);
-}
-
-
-private String getImagePath(Uri uri,String selection){
-    String path=null;
-    //获取真实的图片路径
-    Cursor cursor=getContentResolver().query(uri,null,selection,null,null);
-    if(cursor!=null){
-        if(cursor.moveToFirst()){
-            path=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        }
-        cursor.close();
-    }
-    return path;
-}
-
-
-private void displayImage(String imagePath){
-    if(imagePath!=null){
-        Bitmap bitmap=BitmapFactory.decodeFile(imagePath);
-        picture.setImageBitmap(bitmap);
-    }else{
-        Toast.makeText(this,&quot;failed to get image&quot;,Toast.LENGTH_SHORT).show();
-    }
-}
-
-private void handleImageBeforeKitKat(Intent data){
-    Uri uri=data.getData();
-    String imagePath=getImagePath(uri,null);
-    displayImage(imagePath);
-}
+                        <span class="token punctuation">.</span><span class="token function">setAutoCancel</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setContentTitle</span><span class="token punctuation">(</span><span class="token string">"收到订阅消息"</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setContentText</span><span class="token punctuation">(</span><span class="token string">"新闻消息"</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setWhen</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setSmallIcon</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>mipmap<span class="token punctuation">.</span>ic_launcher<span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setLargeIcon</span><span class="token punctuation">(</span>BitmapFactory<span class="token punctuation">.</span><span class="token function">decodeResource</span><span class="token punctuation">(</span><span class="token function">getResources</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> R<span class="token punctuation">.</span>mipmap<span class="token punctuation">.</span>ic_launcher<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">setContentIntent</span><span class="token punctuation">(</span>pendingIntent<span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                manager<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> notificationGet<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
-<p>}</p>
-<pre><code>## 三 网络技术
-无论在Android还是前端框架都有相识的网络请求框架，他们的原理都差不多
-官网：[https://github.com/square/okhttp](https://github.com/square/okhttp)
-### 3.1 使用OkHttp访问网络
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1649742043758-09d60f53-6b29-474a-9f37-abb889847b61.png#clientId=u71edc886-bdee-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=749&id=u046bafef&margin=%5Bobject%20Object%5D&name=image.png&originHeight=936&originWidth=1642&originalType=binary&ratio=1&rotation=0&showTitle=false&size=81397&status=done&style=none&taskId=u83d2186b-20a0-4b33-9338-054db6f4e92&title=&width=1313.6" alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1649742061148-95fcbef7-123e-4886-9665-d6322be96581.png#clientId=u71edc886-bdee-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=749&id=u408a18f8&margin=%5Bobject%20Object%5D&name=image.png&originHeight=936&originWidth=1642&originalType=binary&ratio=1&rotation=0&showTitle=false&size=92651&status=done&style=none&taskId=uf1ca85d9-c027-45a2-972a-ff2bac1527f&title=&width=1313.6" alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2022/png/12426173/1649742080863-b4b71743-dfea-46b1-9472-786e6e3dd8e9.png#clientId=u71edc886-bdee-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=749&id=ue1854de6&margin=%5Bobject%20Object%5D&name=image.png&originHeight=936&originWidth=1642&originalType=binary&ratio=1&rotation=0&showTitle=false&size=51746&status=done&style=none&taskId=uf46646eb-fc36-43fe-9ac8-bce91e9f283&title=&width=1313.6" alt="image.png"></p>
+<h2 id="二-拍照技术"><a href="#二-拍照技术" class="headerlink" title="二 拍照技术"></a>二 拍照技术</h2><ul>
+<li>声明权限</li>
+</ul>
+<pre class=" language-java"><code class="language-java">
+    <span class="token operator">&lt;</span>uses<span class="token operator">-</span>permission android<span class="token operator">:</span>name<span class="token operator">=</span><span class="token string">"android.permission.CAMERA"</span><span class="token operator">/</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>uses<span class="token operator">-</span>permission android<span class="token operator">:</span>name<span class="token operator">=</span><span class="token string">"android.permission.WRITE_EXTERNAL_STORAGE"</span>
+        tools<span class="token operator">:</span>ignore<span class="token operator">=</span><span class="token string">"ScopedStorage"</span> <span class="token operator">/</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>uses<span class="token operator">-</span>permission android<span class="token operator">:</span>name<span class="token operator">=</span><span class="token string">"android.permission.READ_EXTERNAL_STORAGE"</span><span class="token operator">/</span><span class="token operator">></span>
+</code></pre>
+<ul>
+<li>布局文件</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token operator">&lt;</span><span class="token operator">?</span>xml version<span class="token operator">=</span><span class="token string">"1.0"</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token operator">?</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>LinearLayout xmlns<span class="token operator">:</span>android<span class="token operator">=</span><span class="token string">"http://schemas.android.com/apk/res/android"</span>
+    android<span class="token operator">:</span>orientation<span class="token operator">=</span><span class="token string">"vertical"</span>
+    android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"match_parent"</span>
+    android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"match_parent"</span><span class="token operator">></span>
 
-- 导入依赖
-```java
-implementation(&#39;com.squareup.okhttp3:okhttp:3.4.1&#39;)
+    <span class="token operator">&lt;</span>Button
+        android<span class="token operator">:</span>id<span class="token operator">=</span><span class="token string">"@+id/take_photo"</span>
+        android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"match_parent"</span>
+        android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>text<span class="token operator">=</span><span class="token string">"take photo"</span><span class="token operator">/</span><span class="token operator">></span>
+
+    <span class="token operator">&lt;</span>Button
+        android<span class="token operator">:</span>id<span class="token operator">=</span><span class="token string">"@+id/choose_from_album"</span>
+        android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"match_parent"</span>
+        android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>text<span class="token operator">=</span><span class="token string">"choose photo"</span><span class="token operator">/</span><span class="token operator">></span>
+
+
+    <span class="token operator">&lt;</span>ImageView
+        android<span class="token operator">:</span>id<span class="token operator">=</span><span class="token string">"@+id/picture"</span>
+        android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>layout_gravity<span class="token operator">=</span><span class="token string">"center_horizontal"</span><span class="token operator">/</span><span class="token operator">></span>
+
+<span class="token operator">&lt;</span><span class="token operator">/</span>LinearLayout<span class="token operator">></span>
+</code></pre>
+<ul>
+<li>代码文件</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>Photo<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>Manifest<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>TargetApi<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>content<span class="token punctuation">.</span>ContentUris<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>content<span class="token punctuation">.</span>Intent<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>content<span class="token punctuation">.</span>pm<span class="token punctuation">.</span>PackageManager<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>database<span class="token punctuation">.</span>Cursor<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span>Bitmap<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>graphics<span class="token punctuation">.</span>BitmapFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>net<span class="token punctuation">.</span>Uri<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>os<span class="token punctuation">.</span>Build<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>os<span class="token punctuation">.</span>Bundle<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>provider<span class="token punctuation">.</span>DocumentsContract<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>provider<span class="token punctuation">.</span>MediaStore<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>view<span class="token punctuation">.</span>View<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>Button<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>ImageView<span class="token punctuation">;</span>
+<span class="token keyword">import</span> android<span class="token punctuation">.</span>widget<span class="token punctuation">.</span>Toast<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> androidx<span class="token punctuation">.</span>appcompat<span class="token punctuation">.</span>app<span class="token punctuation">.</span>AppCompatActivity<span class="token punctuation">;</span>
+<span class="token keyword">import</span> androidx<span class="token punctuation">.</span>core<span class="token punctuation">.</span>app<span class="token punctuation">.</span>ActivityCompat<span class="token punctuation">;</span>
+<span class="token keyword">import</span> androidx<span class="token punctuation">.</span>core<span class="token punctuation">.</span>content<span class="token punctuation">.</span>ContextCompat<span class="token punctuation">;</span>
+<span class="token keyword">import</span> androidx<span class="token punctuation">.</span>core<span class="token punctuation">.</span>content<span class="token punctuation">.</span>FileProvider<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>shu<span class="token punctuation">.</span>R<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>File<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>FileNotFoundException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * 调用拍照
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PhotoActivity</span> <span class="token keyword">extends</span> <span class="token class-name">AppCompatActivity</span> <span class="token keyword">implements</span> <span class="token class-name">View<span class="token punctuation">.</span>OnClickListener</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> CHOOSE_PHOTO<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> TAKE_PHOTO <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Button takePhoto<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> ImageView picture<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Uri imageUri<span class="token punctuation">;</span>
+
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>Bundle savedInstanceState<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setContentView</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>layout<span class="token punctuation">.</span>activity_photo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//设置点击事件</span>
+        takePhoto<span class="token operator">=</span> <span class="token punctuation">(</span>Button<span class="token punctuation">)</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>take_photo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        takePhoto<span class="token punctuation">.</span><span class="token function">setOnClickListener</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        picture<span class="token operator">=</span><span class="token punctuation">(</span>ImageView<span class="token punctuation">)</span><span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>picture<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 选择相册按钮</span>
+        Button chooseFromAlbum<span class="token operator">=</span><span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>choose_from_album<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        chooseFromAlbum<span class="token punctuation">.</span><span class="token function">setOnClickListener</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">View<span class="token punctuation">.</span>OnClickListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onClick</span><span class="token punctuation">(</span>View view<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>ContextCompat<span class="token punctuation">.</span><span class="token function">checkSelfPermission</span><span class="token punctuation">(</span>PhotoActivity<span class="token punctuation">.</span><span class="token keyword">this</span><span class="token punctuation">,</span> Manifest<span class="token punctuation">.</span>permission<span class="token punctuation">.</span>WRITE_EXTERNAL_STORAGE<span class="token punctuation">)</span>
+                        <span class="token operator">!=</span> PackageManager<span class="token punctuation">.</span>PERMISSION_GRANTED<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    ActivityCompat<span class="token punctuation">.</span><span class="token function">requestPermissions</span><span class="token punctuation">(</span>PhotoActivity<span class="token punctuation">.</span><span class="token keyword">this</span><span class="token punctuation">,</span>
+                            <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>Manifest<span class="token punctuation">.</span>permission<span class="token punctuation">.</span>WRITE_EXTERNAL_STORAGE<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+                    <span class="token function">openAlbum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onClick</span><span class="token punctuation">(</span>View v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        File outputImage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token function">getExternalCacheDir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"output_image.jpg"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>outputImage<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                outputImage<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            outputImage<span class="token punctuation">.</span><span class="token function">createNewFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+
+        <span class="token comment" spellcheck="true">//安卓版本大于7</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>Build<span class="token punctuation">.</span>VERSION<span class="token punctuation">.</span>SDK_INT<span class="token operator">>=</span><span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            imageUri<span class="token operator">=</span> FileProvider<span class="token punctuation">.</span><span class="token function">getUriForFile</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span><span class="token string">"com.shu.fileprovider"</span><span class="token punctuation">,</span>outputImage<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+            imageUri <span class="token operator">=</span> Uri<span class="token punctuation">.</span><span class="token function">fromFile</span><span class="token punctuation">(</span>outputImage<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">//动态授权</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>ContextCompat<span class="token punctuation">.</span><span class="token function">checkSelfPermission</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> Manifest<span class="token punctuation">.</span>permission<span class="token punctuation">.</span>CAMERA<span class="token punctuation">)</span><span class="token operator">!=</span> PackageManager<span class="token punctuation">.</span>PERMISSION_GRANTED<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            ActivityCompat<span class="token punctuation">.</span><span class="token function">requestPermissions</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>Manifest<span class="token punctuation">.</span>permission<span class="token punctuation">.</span>CAMERA<span class="token punctuation">,</span>Manifest<span class="token punctuation">.</span>permission<span class="token punctuation">.</span>WRITE_EXTERNAL_STORAGE<span class="token punctuation">,</span>Manifest<span class="token punctuation">.</span>permission<span class="token punctuation">.</span>READ_EXTERNAL_STORAGE<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+            <span class="token function">go</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token comment" spellcheck="true">/**
+     * 跳转
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">go</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Intent intent <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Intent</span><span class="token punctuation">(</span><span class="token string">"android.media.action.IMAGE_CAPTURE"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        intent<span class="token punctuation">.</span><span class="token function">putExtra</span><span class="token punctuation">(</span>MediaStore<span class="token punctuation">.</span>EXTRA_OUTPUT<span class="token punctuation">,</span> imageUri<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">startActivityForResult</span><span class="token punctuation">(</span>intent<span class="token punctuation">,</span> TAKE_PHOTO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">onActivityResult</span><span class="token punctuation">(</span><span class="token keyword">int</span> requestCode<span class="token punctuation">,</span> <span class="token keyword">int</span> resultCode<span class="token punctuation">,</span> Intent data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onActivityResult</span><span class="token punctuation">(</span>requestCode<span class="token punctuation">,</span> resultCode<span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span>requestCode<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">case</span> TAKE_PHOTO<span class="token operator">:</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>resultCode<span class="token operator">==</span>RESULT_OK<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                        Bitmap bitmap<span class="token operator">=</span> BitmapFactory<span class="token punctuation">.</span><span class="token function">decodeStream</span><span class="token punctuation">(</span><span class="token function">getContentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">openInputStream</span><span class="token punctuation">(</span>imageUri<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        picture<span class="token punctuation">.</span><span class="token function">setImageBitmap</span><span class="token punctuation">(</span>bitmap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">FileNotFoundException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token keyword">case</span> CHOOSE_PHOTO<span class="token operator">:</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>resultCode<span class="token operator">==</span>RESULT_OK<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    <span class="token comment" spellcheck="true">//判断手机系统版本号</span>
+                    <span class="token keyword">if</span><span class="token punctuation">(</span>Build<span class="token punctuation">.</span>VERSION<span class="token punctuation">.</span>SDK_INT<span class="token operator">>=</span><span class="token number">19</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                        <span class="token comment" spellcheck="true">//4.4及以上系统</span>
+                        <span class="token function">handleImageOnKitKat</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+                        <span class="token comment" spellcheck="true">//4.4以下系统</span>
+                        <span class="token function">handleImageBeforeKitKat</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 请求获取权限
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onRequestPermissionsResult</span><span class="token punctuation">(</span><span class="token keyword">int</span> requestCode<span class="token punctuation">,</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> permissions<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> grantResults<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onRequestPermissionsResult</span><span class="token punctuation">(</span>requestCode<span class="token punctuation">,</span> permissions<span class="token punctuation">,</span> grantResults<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span>requestCode<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>grantResults<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> grantResults<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> PackageManager<span class="token punctuation">.</span>PERMISSION_GRANTED<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token comment" spellcheck="true">// 启动相机程序</span>
+                    <span class="token function">go</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    Toast<span class="token punctuation">.</span><span class="token function">makeText</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token string">"没有权限"</span><span class="token punctuation">,</span> Toast<span class="token punctuation">.</span>LENGTH_SHORT<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">default</span><span class="token operator">:</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">openAlbum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Intent intent<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Intent</span><span class="token punctuation">(</span><span class="token string">"android.intent.action.GET_CONTENT"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        intent<span class="token punctuation">.</span><span class="token function">setType</span><span class="token punctuation">(</span><span class="token string">"image/*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">startActivityForResult</span><span class="token punctuation">(</span>intent<span class="token punctuation">,</span>CHOOSE_PHOTO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token annotation punctuation">@TargetApi</span><span class="token punctuation">(</span><span class="token number">19</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">handleImageOnKitKat</span><span class="token punctuation">(</span>Intent data<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        String imagePath<span class="token operator">=</span>null<span class="token punctuation">;</span>
+        Uri uri<span class="token operator">=</span>data<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"xxx"</span><span class="token operator">+</span>uri<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>DocumentsContract<span class="token punctuation">.</span><span class="token function">isDocumentUri</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span>uri<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//document类型的Uri处理方式</span>
+            String docId<span class="token operator">=</span>DocumentsContract<span class="token punctuation">.</span><span class="token function">getDocumentId</span><span class="token punctuation">(</span>uri<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"com.android.providers.media.documents"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>uri<span class="token punctuation">.</span><span class="token function">getAuthority</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                String id<span class="token operator">=</span>docId<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                String seletion<span class="token operator">=</span>MediaStore<span class="token punctuation">.</span>Images<span class="token punctuation">.</span>Media<span class="token punctuation">.</span>_ID<span class="token operator">+</span><span class="token string">"="</span><span class="token operator">+</span>id<span class="token punctuation">;</span>
+                imagePath<span class="token operator">=</span><span class="token function">getImagePath</span><span class="token punctuation">(</span>MediaStore<span class="token punctuation">.</span>Images<span class="token punctuation">.</span>Media<span class="token punctuation">.</span>EXTERNAL_CONTENT_URI<span class="token punctuation">,</span>seletion<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"com.android.providers.downloads.documents"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>uri<span class="token punctuation">.</span><span class="token function">getAuthority</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                Uri contentUri<span class="token operator">=</span> ContentUris<span class="token punctuation">.</span><span class="token function">withAppendedId</span><span class="token punctuation">(</span>Uri<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token string">"content://downloads/public_downloads"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>Long<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>docId<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                imagePath<span class="token operator">=</span><span class="token function">getImagePath</span><span class="token punctuation">(</span>contentUri<span class="token punctuation">,</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"content"</span><span class="token punctuation">.</span><span class="token function">equalsIgnoreCase</span><span class="token punctuation">(</span>uri<span class="token punctuation">.</span><span class="token function">getScheme</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//content类型的Uri处理方式</span>
+            imagePath<span class="token operator">=</span><span class="token function">getImagePath</span><span class="token punctuation">(</span>uri<span class="token punctuation">,</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"file"</span><span class="token punctuation">.</span><span class="token function">equalsIgnoreCase</span><span class="token punctuation">(</span>uri<span class="token punctuation">.</span><span class="token function">getScheme</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//file类型的Uri，直接获取路径即可</span>
+            imagePath<span class="token operator">=</span>uri<span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">displayImage</span><span class="token punctuation">(</span>imagePath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">private</span> String <span class="token function">getImagePath</span><span class="token punctuation">(</span>Uri uri<span class="token punctuation">,</span>String selection<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        String path<span class="token operator">=</span>null<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//获取真实的图片路径</span>
+        Cursor cursor<span class="token operator">=</span><span class="token function">getContentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span>uri<span class="token punctuation">,</span>null<span class="token punctuation">,</span>selection<span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cursor<span class="token operator">!=</span>null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>cursor<span class="token punctuation">.</span><span class="token function">moveToFirst</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                path<span class="token operator">=</span>cursor<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span>cursor<span class="token punctuation">.</span><span class="token function">getColumnIndex</span><span class="token punctuation">(</span>MediaStore<span class="token punctuation">.</span>Images<span class="token punctuation">.</span>Media<span class="token punctuation">.</span>DATA<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            cursor<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> path<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">displayImage</span><span class="token punctuation">(</span>String imagePath<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>imagePath<span class="token operator">!=</span>null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            Bitmap bitmap<span class="token operator">=</span>BitmapFactory<span class="token punctuation">.</span><span class="token function">decodeFile</span><span class="token punctuation">(</span>imagePath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            picture<span class="token punctuation">.</span><span class="token function">setImageBitmap</span><span class="token punctuation">(</span>bitmap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+            Toast<span class="token punctuation">.</span><span class="token function">makeText</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span><span class="token string">"failed to get image"</span><span class="token punctuation">,</span>Toast<span class="token punctuation">.</span>LENGTH_SHORT<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">handleImageBeforeKitKat</span><span class="token punctuation">(</span>Intent data<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Uri uri<span class="token operator">=</span>data<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String imagePath<span class="token operator">=</span><span class="token function">getImagePath</span><span class="token punctuation">(</span>uri<span class="token punctuation">,</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">displayImage</span><span class="token punctuation">(</span>imagePath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="三-网络技术"><a href="#三-网络技术" class="headerlink" title="三 网络技术"></a>三 网络技术</h2><p>无论在Android还是前端框架都有相识的网络请求框架，他们的原理都差不多<br>官网：<a href="https://github.com/square/okhttp" target="_blank" rel="noopener">https://github.com/square/okhttp</a></p>
+<h3 id="3-1-使用OkHttp访问网络"><a href="#3-1-使用OkHttp访问网络" class="headerlink" title="3.1 使用OkHttp访问网络"></a>3.1 使用OkHttp访问网络</h3><ul>
+<li>导入依赖</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token function">implementation</span><span class="token punctuation">(</span><span class="token string">'com.squareup.okhttp3:okhttp:3.4.1'</span><span class="token punctuation">)</span>
 </code></pre>
 <ul>
 <li>每一个HTTP请求中都应该包含一个URL，一个GET或POST方法以及Header或其他参数，当然还可以含特定内容类型的数据流。</li>
 <li>响应则包含一个回复代码（200代表成功，404代表未找到），Header和定制可选的body。</li>
-<li>基本用法<br>&#96;&#96;&#96;java<br>OkHttpClient client &#x3D; new OkHttpClient();</li>
+<li>基本用法</li>
 </ul>
-<p>String run(String url) throws IOException {<br>  Request request &#x3D; new Request.Builder()<br>      .url(url)<br>      .build();</p>
-<p>  try (Response response &#x3D; client.newCall(request).execute()) {<br>    return response.body().string();<br>  }<br>}</p>
-<pre><code>
+<pre class=" language-java"><code class="language-java">OkHttpClient client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OkHttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+String <span class="token function">run</span><span class="token punctuation">(</span>String url<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  Request request <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Request<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">try</span> <span class="token punctuation">(</span>Response response <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">newCall</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> response<span class="token punctuation">.</span><span class="token function">body</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 
                 
@@ -1531,7 +1626,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">119.2k</span>
+                        class="white-color">125.6k</span>
             
             
             
